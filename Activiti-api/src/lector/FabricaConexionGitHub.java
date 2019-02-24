@@ -14,6 +14,11 @@ public class FabricaConexionGitHub implements FabricaConexion {
 	private static FabricaConexionGitHub instancia;
 
 	/**
+	 * Fachada generada.
+	 */
+	private FachadaConexion fachadaConexion;
+
+	/**
 	 * Creacion de instancia y return de la misma
 	 */
 	public static FabricaConexionGitHub getInstance() {
@@ -22,11 +27,6 @@ public class FabricaConexionGitHub implements FabricaConexion {
 		}
 		return instancia;
 	}
-
-	/**
-	 * Fachada generada.
-	 */
-	private FachadaConexion fachadaConexion;
 
 	/**
 	 * Constructor privado

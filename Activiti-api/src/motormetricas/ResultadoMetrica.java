@@ -20,7 +20,7 @@ public class ResultadoMetrica {
 	/**
 	 * fecha de creación.
 	 */
-	private static Date fecha;
+	private static Date fecha = new Date();
 
 	/**
 	 * Colección de medidas.
@@ -45,7 +45,6 @@ public class ResultadoMetrica {
 	 * Constructor.
 	 */
 	public ResultadoMetrica() {
-		fecha = new Date();
 		coleccionMedidas = new Vector<Medida>();
 	}
 

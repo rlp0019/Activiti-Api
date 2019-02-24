@@ -12,35 +12,34 @@ import motormetricas.valores.Entero;
 
 /**
  * Métrica NumeroCambiosSinMensaje.
+ * 
  * @author David Blanco Alonso
  */
-public class NumeroCambiosSinMensaje extends Metrica
-{
+public class NumeroCambiosSinMensaje extends Metrica {
 	/**
 	 * Constructor.
 	 */
-	public NumeroCambiosSinMensaje()
-	{
-		descripcion = new Descripcion("Proceso de orientación", "NumeroCambiosSinMensaje", "Número de cambios realizados que no tienen mensaje.",
-				"¿Cuántos cambios se han realizado sin mensaje?", "NCSM número de cambios sin mensaje", "NCSM >= 0 mejor valores bajos",
-				"Absoluta", "NCSM contador", "Repositorio GitHub de un proyecto");
+	public NumeroCambiosSinMensaje() {
+		descripcion = new Descripcion("Proceso de orientación", "NumeroCambiosSinMensaje",
+				"Número de cambios realizados que no tienen mensaje.", "¿Cuántos cambios se han realizado sin mensaje?",
+				"NCSM número de cambios sin mensaje", "NCSM >= 0 mejor valores bajos", "Absoluta", "NCSM contador",
+				"Repositorio GitHub de un proyecto");
 	}
-	
+
 	/**
 	 * Metodo que calcula la métrica y la guarda en el objeto ResultadoMetrica.
-	 * @param lista List<?> información necesaria para calcular la métrica.
+	 * 
+	 * @param lista        List<?> información necesaria para calcular la métrica.
 	 * @param metricResult ResultadoMetrica objeto donde guardar el resultado.
 	 * @return Valor valor obtenido en la métrica.
 	 * @throws IOException
 	 */
-	public Valor run(List<?> lista) throws IOException
-	{		
+	@Override
+	public Valor run(List<?> lista) throws IOException {
 		Entero entero = new Entero(0);
-		
-		for(Object x : lista)
-		{
-			if(((RepositoryCommit) x).getCommit().getMessage() == "")
-			{
+
+		for (Object x : lista) {
+			if ("".equals(((RepositoryCommit) x).getCommit().getMessage())) {
 				entero.setValor(entero.getValor() + 1);
 			}
 		}
