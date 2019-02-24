@@ -103,6 +103,7 @@ public class ResultadoMetrica {
 				break;
 			default:
 				cadena += x.getMetrica().getDescripcion().getProposito() + ": " + x.getValue();
+				break;
 			}
 		}
 

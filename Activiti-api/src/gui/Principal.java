@@ -350,6 +350,8 @@ public class Principal {
 
 			anterior = pnlComparacion;
 			break;
+		default:
+			break;
 		}
 
 		frmFormulario.getContentPane().remove(1);
