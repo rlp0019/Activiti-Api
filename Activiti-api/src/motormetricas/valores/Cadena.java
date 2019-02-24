@@ -1,13 +1,13 @@
-package motorMetricas.valores;
+package motormetricas.valores;
 
-import motorMetricas.Valor;
+import motormetricas.Valor;
 
 /**
  * Calse para manejar los tipos de valores String.
+ * 
  * @author David Blanco Alonso
  */
-public class Cadena implements Valor
-{
+public class Cadena implements Valor {
 	/**
 	 * valor.
 	 */
@@ -16,43 +16,42 @@ public class Cadena implements Valor
 	/**
 	 * Constructor.
 	 */
-    public Cadena() 
-    {
-        valor = "";
-    }
+	public Cadena() {
+		valor = "";
+	}
 
-    /**
+	/**
 	 * Constructor.
 	 */
-	public Cadena(String valor)
-	{
+	public Cadena(String valor) {
 		this.valor = valor;
 	}
 
 	/**
 	 * Devuelve el valor.
+	 * 
 	 * @return String valor.
 	 */
-	public String getValor() 
-	{
+	public String getValor() {
 		return valor;
 	}
 
 	/**
 	 * Modifica el valor.
+	 * 
 	 * @param valor String valor.
 	 */
-    public void setValor(String valor) 
-    {
-       this.valor = valor;
-    }
-    
-    /**
+	public void setValor(String valor) {
+		this.valor = valor;
+	}
+
+	/**
 	 * Metodos toString.
+	 * 
 	 * @return String valor.
 	 */
-    public String toString()
-    {
+	@Override
+	public String toString() {
 		return valor;
-    }
+	}
 }

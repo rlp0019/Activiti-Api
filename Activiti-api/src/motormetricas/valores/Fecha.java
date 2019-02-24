@@ -1,14 +1,15 @@
-package motorMetricas.valores;
+package motormetricas.valores;
 
 import java.util.Date;
-import motorMetricas.Valor;
+
+import motormetricas.Valor;
 
 /**
  * Clase para controlar los tipos Date.
+ * 
  * @author David Blanco Alonso
  */
-public class Fecha implements Valor
-{
+public class Fecha implements Valor {
 	/**
 	 * Valor
 	 */
@@ -17,43 +18,42 @@ public class Fecha implements Valor
 	/**
 	 * Constructor.
 	 */
-    public Fecha() 
-    {
-        valor = new Date();
-    }
+	public Fecha() {
+		valor = new Date();
+	}
 
-    /**
+	/**
 	 * Constructor.
 	 */
-	public Fecha(Date valor)
-	{
+	public Fecha(Date valor) {
 		this.valor = valor;
 	}
 
 	/**
 	 * Devuelve el valor.
+	 * 
 	 * @return Date valor.
 	 */
-	public Date getValor() 
-	{
+	public Date getValor() {
 		return valor;
 	}
 
 	/**
 	 * Modifica el valor.
+	 * 
 	 * @param valor Date valor.
 	 */
-    public void setValor(Date valor) 
-    {
-    	this.valor = valor;
-    }
-    
-    /**
+	public void setValor(Date valor) {
+		this.valor = valor;
+	}
+
+	/**
 	 * Metodos toString.
+	 * 
 	 * @return String valor.
 	 */
-    public String toString()
-    {
+	@Override
+	public String toString() {
 		return valor.toString();
-    }
+	}
 }

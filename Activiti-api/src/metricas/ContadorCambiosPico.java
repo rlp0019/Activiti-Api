@@ -3,11 +3,11 @@ package metricas;
 import java.io.IOException;
 import java.util.List;
 
-import motorMetricas.Descripcion;
-import motorMetricas.Metrica;
-import motorMetricas.Valor;
-import motorMetricas.valores.Conjunto;
-import motorMetricas.valores.Largo;
+import motormetricas.Descripcion;
+import motormetricas.Metrica;
+import motormetricas.Valor;
+import motormetricas.valores.Conjunto;
+import motormetricas.valores.Largo;
 
 /**
  * Métrica ContadorCambiosPico.

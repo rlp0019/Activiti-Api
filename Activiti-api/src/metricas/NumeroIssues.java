@@ -3,10 +3,10 @@ package metricas;
 import java.io.IOException;
 import java.util.List;
 
-import motorMetricas.Descripcion;
-import motorMetricas.Metrica;
-import motorMetricas.Valor;
-import motorMetricas.valores.Entero;
+import motormetricas.Descripcion;
+import motormetricas.Metrica;
+import motormetricas.Valor;
+import motormetricas.valores.Entero;
 
 /**
  * Métrica NumeroIssues.

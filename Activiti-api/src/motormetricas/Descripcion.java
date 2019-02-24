@@ -1,11 +1,12 @@
-package motorMetricas;
+package motormetricas;
 
 /**
- * Implementa todos los campos que componen la descripción detallada de una métrica.
+ * Implementa todos los campos que componen la descripción detallada de una
+ * métrica.
+ * 
  * @author David Blanco Alonso
  */
-public class Descripcion 
-{
+public class Descripcion {
 	/**
 	 * Categoria de la métrica.
 	 */
@@ -53,6 +54,7 @@ public class Descripcion
 
 	/**
 	 * Constructor.
+	 * 
 	 * @param categoria
 	 * @param nombre
 	 * @param descripcion
@@ -64,8 +66,7 @@ public class Descripcion
 	 * @param fuenteDeMedicion
 	 */
 	public Descripcion(String categoria, String nombre, String descripcion, String proposito, String formula,
-			String interpretacion, String tipoEscala, String tipoMedida, String fuenteDeMedicion)
-	{
+			String interpretacion, String tipoEscala, String tipoMedida, String fuenteDeMedicion) {
 		this.categoria = categoria;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
@@ -76,85 +77,85 @@ public class Descripcion
 		this.tipoMedida = tipoMedida;
 		this.fuenteDeMedicion = fuenteDeMedicion;
 	}
-	
+
 	/**
 	 * Devuelve la categoria de la métrica..
+	 * 
 	 * @return String categoria.
 	 */
-	public String getCategoria() 
-	{
+	public String getCategoria() {
 		return categoria;
 	}
 
 	/**
 	 * Devuelve la descripción de la métrica..
+	 * 
 	 * @return String descripción.
 	 */
-	public String getDescripcion() 
-	{
+	public String getDescripcion() {
 		return descripcion;
 	}
 
 	/**
 	 * Devuelve la formula de la métrica..
+	 * 
 	 * @return String formula.
 	 */
-	public String getFormula()
-	{
+	public String getFormula() {
 		return formula;
 	}
-	
+
 	/**
 	 * Devuelve la fuente de medición de la métrica..
+	 * 
 	 * @return String fuente de medición.
 	 */
-	public String getFuenteDeMedicion()
-	{
+	public String getFuenteDeMedicion() {
 		return fuenteDeMedicion;
 	}
-	
+
 	/**
 	 * Devuelve la interpretación de la métrica..
+	 * 
 	 * @return String interpretación.
 	 */
-	public String getInterpretacion() 
-	{
+	public String getInterpretacion() {
 		return interpretacion;
 	}
 
 	/**
 	 * Devuelve el nombre de la métrica..
+	 * 
 	 * @return String nombre.
 	 */
-	public String getNombre() 
-	{
+	public String getNombre() {
 		return nombre;
 	}
 
 	/**
 	 * Devuelve el proposito de la métrica..
+	 * 
 	 * @return String proposito.
 	 */
-	public String getProposito() 
-	{
+	public String getProposito() {
 		return proposito;
 	}
 
 	/**
 	 * Devuelve el tipo de escala de la métrica..
+	 * 
 	 * @return String tipo de escala.
 	 */
-	public String getTipoEscala() 
-	{
+	public String getTipoEscala() {
 		return tipoEscala;
 	}
-	
+
 	/**
 	 * Devuelve el tipo de medida de la métrica..
+	 * 
 	 * @return String tipo de medida.
 	 */
-	public String getTipoMedida() 
-	{
+	public String getTipoMedida() {
 		return tipoMedida;
 	}
 }

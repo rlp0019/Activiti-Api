@@ -1,7 +1,6 @@
 package charts;
 
 import java.awt.Color;
-import motorMetricas.valores.Conjunto;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -12,6 +11,8 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.util.Rotation;
+
+import motormetricas.valores.Conjunto;
 
 /**
  * Clase que contiene losmetods para generar los graficos de la aplicación.

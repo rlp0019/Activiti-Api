@@ -5,10 +5,10 @@ import java.util.List;
 
 import org.eclipse.egit.github.core.RepositoryCommit;
 
-import motorMetricas.Descripcion;
-import motorMetricas.Metrica;
-import motorMetricas.Valor;
-import motorMetricas.valores.Entero;
+import motormetricas.Descripcion;
+import motormetricas.Metrica;
+import motormetricas.Valor;
+import motormetricas.valores.Entero;
 
 /**
  * Métrica NumeroCambiosSinMensaje.

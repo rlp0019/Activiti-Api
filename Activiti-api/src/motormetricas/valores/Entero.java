@@ -1,13 +1,13 @@
-package motorMetricas.valores;
+package motormetricas.valores;
 
-import motorMetricas.Valor;
+import motormetricas.Valor;
 
 /**
  * Clase para controlar los tipos enteros.
+ * 
  * @author David Blanco Alonso
  */
-public class Entero implements Valor
-{
+public class Entero implements Valor {
 	/**
 	 * Valor.
 	 */
@@ -16,43 +16,42 @@ public class Entero implements Valor
 	/**
 	 * Constructor.
 	 */
-    public Entero() 
-    {
-        valor = 0;
-    }
+	public Entero() {
+		valor = 0;
+	}
 
-    /**
+	/**
 	 * Constructor.
 	 */
-	public Entero(int valor)
-	{
+	public Entero(int valor) {
 		this.valor = valor;
 	}
 
 	/**
 	 * Devuelve el valor.
+	 * 
 	 * @return int valor.
 	 */
-	public int getValor() 
-	{
+	public int getValor() {
 		return valor;
 	}
 
 	/**
 	 * Modifica el valor.
+	 * 
 	 * @param valor int valor.
 	 */
-    public void setValor(int valor) 
-    {
-       this.valor = valor;
-    }
-    
-    /**
+	public void setValor(int valor) {
+		this.valor = valor;
+	}
+
+	/**
 	 * Metodos toString.
+	 * 
 	 * @return String valor.
 	 */
-    public String toString()
-    {
-    	return Integer.toString(valor);
-    }
+	@Override
+	public String toString() {
+		return Integer.toString(valor);
+	}
 }

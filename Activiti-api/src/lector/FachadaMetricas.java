@@ -1,6 +1,6 @@
 package lector;
 
-import motorMetricas.ResultadoMetrica;
+import motormetricas.ResultadoMetrica;
 
 /**
  * Interace fachada metricas.

@@ -5,10 +5,10 @@ import java.util.List;
 
 import org.eclipse.egit.github.core.RepositoryCommit;
 
-import motorMetricas.Descripcion;
-import motorMetricas.Metrica;
-import motorMetricas.Valor;
-import motorMetricas.valores.Largo;
+import motormetricas.Descripcion;
+import motormetricas.Metrica;
+import motormetricas.Valor;
+import motormetricas.valores.Largo;
 
 /**
  * Métrica MediaDiasCambio.

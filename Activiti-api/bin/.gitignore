@@ -1,6 +1,6 @@
-/gui/
-/imagenes/
 /lector/
-/test/
-/charts/
+/metricas/
 /motorMetricas/
+/charts/
+/motormetricas/
+/gui/
