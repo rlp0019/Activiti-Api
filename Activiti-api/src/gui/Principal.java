@@ -111,26 +111,6 @@ public class Principal {
 	protected FachadaConexion conexion;
 
 	/**
-	 * Barra de menu para las distintas opciones que podemos realizar.
-	 */
-	private JMenuBar menuBar;
-
-	/**
-	 * Menu para buscar un repositorio en una plataforma.
-	 */
-	private JMenuItem mnBuscarRepositorio;
-
-	/**
-	 * Menu para seleccionar un fichero de resultados guardado anteriormente.
-	 */
-	private JMenuItem mnCargarArchivo;
-
-	/**
-	 * Menu para comparar dos repositorios desde dos ficheros.
-	 */
-	private JMenuItem mnCompararArchivos;
-
-	/**
 	 * Metodo get para la Fabrica encargada de crear la conexion.
 	 * 
 	 * @return FabricaConexion Fabrica encargada de crear la conexion.
@@ -230,10 +210,10 @@ public class Principal {
 		pnlInicio = new PanelInicio(this);
 		frmFormulario.getContentPane().add(pnlInicio);
 
-		menuBar = new JMenuBar();
+		JMenuBar menuBar = new JMenuBar();
 		frmFormulario.setJMenuBar(menuBar);
 
-		mnBuscarRepositorio = new JMenuItem("Buscar Repositorio");
+		JMenuItem mnBuscarRepositorio = new JMenuItem("Buscar Repositorio");
 		mnBuscarRepositorio.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -242,7 +222,7 @@ public class Principal {
 		});
 		menuBar.add(mnBuscarRepositorio);
 
-		mnCargarArchivo = new JMenuItem("Cargar Informe");
+		JMenuItem mnCargarArchivo = new JMenuItem("Cargar Informe");
 		mnCargarArchivo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -251,7 +231,7 @@ public class Principal {
 		});
 		menuBar.add(mnCargarArchivo);
 
-		mnCompararArchivos = new JMenuItem("Comparar Informes");
+		JMenuItem mnCompararArchivos = new JMenuItem("Comparar Informes");
 		mnCompararArchivos.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {

@@ -28,39 +28,14 @@ public class PanelComparacion extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Label asociado al campo de texto para la ruta del informe 1.
-	 */
-	private JLabel lblFichero1;
-
-	/**
 	 * Campo de texto donde introducor la ruta del informe 1.
 	 */
 	private JTextField txtFichero1;
 
 	/**
-	 * Boton para seleccionar un fichero como informe 1.
-	 */
-	private JButton btnFichero1;
-
-	/**
-	 * Label asociado al campo de texto para la ruta del informe 2.
-	 */
-	private JLabel lblFichero2;
-
-	/**
 	 * Campo de texto donde introducor la ruta del informe 2.
 	 */
 	private JTextField txtFichero2;
-
-	/**
-	 * Boton para seleccionar un fichero como informe 2.
-	 */
-	private JButton btnFichero2;
-
-	/**
-	 * Boton para mostrar la comparacion de los dos ficheros seleccionados.
-	 */
-	private JButton btnComparar;
 
 	/**
 	 * Fabrica asbstracta.
@@ -94,7 +69,7 @@ public class PanelComparacion extends JPanel {
 		setLayout(null);
 		this.setBounds(0, 0, 700, 470);
 
-		lblFichero1 = new JLabel("1º fichero a comparar");
+		JLabel lblFichero1 = new JLabel("1º fichero a comparar");
 		lblFichero1.setBounds(22, 178, 148, 14);
 		add(lblFichero1);
 
@@ -103,7 +78,7 @@ public class PanelComparacion extends JPanel {
 		add(txtFichero1);
 		txtFichero1.setColumns(10);
 
-		btnFichero1 = new JButton("Seleccionar");
+		JButton btnFichero1 = new JButton("Seleccionar");
 		btnFichero1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -113,7 +88,7 @@ public class PanelComparacion extends JPanel {
 		btnFichero1.setBounds(530, 174, 148, 23);
 		add(btnFichero1);
 
-		lblFichero2 = new JLabel("2º fichero a comparar");
+		JLabel lblFichero2 = new JLabel("2º fichero a comparar");
 		lblFichero2.setBounds(22, 252, 148, 14);
 		add(lblFichero2);
 
@@ -122,7 +97,7 @@ public class PanelComparacion extends JPanel {
 		txtFichero2.setBounds(180, 249, 340, 20);
 		add(txtFichero2);
 
-		btnFichero2 = new JButton("Seleccionar");
+		JButton btnFichero2 = new JButton("Seleccionar");
 		btnFichero2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -132,7 +107,7 @@ public class PanelComparacion extends JPanel {
 		btnFichero2.setBounds(530, 248, 148, 23);
 		add(btnFichero2);
 
-		btnComparar = new JButton("Comparar");
+		JButton btnComparar = new JButton("Comparar");
 		btnComparar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

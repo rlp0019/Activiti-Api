@@ -67,16 +67,6 @@ public class FachadaConexionGitHub implements FachadaConexion {
 	private List<Repository> repositorios;
 
 	/**
-	 * CommitService servicio para trabajar conn los commits de GitHub.
-	 */
-	private CommitService servicioCommits;
-
-	/**
-	 * IssueService servicio para trabajar con las issues de GitHub.
-	 */
-	private IssueService servicioIssues;
-
-	/**
 	 * RepositoryService servicio para trabajar con los repositorios de GitHub.
 	 */
 	private RepositoryService servicioRepositorios;
@@ -222,9 +212,9 @@ public class FachadaConexionGitHub implements FachadaConexion {
 	 * @throws IOException
 	 */
 	private void obtenerCommits(RepositoryId repositorio) throws IOException {
-		this.servicioCommits = new CommitService(this.cliente);
+		CommitService servicioCommits = new CommitService(this.cliente);
 
-		this.commits = this.servicioCommits.getCommits(repositorio);
+		this.commits = servicioCommits.getCommits(repositorio);
 	}
 
 	/**
@@ -234,12 +224,12 @@ public class FachadaConexionGitHub implements FachadaConexion {
 	 * @throws IOException
 	 */
 	private void obtenerIssues(RepositoryId repositorio) throws IOException {
-		this.servicioIssues = new IssueService(this.cliente);
+		IssueService servicioIssues = new IssueService(this.cliente);
 
 		Map<String, String> filtro = new HashMap<String, String>();
 		filtro.put("state", "all");
 
-		this.issues = this.servicioIssues.getIssues(repositorio, filtro);
+		this.issues = servicioIssues.getIssues(repositorio, filtro);
 	}
 
 	/**
