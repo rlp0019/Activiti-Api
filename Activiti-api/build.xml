@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project  name="Activiti-api" default="" basedir=".">
+  <description>
+    Trabajo de Fin de Grado sobre Activiti-Api.
+  </description>
+
+  <property name="src.dir" value="src"/>
+  <property name="build.dir" value="build"/>
+  <property name="dist.dir" value="dist"/>
+  <property name="dclase.dir" value="DiagramasClase"/>
+  <property name="dsecuencia.dir" value="DiagramasSecuencia"/>
+  <property name="imagenes.dir" value="src/imagenes"/>
+  <property name="ayuda.dir" value="src/gui/ayuda"/>
+	
+  <path id="compile.path">
+  	<pathelement location="lib/junit.jar"/>
+  	<pathelement location="lib/gson-2.3.1.jar"/>
+  	<pathelement location="lib/javahelp-2.0.05.jar"/>
+  	<pathelement location="lib/jcommon-1.0.23.jar"/>
+  	<pathelement location="lib/jfreechart-1.0.19.jar"/>
+  	<pathelement location="lib/org.eclipse.egit.github.core-2.1.5.jar"/>
+  </path>
+	
+  <pathconvert property="manifest.classpath" pathsep=" ">
+	<path refid="compile.path"/>
+	<mapper>
+	  <chainedmapper>
+	     <flattenmapper/>
+	     <globmapper from="*.jar" to="lib/*.jar"/>
+	  </chainedmapper>
+	</mapper>
+  </pathconvert>
+	
+  <target name="Inicio" description="Crea timestamp y carpetas">
+  	<!-- Crea el timestamp--> 
+  	<tstamp/>
+  	
+  	<!-- Crea la carpeta de la build -->
+  	<mkdir dir="${build.dir}"/>
+  	
+  	<!-- Crea la carpeta de la distribución -->
+  	<mkdir dir="${dist.dir}"/>
+  </target>
+	
+  <target name="Compilar" depends="Inicio" description="Compila el programa">
+  	<javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false" debug="true">
+  	  <classpath refid="compile.path"/>
+  	</javac>
+  </target>
+	
+  <target name="Distr" depends="Compilar" description="Genera la distribución">
+	<!-- Toda la build al .jar -->
+	<jar jarfile="${dist.dir}/Activiti-${DSTAMP}.jar" basedir="${build.dir}">
+	  <manifest>
+	  	<attribute name="Main-Class" value="gui/Principal"/>
+	  	<attribute name="Class-Path" value="${manifest.classpath}"/>
+	  </manifest>
+		
+	  <!-- Incluyo el resto de archivos -->
+	  <zipfileset dir="${dclase.dir}" prefix="${dclase.dir}"/>
+	  <zipfileset dir="${dsecuencia.dir}" prefix="${dsecuencia.dir}"/>
+	  <zipfileset dir="${imagenes.dir}" prefix="imagenes"/>
+	  <zipfileset dir="${ayuda.dir}" prefix="gui/ayuda"/>
+	  <zipfileset dir="lib" prefix="lib">
+	  	<include name="**/*.jar"/>
+	  </zipfileset>
+	</jar>
+  </target>
+	
+  <target name="Limpiar" description="Elimina las carpetas creadas">
+	<!-- Elimina las carpertas creadas -->
+    <delete dir="${build.dir}"/>
+	<delete dir="${dist.dir}"/>
+  </target>
+</project>

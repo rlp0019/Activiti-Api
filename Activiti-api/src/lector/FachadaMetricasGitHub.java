@@ -168,8 +168,8 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 					case 9:
 						this.commitXMes = new CommitPorMes();
 						Conjunto valores = new Conjunto();
-						int tamaño = Integer.parseInt(linea.substring(linea.indexOf(":") + 2));
-						for (int i = 0; i < tamaño; i++) {
+						int tamano = Integer.parseInt(linea.substring(linea.indexOf(":") + 2));
+						for (int i = 0; i < tamano; i++) {
 							linea = archivo.readLine();
 							if (linea != null) {
 								valores.setValor(linea.substring(0, linea.indexOf(":")),
@@ -203,8 +203,8 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 					case 13:
 						this.commitXDia = new CommitPorDia();
 						valores = new Conjunto();
-						tamaño = Integer.parseInt(linea.substring(linea.indexOf(":") + 2));
-						for (int i = 0; i < tamaño; i++) {
+						tamano = Integer.parseInt(linea.substring(linea.indexOf(":") + 2));
+						for (int i = 0; i < tamano; i++) {
 							linea = archivo.readLine();
 							if (linea != null) {
 								valores.setValor(linea.substring(0, linea.indexOf(":")),
@@ -218,8 +218,8 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 					case 14:
 						this.commitXAutor = new CambioPorAutor();
 						valores = new Conjunto();
-						tamaño = Integer.parseInt(linea.substring(linea.indexOf(":") + 2));
-						for (int i = 0; i < tamaño; i++) {
+						tamano = Integer.parseInt(linea.substring(linea.indexOf(":") + 2));
+						for (int i = 0; i < tamano; i++) {
 							linea = archivo.readLine();
 							if (linea != null) {
 								valores.setValor(linea.substring(0, linea.indexOf(":")),
@@ -240,8 +240,8 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 					case 16:
 						this.issueXAutor = new IssuesPorAutor();
 						valores = new Conjunto();
-						tamaño = Integer.parseInt(linea.substring(linea.indexOf(":") + 2));
-						for (int i = 0; i < tamaño; i++) {
+						tamano = Integer.parseInt(linea.substring(linea.indexOf(":") + 2));
+						for (int i = 0; i < tamano; i++) {
 							linea = archivo.readLine();
 							if (linea != null) {
 								valores.setValor(linea.substring(0, linea.indexOf(":")),
