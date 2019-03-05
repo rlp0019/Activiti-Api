@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project  name="Activiti-api" default="" basedir=".">
+<project  name="Activiti-api" basedir="." default="distr">
   <description>
     Trabajo de Fin de Grado sobre Activiti-Api.
   </description>
@@ -22,7 +22,7 @@
   	<pathelement location="lib/org.eclipse.egit.github.core-2.1.5.jar"/>
   </path>
 	
-  <target name="Inicio" description="Crea timestamp y carpetas">
+  <target name="inicio" description="Crea timestamp y carpetas">
   	<!-- Crea el timestamp--> 
   	<tstamp/>
   	
@@ -36,13 +36,13 @@
   	<mkdir dir="${libclasses.dir}"/>
   </target>
 	
-  <target name="Compilar" depends="Inicio" description="Compila el programa">
+  <target name="compilar" depends="inicio" description="Compila el programa">
   	<javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false" debug="true">
   	  <classpath refid="compile.path"/>
   	</javac>
   </target>
 	
-  <target name="Distr" depends="Compilar" description="Genera la distribución">
+  <target name="distr" depends="compilar,inicio" description="Genera la distribución">
   	<unjar dest="${libclasses.dir}">
   	  <fileset dir="lib" includes="*.jar"/>
   	</unjar>
@@ -62,7 +62,7 @@
 	</jar>
   </target>
 	
-  <target name="Limpiar" description="Elimina las carpetas creadas">
+  <target name="limpiar" description="Elimina las carpetas creadas">
 	<!-- Elimina las carpertas creadas -->
     <delete dir="${build.dir}"/>
 	<delete dir="${dist.dir}"/>
