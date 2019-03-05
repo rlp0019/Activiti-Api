@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project  name="Activiti-api" basedir="." default="distr">
+<project  name="Activiti-api" basedir="." default="distr" xmlns:jacoco="antlib:org.jacoco.ant">
   <description>
     Trabajo de Fin de Grado sobre Activiti-Api.
   </description>
 
   <property name="src.dir" value="src"/>
-  <property name="build.dir" value="build"/>
+  <property name="tests.dir" value="test/test"/>
+  <property name="build.dir" value="build/main"/>
+  <property name="build.tests.dir" value="build/test"/>
   <property name="dist.dir" value="dist"/>
   <property name="dclase.dir" value="DiagramasClase"/>
   <property name="dsecuencia.dir" value="DiagramasSecuencia"/>
@@ -14,7 +16,6 @@
   <property name="libclasses.dir" value="libC"/>
 	
   <path id="compile.path">
-  	<pathelement location="lib/junit.jar"/>
   	<pathelement location="lib/gson-2.3.1.jar"/>
   	<pathelement location="lib/javahelp-2.0.05.jar"/>
   	<pathelement location="lib/jcommon-1.0.23.jar"/>
@@ -22,11 +23,21 @@
   	<pathelement location="lib/org.eclipse.egit.github.core-2.1.5.jar"/>
   </path>
 	
+  <path id="compile.tests.path">
+  	<pathelement location="lib/jacocoant.jar"/>
+  	<pathelement location="lib/junit.jar"/>
+  	<pathelement location="${build.dir}"/>
+  </path>
+	
+  <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+    <classpath path="lib/jacocoant.jar"/>
+  </taskdef>
+	
   <target name="inicio" description="Crea timestamp y carpetas">
   	<!-- Crea el timestamp--> 
   	<tstamp/>
   	
-  	<!-- Crea la carpeta de la build -->
+  	<!-- Crea las carpetas de la build -->
   	<mkdir dir="${build.dir}"/>
   	
   	<!-- Crea la carpeta de la distribución -->
@@ -37,12 +48,47 @@
   </target>
 	
   <target name="compilar" depends="inicio" description="Compila el programa">
-  	<javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false" debug="true">
-  	  <classpath refid="compile.path"/>
-  	</javac>
+  	<javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false" debug="true" classpathref="compile.path"/>
   </target>
 	
-  <target name="distr" depends="compilar,inicio" description="Genera la distribución">
+  <target name="compilar-tests" depends="compilar" description="Compila el programa">
+  	<javac srcdir="${tests.dir}" destdir="build" includeantruntime="false" debug="true" classpathref="compile.tests.path"/>
+  </target>
+	
+  <target name="tests" depends="compilar-tests">
+    <jacoco:coverage>
+  	  <junit printsummary="on" haltonfailure="no" fork="true">
+  	    <classpath>
+  	      <path refid="compile.tests.path"/>
+  	      <pathelement location="${build.tests.dir}"/>
+  	    </classpath>
+  	    <formatter type="brief" usefile="false" />
+  	    <batchtest>
+  	      <fileset dir="${tests.dir}" includes="**/*Test.java" />
+  	    </batchtest>
+  	  </junit>
+  	</jacoco:coverage>
+  	
+  	<jacoco:report>
+  	  <executiondata>
+  	    <file file="jacoco.exec"/>
+  	  </executiondata>
+  	  <structure name="Activiti-Api">
+  	    <classfiles>
+  	      <fileset dir="${build.dir}"/>
+  	      <fileset dir="${build.tests.dir}"/>
+  	    </classfiles>
+  	    <sourcefiles encoding="UTF-8">
+  	      <fileset dir="${src.dir}" includes="**/*.java"/>
+  	      <fileset dir="${tests.dir}" includes="**/*Test.java"/>
+  	    </sourcefiles>
+  	  </structure>
+  	  <html destdir="report"/>
+  	  <xml destfile="report.xml"/>
+  	</jacoco:report>
+  </target>
+	
+  <target name="distr" depends="inicio,compilar" description="Genera la distribución">
   	<unjar dest="${libclasses.dir}">
   	  <fileset dir="lib" includes="*.jar"/>
   	</unjar>
@@ -63,9 +109,11 @@
   </target>
 	
   <target name="limpiar" description="Elimina las carpetas creadas">
-	<!-- Elimina las carpertas creadas -->
-    <delete dir="${build.dir}"/>
+	<!-- Elimina las carpertas y archivos creados -->
+    <delete dir="build"/>
 	<delete dir="${dist.dir}"/>
   	<delete dir="${libclasses.dir}"/>
+  	<delete dir="report"/>
+  	<delete file="jacoco.exec"/>
   </target>
 </project>

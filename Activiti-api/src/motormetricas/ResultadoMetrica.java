@@ -78,23 +78,23 @@ public class ResultadoMetrica {
 		cadena += "Metricas:";
 		for (Medida x : coleccionMedidas) {
 			switch (x.getValue().getClass().getName()) {
-			case "motorMetricas.valores.Entero":
+			case "motormetricas.valores.Entero":
 				cadena += "\n  " + x.getMetrica().getDescripcion().getNombre() + ": "
 						+ ((Entero) x.getValue()).getValor();
 				break;
-			case "motorMetricas.valores.Largo":
+			case "motormetricas.valores.Largo":
 				cadena += "\n  " + x.getMetrica().getDescripcion().getNombre() + ": "
 						+ formateador.format(((Largo) x.getValue()).getValor());
 				break;
-			case "motorMetricas.valores.Fecha":
+			case "motormetricas.valores.Fecha":
 				cadena += "\n  " + x.getMetrica().getDescripcion().getNombre() + ": "
 						+ ((Fecha) x.getValue()).getValor().toString();
 				break;
-			case "motorMetricas.valores.Cadena":
+			case "motormetricas.valores.Cadena":
 				cadena += "\n  " + x.getMetrica().getDescripcion().getNombre() + ": "
 						+ ((Cadena) x.getValue()).getValor();
 				break;
-			case "motorMetricas.valores.Conjunto":
+			case "motormetricas.valores.Conjunto":
 				cadena += "\n  " + x.getMetrica().getDescripcion().getNombre() + ": ";
 				Map<String, Entero> aux = ((Conjunto) x.getValue()).getValor();
 				for (String key : aux.keySet()) {
@@ -102,7 +102,7 @@ public class ResultadoMetrica {
 				}
 				break;
 			default:
-				cadena += x.getMetrica().getDescripcion().getProposito() + ": " + x.getValue();
+				cadena += x.getMetrica().getDescripcion().getProposito() + ": " + (x.getValue());
 				break;
 			}
 		}
