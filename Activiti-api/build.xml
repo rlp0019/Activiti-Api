@@ -5,7 +5,7 @@
   </description>
 
   <property name="src.dir" value="src"/>
-  <property name="tests.dir" value="test/test"/>
+  <property name="tests.dir" value="test/"/>
   <property name="build.dir" value="build/main"/>
   <property name="build.tests.dir" value="build/test"/>
   <property name="dist.dir" value="dist"/>
@@ -13,7 +13,7 @@
   <property name="dsecuencia.dir" value="DiagramasSecuencia"/>
   <property name="imagenes.dir" value="src/imagenes"/>
   <property name="ayuda.dir" value="src/gui/ayuda"/>
-  <property name="libclasses.dir" value="libC"/>
+  <property name="libclasses.dir" value="libc"/>
 	
   <path id="compile.path">
   	<pathelement location="lib/gson-2.3.1.jar"/>
@@ -24,6 +24,7 @@
   </path>
 	
   <path id="compile.tests.path">
+  	<path refid="compile.path"/>
   	<pathelement location="lib/jacocoant.jar"/>
   	<pathelement location="lib/junit.jar"/>
   	<pathelement location="${build.dir}"/>
@@ -45,6 +46,9 @@
   	
   	<!-- Crea la carpeta de las class de librerias -->
   	<mkdir dir="${libclasses.dir}"/>
+  	
+  	<!-- Crea la carpeta de las class de tests -->
+  	<mkdir dir="${build.tests.dir}"/>
   </target>
 	
   <target name="compilar" depends="inicio" description="Compila el programa">
@@ -52,7 +56,7 @@
   </target>
 	
   <target name="compilar-tests" depends="compilar" description="Compila el programa">
-  	<javac srcdir="${tests.dir}" destdir="build" includeantruntime="false" debug="true" classpathref="compile.tests.path"/>
+  	<javac srcdir="${tests.dir}" destdir="${build.tests.dir}" includeantruntime="false" debug="true" classpathref="compile.tests.path"/>
   </target>
 	
   <target name="tests" depends="compilar-tests">
