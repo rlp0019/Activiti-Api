@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path="Activiti-api/src"/>
-	<classpathentry kind="src" path="Activiti-api/test"/>
-	<classpathentry kind="lib" path="Activiti-api/lib/gson-2.3.1.jar"/>
-	<classpathentry kind="lib" path="Activiti-api/lib/jacocoant.jar"/>
-	<classpathentry kind="lib" path="Activiti-api/lib/javahelp-2.0.05.jar"/>
-	<classpathentry kind="lib" path="Activiti-api/lib/jcommon-1.0.23.jar"/>
-	<classpathentry kind="lib" path="Activiti-api/lib/jfreechart-1.0.19.jar"/>
-	<classpathentry kind="lib" path="Activiti-api/lib/junit.jar"/>
-	<classpathentry kind="lib" path="Activiti-api/lib/org.eclipse.egit.github.core-2.1.5.jar"/>
+	<classpathentry kind="src" path="rsc"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="lib" path="C:/Users/Kiriboo/Desktop/Mis documentos/Documentos y Uni/Uni/4to/GITHUB/Activiti-Api/rsc/lib/gson-2.3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Kiriboo/Desktop/Mis documentos/Documentos y Uni/Uni/4to/GITHUB/Activiti-Api/rsc/lib/jacocoant.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Kiriboo/Desktop/Mis documentos/Documentos y Uni/Uni/4to/GITHUB/Activiti-Api/rsc/lib/javahelp-2.0.05.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Kiriboo/Desktop/Mis documentos/Documentos y Uni/Uni/4to/GITHUB/Activiti-Api/rsc/lib/jcommon-1.0.23.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Kiriboo/Desktop/Mis documentos/Documentos y Uni/Uni/4to/GITHUB/Activiti-Api/rsc/lib/jfreechart-1.0.19.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Kiriboo/Desktop/Mis documentos/Documentos y Uni/Uni/4to/GITHUB/Activiti-Api/rsc/lib/junit.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Kiriboo/Desktop/Mis documentos/Documentos y Uni/Uni/4to/GITHUB/Activiti-Api/rsc/lib/org.eclipse.egit.github.core-2.1.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
