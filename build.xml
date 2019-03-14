@@ -4,34 +4,34 @@
     Trabajo de Fin de Grado sobre Activiti-Api.
   </description>
 
-  <property name="src.dir" value="src"/>
-  <property name="tests.dir" value="test/"/>
+  <property name="src.dir" value="Activiti-api/src"/>
+  <property name="tests.dir" value="Activiti-api/test/"/>
   <property name="build.dir" value="build/main"/>
   <property name="build.tests.dir" value="build/test"/>
   <property name="dist.dir" value="dist"/>
-  <property name="dclase.dir" value="DiagramasClase"/>
-  <property name="dsecuencia.dir" value="DiagramasSecuencia"/>
-  <property name="imagenes.dir" value="src/imagenes"/>
-  <property name="ayuda.dir" value="src/gui/ayuda"/>
+  <property name="dclase.dir" value="Activiti-api/DiagramasClase"/>
+  <property name="dsecuencia.dir" value="Activiti-api/DiagramasSecuencia"/>
+  <property name="imagenes.dir" value="Activiti-api/src/imagenes"/>
+  <property name="ayuda.dir" value="Activiti-api/src/gui/ayuda"/>
   <property name="libclasses.dir" value="libc"/>
 	
   <path id="compile.path">
-  	<pathelement location="lib/gson-2.3.1.jar"/>
-  	<pathelement location="lib/javahelp-2.0.05.jar"/>
-  	<pathelement location="lib/jcommon-1.0.23.jar"/>
-  	<pathelement location="lib/jfreechart-1.0.19.jar"/>
-  	<pathelement location="lib/org.eclipse.egit.github.core-2.1.5.jar"/>
+  	<pathelement location="Activiti-api/lib/gson-2.3.1.jar"/>
+  	<pathelement location="Activiti-api/lib/javahelp-2.0.05.jar"/>
+  	<pathelement location="Activiti-api/lib/jcommon-1.0.23.jar"/>
+  	<pathelement location="Activiti-api/lib/jfreechart-1.0.19.jar"/>
+  	<pathelement location="Activiti-api/lib/org.eclipse.egit.github.core-2.1.5.jar"/>
   </path>
 	
   <path id="compile.tests.path">
   	<path refid="compile.path"/>
-  	<pathelement location="lib/jacocoant.jar"/>
-  	<pathelement location="lib/junit.jar"/>
+  	<pathelement location="Activiti-api/lib/jacocoant.jar"/>
+  	<pathelement location="Activiti-api/lib/junit.jar"/>
   	<pathelement location="${build.dir}"/>
   </path>
 	
   <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
-    <classpath path="lib/jacocoant.jar"/>
+    <classpath path="Activiti-api/lib/jacocoant.jar"/>
   </taskdef>
 	
   <target name="inicio" description="Crea timestamp y carpetas">
@@ -94,7 +94,7 @@
 	
   <target name="distr" depends="inicio,compilar" description="Genera la distribución">
   	<unjar dest="${libclasses.dir}">
-  	  <fileset dir="lib" includes="*.jar"/>
+  	  <fileset dir="Activiti-api/lib" includes="*.jar"/>
   	</unjar>
   	
 	<!-- Toda la build al .jar -->
@@ -119,5 +119,7 @@
   	<delete dir="${libclasses.dir}"/>
   	<delete dir="report"/>
   	<delete file="jacoco.exec"/>
+  	<delete dir="Activiti-api/build"/>
+  	<delete dir="Activiti-api/bin"/>
   </target>
 </project>
