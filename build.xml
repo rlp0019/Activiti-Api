@@ -13,25 +13,27 @@
   <property name="dsecuencia.dir" value="rsc/DiagramasSecuencia"/>
   <property name="imagenes.dir" value="src/imagenes"/>
   <property name="ayuda.dir" value="src/gui/ayuda"/>
+  <property name="lib.dir" value="rsc/lib"/>
   <property name="libclasses.dir" value="libc"/>
 	
   <path id="compile.path">
-  	<pathelement location="rsc/lib/gson-2.3.1.jar"/>
-  	<pathelement location="rsc/lib/javahelp-2.0.05.jar"/>
-  	<pathelement location="rsc/lib/jcommon-1.0.23.jar"/>
-  	<pathelement location="rsc/lib/jfreechart-1.0.19.jar"/>
-  	<pathelement location="rsc/lib/org.eclipse.egit.github.core-2.1.5.jar"/>
+  	<pathelement location="${lib.dir}/gson-2.3.1.jar"/>
+  	<pathelement location="${lib.dir}/javahelp-2.0.05.jar"/>
+  	<pathelement location="${lib.dir}/jcommon-1.0.23.jar"/>
+  	<pathelement location="${lib.dir}/jfreechart-1.0.19.jar"/>
+  	<pathelement location="${lib.dir}/org.eclipse.egit.github.core-2.1.5.jar"/>
   </path>
 	
   <path id="compile.tests.path">
   	<path refid="compile.path"/>
-  	<pathelement location="rsc/lib/jacocoant.jar"/>
-  	<pathelement location="rsc/lib/junit.jar"/>
+  	<pathelement location="${lib.dir}/jacocoant.jar"/>
+  	<pathelement location="${lib.dir}/junit.jar"/>
+  	<pathelement location="${lib.dir}/hamcrest-core-1.3.jar"/>
   	<pathelement location="${build.dir}"/>
   </path>
 	
   <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
-    <classpath path="rsc/lib/jacocoant.jar"/>
+    <classpath path="${lib.dir}/jacocoant.jar"/>
   </taskdef>
 	
   <target name="inicio" description="Crea timestamp y carpetas">
@@ -94,7 +96,7 @@
 	
   <target name="distr" depends="inicio,compilar" description="Genera la distribución">
   	<unjar dest="${libclasses.dir}">
-  	  <fileset dir="rsc/lib" includes="*.jar"/>
+  	  <fileset dir="${lib.dir}" includes="*.jar"/>
   	</unjar>
   	
 	<!-- Toda la build al .jar -->
