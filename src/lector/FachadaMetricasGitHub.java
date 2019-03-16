@@ -50,7 +50,7 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 	/**
 	 * Medidas resultantes del cálculo de las metricas.
 	 */
-	ResultadoMetrica metricas;
+	private ResultadoMetrica metricas;
 
 	/**
 	 * Metricas asignadas.
@@ -540,8 +540,8 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 	/**
 	 * Devuelve los resutlados de l as metricas.
 	 * 
-	 * @return ResultadoMetrica objeto con todas las medidas resultantes del cálculo
-	 *         de métricas.
+	 * @return ResultadoMetrica objeto con todas las medidas resultantes del
+	 *         cálculo de métricas.
 	 */
 	@Override
 	public ResultadoMetrica getResultadoMetrica() {
