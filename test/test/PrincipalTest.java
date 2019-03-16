@@ -25,6 +25,7 @@ public class PrincipalTest {
 		fabricaLector = null;
 	}
 
+	@Test
 	public void testConexion() {
 		String usuario, password;
 		usuario = "pruebarlp";

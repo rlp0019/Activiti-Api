@@ -11,5 +11,6 @@
 	<classpathentry kind="lib" path="C:/Users/Kiriboo/Desktop/Mis documentos/Documentos y Uni/Uni/4to/GITHUB/Activiti-Api/rsc/lib/jfreechart-1.0.19.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Kiriboo/Desktop/Mis documentos/Documentos y Uni/Uni/4to/GITHUB/Activiti-Api/rsc/lib/junit.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Kiriboo/Desktop/Mis documentos/Documentos y Uni/Uni/4to/GITHUB/Activiti-Api/rsc/lib/org.eclipse.egit.github.core-2.1.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Kiriboo/Desktop/Mis documentos/Documentos y Uni/Uni/4to/GITHUB/Activiti-Api/rsc/lib/hamcrest-core-1.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
