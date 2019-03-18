@@ -516,7 +516,7 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 				resultadoComparacion += "</tr>";
 				break;
 			default:
-				;
+				break;
 			}
 		}
 		return resultadoComparacion;
@@ -591,6 +591,8 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 			case "IssuesPorAutor":
 				resultados[5] = Graficos.crearGraficoBarra3d((Conjunto) metricas.getMedida(i).getValue(),
 						"Issues por autor", "Autor", "Nº Issues");
+				break;
+			default:
 				break;
 			}
 		}

@@ -27,7 +27,8 @@ public class PrincipalTest {
 
 	@Test
 	public void testConexion() {
-		String usuario, password;
+		String usuario;
+		String password;
 		usuario = "pruebarlp";
 		password = "12qe34wr";
 
@@ -44,7 +45,8 @@ public class PrincipalTest {
 
 	@Test(expected = IOException.class)
 	public void testRepositorioVacio() throws IOException {
-		String usuario, password;
+		String usuario;
+		String password;
 		usuario = "pruebarlp";
 		password = "12qe34wr";
 
@@ -57,7 +59,8 @@ public class PrincipalTest {
 
 	@Test
 	public void testRepositorioGrande() {
-		String usuario, password;
+		String usuario;
+		String password;
 		usuario = "pruebarlp";
 		password = "12qe34wr";
 		FachadaConexion lector = null;
