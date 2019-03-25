@@ -186,7 +186,7 @@ public class PrincipalTest {
 					+ "\n\tweidenfreak: 4" + "\n\tthegcat: 1" + "\n\tafknapping: 1" + "\n\trkh: 1" + "\n\tbtuduri: 1"
 					+ "\n\tnuclearsandwich: 1" + "\n\tmatiaskorhonen: 4" + "\n\tmfilej: 2" + "\n\tksaa: 1"
 					+ "\n\ttimoh: 1" + "\n\tlautis: 1" + "\n\tjanika: 1" + "\n\tmyabc: 2" + "\n\tr00k: 2"
-					+ "\n\tconsti: 1" + "\n  NumeroFavoritos: 950";
+					+ "\n\tconsti: 1" + "\n  NumeroFavoritos: 959";
 
 			assertEquals(cadena, resultadoMetricas[0]);
 		} catch (IOException e) {

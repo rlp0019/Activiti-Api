@@ -93,9 +93,15 @@
   	  <html destdir="report"/>
   	  <xml destfile="report.xml"/>
   	</jacoco:report>
+  </target>
   	
+  <target name="coverage" description="Envía el coverage a Codacy.">
   	<java jar="${lib.dir}/codacy-coverage-4.0.5.jar" fork ="true" classpathref="compile.tests.path">
-  	  <!-- <arg value="report -l Java -r report.xml"/> -->
+  	  <arg value="report"/>
+  	  <arg value="-l"/>
+  	  <arg value="Java"/>
+  	  <arg value="-r"/>
+  	  <arg value="report.xml"/>
   	</java>
   </target>
 	
@@ -128,5 +134,6 @@
   	<delete file="jacoco.exec"/>
   	<delete dir="Activiti-api/build"/>
   	<delete dir="Activiti-api/bin"/>
+  	<delete file="codacy-coverage.json"/>
   </target>
 </project>

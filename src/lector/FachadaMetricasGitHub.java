@@ -89,7 +89,7 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 
 		String linea = "";
 		int nLinea = 0;
-		Medida medida;
+		Medida medida = null;
 		try {
 			linea = archivo.readLine();
 
@@ -100,57 +100,41 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 						this.numIssues = new NumeroIssues();
 						medida = new Medida(this.numIssues,
 								new Entero(Integer.parseInt(linea.substring(linea.indexOf(":") + 2))));
-						metricas.addMeasure(medida);
-						nLinea++;
 						break;
 					case 1:
 						this.contadorTareas = new ContadorTareas();
 						medida = new Medida(this.contadorTareas,
 								new Largo(Double.parseDouble(linea.substring(linea.indexOf(":") + 2))));
-						metricas.addMeasure(medida);
-						nLinea++;
 						break;
 					case 2:
 						this.numIssuesCerradas = new NumeroIssuesCerradas();
 						medida = new Medida(this.numIssuesCerradas,
 								new Entero(Integer.parseInt(linea.substring(linea.indexOf(":") + 2))));
-						metricas.addMeasure(medida);
-						nLinea++;
 						break;
 					case 3:
 						this.porcentajeIssuesCerradas = new PorcentajeIssuesCerradas();
 						medida = new Medida(this.porcentajeIssuesCerradas,
 								new Largo(Double.parseDouble(linea.substring(linea.indexOf(":") + 2))));
-						metricas.addMeasure(medida);
-						nLinea++;
 						break;
 					case 4:
 						this.mediaDiasCierre = new MediaDiasCierre();
 						medida = new Medida(this.mediaDiasCierre,
 								new Largo(Double.parseDouble(linea.substring(linea.indexOf(":") + 2))));
-						metricas.addMeasure(medida);
-						nLinea++;
 						break;
 					case 5:
 						this.numCambiosSinMensaje = new NumeroCambiosSinMensaje();
 						medida = new Medida(this.numCambiosSinMensaje,
 								new Entero(Integer.parseInt(linea.substring(linea.indexOf(":") + 2))));
-						metricas.addMeasure(medida);
-						nLinea++;
 						break;
 					case 6:
 						this.mediaDiasCambios = new MediaDiasCambio();
 						medida = new Medida(this.mediaDiasCambios,
 								new Largo(Double.parseDouble(linea.substring(linea.indexOf(":") + 2))));
-						metricas.addMeasure(medida);
-						nLinea++;
 						break;
 					case 7:
 						this.diasPrimerUltimoCommit = new DiasPrimerUltimoCommit();
 						medida = new Medida(this.diasPrimerUltimoCommit,
 								new Largo(Double.parseDouble(linea.substring(linea.indexOf(":") + 2))));
-						metricas.addMeasure(medida);
-						nLinea++;
 						break;
 					case 8:
 						this.ultimaModificacion = new UltimaModificacion();
@@ -159,11 +143,9 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 									Locale.US);
 							medida = new Medida(this.ultimaModificacion,
 									new Fecha(formatoFecha.parse(linea.substring(linea.indexOf(":") + 2))));
-							metricas.addMeasure(medida);
 						} catch (ParseException e) {
 							e.printStackTrace();
 						}
-						nLinea++;
 						break;
 					case 9:
 						this.commitXMes = new CommitPorMes();
@@ -177,28 +159,20 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 							}
 						}
 						medida = new Medida(this.commitXMes, valores);
-						metricas.addMeasure(medida);
-						nLinea++;
 						break;
 					case 10:
 						this.relacionMesPico = new RelacionMesPico();
 						medida = new Medida(this.relacionMesPico, new Cadena(linea.substring(linea.indexOf(":") + 2)));
-						metricas.addMeasure(medida);
-						nLinea++;
 						break;
 					case 11:
 						this.contadorCambiosPico = new ContadorCambiosPico();
 						medida = new Medida(this.contadorCambiosPico,
 								new Largo(Double.parseDouble(linea.substring(linea.indexOf(":") + 2))));
-						metricas.addMeasure(medida);
-						nLinea++;
 						break;
 					case 12:
 						this.ratioActividadCambio = new RatioActividadCambio();
 						medida = new Medida(this.ratioActividadCambio,
 								new Largo(Double.parseDouble(linea.substring(linea.indexOf(":") + 2))));
-						metricas.addMeasure(medida);
-						nLinea++;
 						break;
 					case 13:
 						this.commitXDia = new CommitPorDia();
@@ -212,8 +186,6 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 							}
 						}
 						medida = new Medida(this.commitXDia, valores);
-						metricas.addMeasure(medida);
-						nLinea++;
 						break;
 					case 14:
 						this.commitXAutor = new CambioPorAutor();
@@ -227,15 +199,11 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 							}
 						}
 						medida = new Medida(this.commitXAutor, valores);
-						metricas.addMeasure(medida);
-						nLinea++;
 						break;
 					case 15:
 						this.contadorAutor = new ContadorAutor();
 						medida = new Medida(this.contadorAutor,
 								new Largo(Double.parseDouble(linea.substring(linea.indexOf(":") + 2))));
-						metricas.addMeasure(medida);
-						nLinea++;
 						break;
 					case 16:
 						this.issueXAutor = new IssuesPorAutor();
@@ -249,19 +217,17 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 							}
 						}
 						medida = new Medida(this.issueXAutor, valores);
-						metricas.addMeasure(medida);
-						nLinea++;
 						break;
 					case 17:
 						this.numFavoritos = new NumeroFavoritos();
 						medida = new Medida(this.numFavoritos,
 								new Entero(Integer.parseInt(linea.substring(linea.indexOf(":") + 2))));
-						metricas.addMeasure(medida);
-						nLinea++;
 						break;
 					default:
 						break;
 					}
+					metricas.addMeasure(medida);
+					nLinea++;
 				}
 				linea = archivo.readLine();
 			}
