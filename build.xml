@@ -9,8 +9,8 @@
   <property name="build.dir" value="build/main"/>
   <property name="build.tests.dir" value="build/test"/>
   <property name="dist.dir" value="dist"/>
-  <property name="dclase.dir" value="rsc/DiagramasClase"/>
-  <property name="dsecuencia.dir" value="rsc/DiagramasSecuencia"/>
+  <property name="dclase.dir" value="rsc/diagramasclase"/>
+  <property name="dsecuencia.dir" value="rsc/diagramassecuencia"/>
   <property name="imagenes.dir" value="src/imagenes"/>
   <property name="ayuda.dir" value="src/gui/ayuda"/>
   <property name="lib.dir" value="rsc/lib"/>
