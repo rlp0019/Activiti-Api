@@ -42,12 +42,12 @@ public class FachadaConexionGitHub implements FachadaConexion {
 	private List<Issue> issues;
 
 	/**
-	 * Fachada que contiene las metricas calculadas para el repositorio.
+	 * Fachada que contiene las métricas calculadas para el repositorio.
 	 */
 	private FachadaMetricas metricas;
 
 	/**
-	 * String nombre del reposiorio del que se ha realizado el calculo de métricas.
+	 * String nombre del repositorio del que se ha realizado el calculo de métricas.
 	 */
 	private String nombreRepositorio;
 
@@ -62,17 +62,19 @@ public class FachadaConexionGitHub implements FachadaConexion {
 	private Repository repositorio;
 
 	/**
-	 * Lista de los repositorios pertenecioentes a un usuario.
+	 * Lista de los repositorios pertenecientes a un usuario.
 	 */
 	private List<Repository> repositorios;
 
 	/**
-	 * RepositoryService servicio para trabajar con los repositorios de GitHub.
+	 * Servicio para trabajar con los repositorios de GitHub.
 	 */
 	private RepositoryService servicioRepositorios;
 
 	/**
-	 * Creacion de instancia y return de la misma
+	 * Creación de instancia.
+	 * 
+	 * @return instancia de la fachada sin argumentos.
 	 */
 	public static FachadaConexionGitHub getInstance() {
 		instancia = new FachadaConexionGitHub();
@@ -81,7 +83,12 @@ public class FachadaConexionGitHub implements FachadaConexion {
 	}
 
 	/**
-	 * Creacion de instancia y return de la misma
+	 * Creación de instancia.
+	 * 
+	 * @param usuario  usuario del repositorio.
+	 * @param password contraseña del repositorio.
+	 * @return instancia de la fachada con argumentos.
+	 * @throws IOException excepción de entrada o salida.
 	 */
 	public static FachadaConexionGitHub getInstance(String usuario, String password) throws IOException {
 		instancia = new FachadaConexionGitHub(usuario, password);
@@ -90,7 +97,7 @@ public class FachadaConexionGitHub implements FachadaConexion {
 	}
 
 	/**
-	 * Constructor privado
+	 * Constructor privado.
 	 */
 	private FachadaConexionGitHub() {
 		cliente = new GitHubClient();
@@ -98,7 +105,11 @@ public class FachadaConexionGitHub implements FachadaConexion {
 	}
 
 	/**
-	 * Constructor privado
+	 * Constructor privado.
+	 * 
+	 * @param usuario  usuario del repositorio.
+	 * @param password contraseña del repositorio.
+	 * @throws IOException excepción de entrada o salida.
 	 */
 	private FachadaConexionGitHub(String usuario, String password) throws IOException {
 		cliente = new GitHubClient();
@@ -108,11 +119,12 @@ public class FachadaConexionGitHub implements FachadaConexion {
 	}
 
 	/**
-	 * Realiza la comparacion de esta conexion y sus resultados con los resultados
-	 * de otra conexion.
+	 * Realiza la comparación de esta conexión y sus resultados con los resultados
+	 * de otra conexión.
 	 * 
-	 * @param conexion2 FachadaConexion conexión con la que realizar la comparación.
-	 * @return String resultado de la comparacion(contien filas de tabla HTML).
+	 * @param comparacion FachadaConexion conexión con la que realizar la
+	 *                    comparación.
+	 * @return resultado de la comparación(contine filas de tabla HTML).
 	 */
 	@Override
 	public String comparar(FachadaConexion comparacion) {
@@ -120,9 +132,9 @@ public class FachadaConexionGitHub implements FachadaConexion {
 	}
 
 	/**
-	 * Genera un informe con los resultados obtenidos en las metricas.
+	 * Genera un informe con los resultados obtenidos en las métricas.
 	 * 
-	 * @return Char[] texto del informe.
+	 * @return texto del informe.
 	 */
 	@Override
 	public char[] generarArchivo() {
@@ -131,10 +143,9 @@ public class FachadaConexionGitHub implements FachadaConexion {
 	}
 
 	/**
-	 * Devuelve la Fachada metricas que contiene los resultados de las metricas
-	 * calculadas.
+	 * Devuelve la Fachada que contiene los resultados de las métricas calculadas.
 	 * 
-	 * @return FachadaMetricas metricas calculadas.
+	 * @return métricas calculadas.
 	 */
 	@Override
 	public FachadaMetricas getMetricas() {
@@ -145,7 +156,7 @@ public class FachadaConexionGitHub implements FachadaConexion {
 	 * Devuelve el nombre del repositorio del que se ha realizado el calculo de las
 	 * métricas.
 	 * 
-	 * @return String nombre del repositorio.
+	 * @return nombre del repositorio.
 	 */
 	@Override
 	public String getNombreRepositorio() {
@@ -156,8 +167,8 @@ public class FachadaConexionGitHub implements FachadaConexion {
 	 * Metodo que devuelve los repositorios que pertenecen al usuario indicado.
 	 * 
 	 * @param usuario String usuario del que obtner los repositorios.
-	 * @return String[] array que contien todos los respositorios de ese usuario.
-	 * @throws IOException
+	 * @return array que contiene todos los respositorios de ese usuario.
+	 * @throws IOException excepción de entrada o salida
 	 */
 	@Override
 	public String[] getNombresRepositorio(String usuario) throws IOException {
@@ -209,7 +220,7 @@ public class FachadaConexionGitHub implements FachadaConexion {
 	 * Obtiene la información de los commits para un repositorio dado.
 	 * 
 	 * @param repositorio RepositoryID repositorio del que obtener los commits.
-	 * @throws IOException
+	 * @throws IOException excepción de entrada o salida
 	 */
 	private void obtenerCommits(RepositoryId repositorio) throws IOException {
 		CommitService servicioCommits = new CommitService(this.cliente);
@@ -221,7 +232,7 @@ public class FachadaConexionGitHub implements FachadaConexion {
 	 * Obtiene la información de las issues para un repositorio dado.
 	 * 
 	 * @param repositorio RepositoryID repositorio del que obtener las issues.
-	 * @throws IOException
+	 * @throws IOException excepción de entrada o salida
 	 */
 	private void obtenerIssues(RepositoryId repositorio) throws IOException {
 		IssueService servicioIssues = new IssueService(this.cliente);
@@ -238,7 +249,7 @@ public class FachadaConexionGitHub implements FachadaConexion {
 	 * 
 	 * @param usuario     String usuario propietario del repositorio.
 	 * @param repositorio String repositorio seleccionado.
-	 * @throws IOException
+	 * @throws IOException excepción de entrada o salida
 	 */
 	@Override
 	public void obtenerMetricas(String usuario, String repositorio) throws IOException {
@@ -259,7 +270,7 @@ public class FachadaConexionGitHub implements FachadaConexion {
 	 * 
 	 * @param usuario     String Usuario al que pertenece el repositorio.
 	 * @param repositorio RepositoryID id del repositorio buscado.
-	 * @throws IOException
+	 * @throws IOException excepción de entrada o salida
 	 */
 	private void obtenerRepositorio(String usuario, RepositoryId repositorio) throws IOException {
 		this.repositorio = this.servicioRepositorios.getRepository(usuario, repositorio.getName());
@@ -269,8 +280,8 @@ public class FachadaConexionGitHub implements FachadaConexion {
 	 * Obtiene los repositorios pertenecientes a un usuario.
 	 * 
 	 * @param usuario String usuario del que buscar los repositorios.
-	 * @throws IOException
-	 * @throws IllegalArgumentException
+	 * @throws IOException              excepción de entrada o salida
+	 * @throws IllegalArgumentException excepción de parámetro erróneo
 	 */
 	private void obtenerRepositorios(String usuario) throws IOException, IllegalArgumentException {
 		this.servicioRepositorios = new RepositoryService(this.cliente);

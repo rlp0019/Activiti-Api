@@ -13,7 +13,7 @@ import motormetricas.valores.Entero;
 /**
  * Métrica NumeroCambiosSinMensaje.
  * 
- * @author David Blanco Alonso
+ * @author David Blanco Alonso.
  */
 public class NumeroCambiosSinMensaje extends Metrica {
 	/**
@@ -27,12 +27,11 @@ public class NumeroCambiosSinMensaje extends Metrica {
 	}
 
 	/**
-	 * Metodo que calcula la métrica y la guarda en el objeto ResultadoMetrica.
+	 * Método que calcula la métrica y la guarda en el objeto ResultadoMetrica.
 	 * 
-	 * @param lista        List<?> información necesaria para calcular la métrica.
-	 * @param metricResult ResultadoMetrica objeto donde guardar el resultado.
-	 * @return Valor valor obtenido en la métrica.
-	 * @throws IOException
+	 * @param lista lista con información necesaria para calcular la métrica.
+	 * @return valor obtenido en la métrica.
+	 * @throws IOException excepción de entrada o salida.
 	 */
 	@Override
 	public Valor run(List<?> lista) throws IOException {

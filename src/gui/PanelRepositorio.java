@@ -17,7 +17,7 @@ import javax.swing.JTextField;
  * Panel con los componentes para realizar la busqueda y selección de un
  * repositorio del que clacular las métricas.
  * 
- * @author David Blanco Alonso
+ * @author David Blanco Alonso.
  */
 public class PanelRepositorio extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -40,6 +40,8 @@ public class PanelRepositorio extends JPanel {
 
 	/**
 	 * Creamos el panel.
+	 * 
+	 * @param aplicacion ventana principal.
 	 */
 	public PanelRepositorio(final Principal aplicacion) {
 		setLayout(null);

@@ -18,6 +18,8 @@ public class PanelInicio extends JPanel {
 
 	/**
 	 * Creamos el panel.
+	 * 
+	 * @param aplicacion ventana principal.
 	 */
 	public PanelInicio(final Principal aplicacion) {
 		this.setLayout(null);

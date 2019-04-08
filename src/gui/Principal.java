@@ -32,7 +32,7 @@ import lector.FachadaConexion;
 /**
  * Clase principal de la interfaz.
  * 
- * @author David Blanco Alonso
+ * @author David Blanco Alonso.
  */
 public class Principal {
 	/**
@@ -114,7 +114,6 @@ public class Principal {
 	 * Metodo get para la Fabrica encargada de crear la conexion.
 	 * 
 	 * @return FabricaConexion Fabrica encargada de crear la conexion.
-	 * @author David Blanco Alonso
 	 */
 	public FabricaConexion getFabricaConexion() {
 		return fabricaConexion;
@@ -125,7 +124,6 @@ public class Principal {
 	 * 
 	 * @return FachadaConexion Fachada encargada de realizar las operaciones con la
 	 *         plataforma elegida.
-	 * @author David Blanco Alonso
 	 */
 	public FachadaConexion getConexion() {
 		return conexion;
@@ -134,7 +132,7 @@ public class Principal {
 	/**
 	 * Lanzamos la aplicación.
 	 * 
-	 * @author David Blanco Alonso
+	 * @param args nada.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -153,7 +151,6 @@ public class Principal {
 	/**
 	 * Creamos la aplicación.
 	 * 
-	 * @author David Blanco Alonso
 	 */
 	public Principal() {
 		initialize();
@@ -163,7 +160,6 @@ public class Principal {
 	/**
 	 * Inicializamos los componentes del frame.
 	 * 
-	 * @author David Blanco Alonso
 	 */
 	private void initialize() {
 		frmFormulario = new JFrame();
@@ -248,8 +244,7 @@ public class Principal {
 	/**
 	 * Boton que carga un nuevo panel en el formulario.
 	 * 
-	 * @param JPane lpanel a cargar en el formulario.
-	 * @author David Blanco Alonso
+	 * @param panel panel a cargar en el formulario.
 	 */
 	protected void cargarPanel(JPanel panel) {
 		switch (panel.getClass().getName()) {
@@ -341,8 +336,6 @@ public class Principal {
 
 	/**
 	 * Metodo para cargar el archivo de ayuda y asignarlo al boton y a la tecla f1.
-	 * 
-	 * @author David Blanco Alonso
 	 */
 	private void cargarAyuda() {
 		try {
@@ -368,8 +361,6 @@ public class Principal {
 
 	/**
 	 * Metodo para cargar un informe.
-	 * 
-	 * @author David Blanco Alonso
 	 */
 	public void cargarArchivo() {
 		try {
@@ -407,8 +398,6 @@ public class Principal {
 
 	/**
 	 * Metodo para generar un informe.
-	 * 
-	 * @author David Blanco Alonso
 	 */
 	public void guardarResultados() {
 		try {

@@ -7,7 +7,7 @@ import motormetricas.Valor;
 /**
  * Clase para controlar los tipos Date.
  * 
- * @author David Blanco Alonso
+ * @author David Blanco Alonso.
  */
 public class Fecha implements Valor {
 	/**
@@ -24,6 +24,8 @@ public class Fecha implements Valor {
 
 	/**
 	 * Constructor.
+	 * 
+	 * @param valor a asignar.
 	 */
 	public Fecha(Date valor) {
 		this.valor = valor;
@@ -32,7 +34,7 @@ public class Fecha implements Valor {
 	/**
 	 * Devuelve el valor.
 	 * 
-	 * @return Date valor.
+	 * @return valor de la fecha.
 	 */
 	public Date getValor() {
 		return valor;
@@ -41,16 +43,16 @@ public class Fecha implements Valor {
 	/**
 	 * Modifica el valor.
 	 * 
-	 * @param valor Date valor.
+	 * @param valor valor de la fecha a asignar.
 	 */
 	public void setValor(Date valor) {
 		this.valor = valor;
 	}
 
 	/**
-	 * Metodos toString.
+	 * Método toString.
 	 * 
-	 * @return String valor.
+	 * @return valor de la fecha en modo texto.
 	 */
 	@Override
 	public String toString() {

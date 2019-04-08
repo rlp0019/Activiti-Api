@@ -5,7 +5,7 @@ import java.io.IOException;
 /**
  * Fabrica abstracta encargada de generar FachadasConexionGitHub.
  * 
- * @author David Blanco Alonso
+ * @author David Blanco Alonso.
  */
 public class FabricaConexionGitHub implements FabricaConexion {
 	/**
@@ -19,7 +19,9 @@ public class FabricaConexionGitHub implements FabricaConexion {
 	private FachadaConexion fachadaConexion;
 
 	/**
-	 * Creacion de instancia y return de la misma
+	 * Creación de instancia.
+	 * 
+	 * @return instancia de la fábrica.
 	 */
 	public static FabricaConexionGitHub getInstance() {
 		if (instancia == null) {
@@ -29,7 +31,7 @@ public class FabricaConexionGitHub implements FabricaConexion {
 	}
 
 	/**
-	 * Constructor privado
+	 * Constructor privado.
 	 */
 	private FabricaConexionGitHub() {
 	}

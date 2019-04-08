@@ -16,7 +16,7 @@ import javax.swing.JTextField;
  * Panel con los componentes para realizar la conexion o seleccionar el modo
  * desconectado.
  * 
- * @author David Blanco Alonso
+ * @author David Blanco Alonso.
  */
 public class PanelConexion extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -53,6 +53,8 @@ public class PanelConexion extends JPanel {
 
 	/**
 	 * Creamos el panel.
+	 * 
+	 * @param aplicacion ventana principal.
 	 */
 	public PanelConexion(final Principal aplicacion) {
 		setLayout(null);

@@ -12,42 +12,44 @@ import motormetricas.valores.Largo;
 
 /**
  * Métrica MediaDiasCierre.
- * @author David Blanco Alonso
+ * 
+ * @author David Blanco Alonso.
  */
-public class MediaDiasCierre extends Metrica
-{
+public class MediaDiasCierre extends Metrica {
 	/**
 	 * Constructor.
 	 */
-	public MediaDiasCierre()
-	{
-		descripcion = new Descripcion("Proceso de orientacion", "MediaDiasCierre", "Muestra los días que se tarda en cerrar una issue, normalizado por el numero de issues cerradas",
-				"¿Cuanto se tarda de media en cerrar una issue?", "MDC = D (suma de los días) / NIC (numero de issues cerradas)", "MDC >= 0 mejor valores bajos",
-				"Ratio", "D contador, NIC contador", "Repositorio GitHub de un proyecto");
+	public MediaDiasCierre() {
+		descripcion = new Descripcion("Proceso de orientacion", "MediaDiasCierre",
+				"Muestra los días que se tarda en cerrar una issue, normalizado por el numero de issues cerradas",
+				"¿Cuanto se tarda de media en cerrar una issue?",
+				"MDC = D (suma de los días) / NIC (numero de issues cerradas)", "MDC >= 0 mejor valores bajos", "Ratio",
+				"D contador, NIC contador", "Repositorio GitHub de un proyecto");
 	}
-	
+
 	/**
-	 * Metodo que calcula la métrica y la guarda en el objeto ResultadoMetrica.
-	 * @param lista List<?> información necesaria para calcular la métrica.
-	 * @param metricResult ResultadoMetrica objeto donde guardar el resultado.
-	 * @return Valor valor obtenido en la métrica.
-	 * @throws IOException
+	 * Método que calcula la métrica y la guarda en el objeto ResultadoMetrica.
+	 * 
+	 * @param lista lista con información necesaria para calcular la métrica.
+	 * @return valor obtenido en la métrica.
+	 * @throws IOException excepción de entrada o salida.
 	 */
-	public Valor run(List<?> lista) throws IOException
-	{		
+	@Override
+	public Valor run(List<?> lista) throws IOException {
 		double mediaDias = 0;
 		int cerradas = 0;
-		for(Object x : lista)
-  		{
-  			if(((Issue) x).getState().equals("closed"))
- 			{
- 				cerradas++;
- 				mediaDias += (((Issue) x).getClosedAt().getTime() - ((Issue) x).getCreatedAt().getTime() )/ (1000 * 60 * 60 * 24);
- 			}
- 		}
-		if(cerradas == 0){cerradas = 1;}
+		for (Object x : lista) {
+			if (((Issue) x).getState().equals("closed")) {
+				cerradas++;
+				mediaDias += (((Issue) x).getClosedAt().getTime() - ((Issue) x).getCreatedAt().getTime())
+						/ (1000 * 60 * 60 * 24);
+			}
+		}
+		if (cerradas == 0) {
+			cerradas = 1;
+		}
 		mediaDias /= cerradas;
-		
+
 		return new Largo(mediaDias);
 	}
 }

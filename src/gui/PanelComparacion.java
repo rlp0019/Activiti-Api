@@ -64,6 +64,8 @@ public class PanelComparacion extends JPanel {
 
 	/**
 	 * Creamos el panel.
+	 * 
+	 * @param aplicacion ventana principal.
 	 */
 	public PanelComparacion(final Principal aplicacion) {
 		setLayout(null);

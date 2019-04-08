@@ -15,6 +15,7 @@
   <property name="ayuda.dir" value="src/gui/ayuda"/>
   <property name="lib.dir" value="rsc/lib"/>
   <property name="libclasses.dir" value="libc"/>
+  <property name="doc.dir" value="doc"/>
 	
   <path id="compile.path">
   	<pathelement location="${lib.dir}/gson-2.3.1.jar"/>
@@ -95,6 +96,7 @@
   	</jacoco:report>
   </target>
   	
+  <!-- Codacy Project Token: e36636d2bafc4692a76e19083868000c -->	
   <target name="coverage" description="Envía el coverage a Codacy.">
   	<java jar="${lib.dir}/codacy-coverage-4.0.5.jar" fork ="true" classpathref="compile.tests.path">
   	  <arg value="report"/>
@@ -103,6 +105,11 @@
   	  <arg value="-r"/>
   	  <arg value="report.xml"/>
   	</java>
+  </target>
+	
+  <!-- Crea la documentación -->
+  <target name="javadoc" depends="inicio" description="generate documentation">
+	<javadoc sourcepath="${src.dir}" destdir="${doc.dir}" classpathref="compile.tests.path"/>
   </target>
 	
   <target name="distr" depends="inicio,compilar" description="Genera la distribución">
@@ -135,5 +142,6 @@
   	<delete dir="Activiti-api/build"/>
   	<delete dir="Activiti-api/bin"/>
   	<delete file="codacy-coverage.json"/>
+  	<delete dir="${doc.dir}"/>
   </target>
 </project>

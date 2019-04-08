@@ -10,13 +10,15 @@ import javax.swing.text.html.StyleSheet;
 /**
  * Panel que muestra los resultados de comparar dos informes.
  * 
- * @author David Blanco Alonso
+ * @author David Blanco Alonso.
  */
 public class PanelResultadosComparacion extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Creamos el panel.
+	 * 
+	 * @param texto resultado de la comparación.
 	 */
 	public PanelResultadosComparacion(String texto) {
 		setLayout(null);

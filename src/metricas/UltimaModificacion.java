@@ -12,39 +12,38 @@ import motormetricas.valores.Fecha;
 
 /**
  * Métrica UltimaModificacion.
- * @author David Blanco Alonso
+ * 
+ * @author David Blanco Alonso.
  */
-public class UltimaModificacion extends Metrica
-{	
+public class UltimaModificacion extends Metrica {
 	/**
 	 * Constructor.
 	 */
-	public UltimaModificacion()
-	{
-		descripcion = new Descripcion("Restricciones temporales", "UltimaModificacion", "Fecha en la que se realizo el último cambio en el repositorio",
-				"¿Cuando se realizo el último cambio en el repositorio?", "UM fecha", "",
-				"Absoluta", "UM fecha", "Repositorio GitHub de un proyecto");
+	public UltimaModificacion() {
+		descripcion = new Descripcion("Restricciones temporales", "UltimaModificacion",
+				"Fecha en la que se realizo el último cambio en el repositorio",
+				"¿Cuando se realizo el último cambio en el repositorio?", "UM fecha", "", "Absoluta", "UM fecha",
+				"Repositorio GitHub de un proyecto");
 	}
-	
+
 	/**
-	 * Metodo que calcula la métrica y la guarda en el objeto ResultadoMetrica.
-	 * @param lista List<?> información necesaria para calcular la métrica.
-	 * @param metricResult ResultadoMetrica objeto donde guardar el resultado.
-	 * @return Valor valor obtenido en la métrica.
-	 * @throws IOException
+	 * Método que calcula la métrica y la guarda en el objeto ResultadoMetrica.
+	 * 
+	 * @param lista lista con información necesaria para calcular la métrica.
+	 * @return valor obtenido en la métrica.
+	 * @throws IOException excepción de entrada o salida.
 	 */
-	public Valor run(List<?> lista) throws IOException
-	{
+	@Override
+	public Valor run(List<?> lista) throws IOException {
 		Fecha valor = new Fecha(null);
-		
-		for(Object x : lista)
-		{
-			if(valor.getValor() == null || ((RepositoryCommit) x).getCommit().getAuthor().getDate().after(valor.getValor()))
-			{
+
+		for (Object x : lista) {
+			if (valor.getValor() == null
+					|| ((RepositoryCommit) x).getCommit().getAuthor().getDate().after(valor.getValor())) {
 				valor.setValor(((RepositoryCommit) x).getCommit().getAuthor().getDate());
 			}
 		}
-		
+
 		return valor;
 	}
 }

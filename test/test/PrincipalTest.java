@@ -1,8 +1,10 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -11,20 +13,40 @@ import org.junit.Test;
 import lector.FabricaConexion;
 import lector.FabricaConexionGitHub;
 import lector.FachadaConexion;
+import lector.csv.LectorCSV;
+import percentiles.CalculadoraPercentil;
 
+/**
+ * Clase con las pruebas del proyecto.
+ * 
+ * @author Roberto Luquero Peñacoba
+ *
+ */
 public class PrincipalTest {
+	/**
+	 * Fábrica del lector.
+	 */
 	private FabricaConexion fabricaLector;
 
+	/**
+	 * Inicialización de la fábrica antes de cada prueba.
+	 */
 	@Before
 	public void setUp() {
 		fabricaLector = FabricaConexionGitHub.getInstance();
 	}
 
+	/**
+	 * Eliminación de la instancia del lector después de cada prueba.
+	 */
 	@After
 	public void tearDown() {
 		fabricaLector = null;
 	}
 
+	/**
+	 * Prueba de la creación de una conexión.
+	 */
 	@Test
 	public void testConexion() {
 		String usuario;
@@ -43,6 +65,11 @@ public class PrincipalTest {
 		}
 	}
 
+	/**
+	 * Prueba del lanzamiento de excepción cuando el repositorio está vacío.
+	 * 
+	 * @throws IOException excepción de repositorio vacío
+	 */
 	@Test(expected = IOException.class)
 	public void testRepositorioVacio() throws IOException {
 		String usuario;
@@ -57,6 +84,9 @@ public class PrincipalTest {
 		lector.obtenerMetricas("pruebarlp", "ProyectoVacio");
 	}
 
+	/**
+	 * Prueba sobre un repositorio de tamaño grande.
+	 */
 	@Test
 	public void testRepositorioGrande() {
 		String usuario;
@@ -89,5 +119,45 @@ public class PrincipalTest {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * Prueba sobre el lector de archivos .csv.
+	 */
+	@Test
+	public void testLectorCSV() {
+		LectorCSV lectorCSV = LectorCSV.getInstance();
+		assertFalse(lectorCSV.equals(null));
+		assert (lectorCSV.getValores() instanceof List);
+		lectorCSV = null;
+	}
+
+	/**
+	 * Prueba de los valores de los cuartiles.
+	 */
+	@Test
+	public void testQuartiles() {
+		LectorCSV lectorCSV = LectorCSV.getInstance();
+		CalculadoraPercentil calc = new CalculadoraPercentil();
+		calc.calculaCuartiles(lectorCSV.getValores());
+
+		assertEquals(calc.getQ1TotalIssues(), Double.valueOf(6.0));
+		assertEquals(calc.getQ1IssuesPorCommit(), Double.valueOf(0.09));
+		assertEquals(calc.getQ1PorcentajeIssuesCerrados(), Double.valueOf(88.5));
+		assertEquals(calc.getQ1DiasPorIssue(), Double.valueOf(2.2199999999999998));
+		assertEquals(calc.getQ1DiasEntreCommit(), Double.valueOf(1.0750000000000002));
+		assertEquals(calc.getQ1TotalDias(), Double.valueOf(81.58000000000001));
+		assertEquals(calc.getQ1CambioPico(), Double.valueOf(0.385));
+		assertEquals(calc.getQ1ActividadPorMes(), Double.valueOf(6.0));
+
+		assertEquals(calc.getQ3TotalIssues(), Double.valueOf(48.5));
+		assertEquals(calc.getQ3IssuesPorCommit(), Double.valueOf(0.5900000000000001));
+		assertEquals(calc.getQ3PorcentajeIssuesCerrados(), Double.valueOf(100.0));
+		assertEquals(calc.getQ3DiasPorIssue(), Double.valueOf(20.66));
+		assertEquals(calc.getQ3DiasEntreCommit(), Double.valueOf(4.77));
+		assertEquals(calc.getQ3TotalDias(), Double.valueOf(201.54000000000002));
+		assertEquals(calc.getQ3CambioPico(), Double.valueOf(0.64));
+		assertEquals(calc.getQ3ActividadPorMes(), Double.valueOf(27.335));
+
 	}
 }

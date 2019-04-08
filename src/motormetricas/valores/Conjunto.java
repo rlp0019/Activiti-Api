@@ -8,7 +8,7 @@ import motormetricas.Valor;
 /**
  * Clase para controlar los tipos Map.
  * 
- * @author David Blanco Alonso
+ * @author David Blanco Alonso.
  */
 public class Conjunto implements Valor {
 	/**
@@ -25,6 +25,9 @@ public class Conjunto implements Valor {
 
 	/**
 	 * Constructor.
+	 * 
+	 * @param key   clave del conjunto a asignar.
+	 * @param valor valor del conjunto a asignar.
 	 */
 	public Conjunto(String key, Entero valor) {
 		conjunto.put(key, valor);
@@ -33,17 +36,17 @@ public class Conjunto implements Valor {
 	/**
 	 * Devuelve el valor.
 	 * 
-	 * @return Map<String,Entero> valor.
+	 * @return el conjunto.
 	 */
 	public Map<String, Entero> getValor() {
 		return conjunto;
 	}
 
 	/**
-	 * Obtiene un valor para un identificador.
+	 * Obtiene un valor para una clave.
 	 * 
-	 * @param key String identificador.
-	 * @return Entero valor.
+	 * @param key clave del conjunto.
+	 * @return valor del conjunto.
 	 */
 	public Entero getValor(String key) {
 		return conjunto.get(key);
@@ -52,17 +55,17 @@ public class Conjunto implements Valor {
 	/**
 	 * Modifica el valor.
 	 * 
-	 * @param key   String identifcador.
-	 * @param valor Entero valor.
+	 * @param key   clave del conjunto.
+	 * @param valor valor del conjunto.
 	 */
 	public void setValor(String key, Entero valor) {
 		this.conjunto.put(key, valor);
 	}
 
 	/**
-	 * Metodos toString.
+	 * Método toString.
 	 * 
-	 * @return String valor.
+	 * @return valor del conjunto en modo texto.
 	 */
 	@Override
 	public String toString() {

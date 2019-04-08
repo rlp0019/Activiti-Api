@@ -5,7 +5,7 @@ import motormetricas.Valor;
 /**
  * Calse para manejar los tipos de valores String.
  * 
- * @author David Blanco Alonso
+ * @author David Blanco Alonso.
  */
 public class Cadena implements Valor {
 	/**
@@ -22,6 +22,8 @@ public class Cadena implements Valor {
 
 	/**
 	 * Constructor.
+	 * 
+	 * @param valor valor de la cadena.
 	 */
 	public Cadena(String valor) {
 		this.valor = valor;
@@ -30,7 +32,7 @@ public class Cadena implements Valor {
 	/**
 	 * Devuelve el valor.
 	 * 
-	 * @return String valor.
+	 * @return valor de la cadena.
 	 */
 	public String getValor() {
 		return valor;
@@ -39,16 +41,16 @@ public class Cadena implements Valor {
 	/**
 	 * Modifica el valor.
 	 * 
-	 * @param valor String valor.
+	 * @param valor valor a asignar.
 	 */
 	public void setValor(String valor) {
 		this.valor = valor;
 	}
 
 	/**
-	 * Metodos toString.
+	 * Método toString.
 	 * 
-	 * @return String valor.
+	 * @return valor de la cadena.
 	 */
 	@Override
 	public String toString() {

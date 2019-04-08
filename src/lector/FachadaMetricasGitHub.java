@@ -242,9 +242,9 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 	 * Constructor desde información obtenida de GitHub.
 	 * 
 	 * @param repositorio Repository información del repositorio
-	 * @param issues      List<issues> información de las issues.
-	 * @param commits     List<RepositoryCommit> información de los commits.
-	 * @throws IOException
+	 * @param issues      lista con información de las issues.
+	 * @param commits     lista con información de los commits.
+	 * @throws IOException excepción de entrada o salida
 	 */
 	public FachadaMetricasGitHub(Repository repositorio, List<Issue> issues, List<RepositoryCommit> commits)
 			throws IOException {
@@ -506,8 +506,8 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 	/**
 	 * Devuelve los resutlados de l as metricas.
 	 * 
-	 * @return ResultadoMetrica objeto con todas las medidas resultantes del
-	 *         cálculo de métricas.
+	 * @return ResultadoMetrica objeto con todas las medidas resultantes del cálculo
+	 *         de métricas.
 	 */
 	@Override
 	public ResultadoMetrica getResultadoMetrica() {

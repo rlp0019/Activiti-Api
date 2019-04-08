@@ -8,7 +8,7 @@ package motormetricas;
  */
 public class Descripcion {
 	/**
-	 * Categoria de la métrica.
+	 * Categoría de la métrica.
 	 */
 	private String categoria;
 
@@ -18,7 +18,7 @@ public class Descripcion {
 	private String descripcion;
 
 	/**
-	 * Formula de la métrica.
+	 * Fórmula de la métrica.
 	 */
 	private String formula;
 
@@ -38,7 +38,7 @@ public class Descripcion {
 	private String nombre;
 
 	/**
-	 * Proposito de la métrica.
+	 * Propósito de la métrica.
 	 */
 	private String proposito;
 
@@ -55,15 +55,15 @@ public class Descripcion {
 	/**
 	 * Constructor.
 	 * 
-	 * @param categoria
-	 * @param nombre
-	 * @param descripcion
-	 * @param proposito
-	 * @param formula
-	 * @param interpretacion
-	 * @param tipoEscala
-	 * @param tipoMedida
-	 * @param fuenteDeMedicion
+	 * @param categoria        categoría de la métrica.
+	 * @param nombre           nombre de la métrica.
+	 * @param descripcion      descripción de la métrica.
+	 * @param proposito        porpósito de la métrica.
+	 * @param formula          fórmula de la métrica.
+	 * @param interpretacion   interpretación de la métrica.
+	 * @param tipoEscala       tipo de escala de la métrica.
+	 * @param tipoMedida       tipo de medida de la métrica.
+	 * @param fuenteDeMedicion fuente de medición de la métrica.
 	 */
 	public Descripcion(String categoria, String nombre, String descripcion, String proposito, String formula,
 			String interpretacion, String tipoEscala, String tipoMedida, String fuenteDeMedicion) {
@@ -79,81 +79,81 @@ public class Descripcion {
 	}
 
 	/**
-	 * Devuelve la categoria de la métrica..
+	 * Devuelve la categoria de la métrica.
 	 * 
-	 * @return String categoria.
+	 * @return categoria de la métrica.
 	 */
 	public String getCategoria() {
 		return categoria;
 	}
 
 	/**
-	 * Devuelve la descripción de la métrica..
+	 * Devuelve la descripción de la métrica.
 	 * 
-	 * @return String descripción.
+	 * @return descripción de la métrica.
 	 */
 	public String getDescripcion() {
 		return descripcion;
 	}
 
 	/**
-	 * Devuelve la formula de la métrica..
+	 * Devuelve la fórmula de la métrica.
 	 * 
-	 * @return String formula.
+	 * @return fórmula de la métrica.
 	 */
 	public String getFormula() {
 		return formula;
 	}
 
 	/**
-	 * Devuelve la fuente de medición de la métrica..
+	 * Devuelve la fuente de medición de la métrica.
 	 * 
-	 * @return String fuente de medición.
+	 * @return fuente de medición de la métrica.
 	 */
 	public String getFuenteDeMedicion() {
 		return fuenteDeMedicion;
 	}
 
 	/**
-	 * Devuelve la interpretación de la métrica..
+	 * Devuelve la interpretación de la métrica.
 	 * 
-	 * @return String interpretación.
+	 * @return interpretación de la métrica.
 	 */
 	public String getInterpretacion() {
 		return interpretacion;
 	}
 
 	/**
-	 * Devuelve el nombre de la métrica..
+	 * Devuelve el nombre de la métrica.
 	 * 
-	 * @return String nombre.
+	 * @return nombre de la métrica.
 	 */
 	public String getNombre() {
 		return nombre;
 	}
 
 	/**
-	 * Devuelve el proposito de la métrica..
+	 * Devuelve el propósito de la métrica.
 	 * 
-	 * @return String proposito.
+	 * @return propósito de la métrica.
 	 */
 	public String getProposito() {
 		return proposito;
 	}
 
 	/**
-	 * Devuelve el tipo de escala de la métrica..
+	 * Devuelve el tipo de escala de la métrica.
 	 * 
-	 * @return String tipo de escala.
+	 * @return tipo de escala de la métrica.
 	 */
 	public String getTipoEscala() {
 		return tipoEscala;
 	}
 
 	/**
-	 * Devuelve el tipo de medida de la métrica..
+	 * Devuelve el tipo de medida de la métrica.
 	 * 
-	 * @return String tipo de medida.
+	 * @return tipo de medida de la métrica.
 	 */
 	public String getTipoMedida() {
 		return tipoMedida;

@@ -5,7 +5,7 @@ import motormetricas.Valor;
 /**
  * Clase para controlar los tipos enteros.
  * 
- * @author David Blanco Alonso
+ * @author David Blanco Alonso.
  */
 public class Entero implements Valor {
 	/**
@@ -22,6 +22,8 @@ public class Entero implements Valor {
 
 	/**
 	 * Constructor.
+	 * 
+	 * @param valor a asignar.
 	 */
 	public Entero(int valor) {
 		this.valor = valor;
@@ -30,7 +32,7 @@ public class Entero implements Valor {
 	/**
 	 * Devuelve el valor.
 	 * 
-	 * @return int valor.
+	 * @return valor del entero.
 	 */
 	public int getValor() {
 		return valor;
@@ -39,16 +41,16 @@ public class Entero implements Valor {
 	/**
 	 * Modifica el valor.
 	 * 
-	 * @param valor int valor.
+	 * @param valor a asignar.
 	 */
 	public void setValor(int valor) {
 		this.valor = valor;
 	}
 
 	/**
-	 * Metodos toString.
+	 * Método toString.
 	 * 
-	 * @return String valor.
+	 * @return valor del entero en modo texto.
 	 */
 	@Override
 	public String toString() {

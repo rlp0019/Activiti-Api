@@ -5,7 +5,7 @@ import motormetricas.Valor;
 /**
  * Calse para controlar los tipos double.
  * 
- * @author David Blanco Alonso
+ * @author David Blanco Alonso.
  */
 public class Largo implements Valor {
 	/**
@@ -22,6 +22,8 @@ public class Largo implements Valor {
 
 	/**
 	 * Constructor.
+	 * 
+	 * @param valor valor a asignar.
 	 */
 	public Largo(double valor) {
 		this.valor = valor;
@@ -30,7 +32,7 @@ public class Largo implements Valor {
 	/**
 	 * Devuelve el valor.
 	 * 
-	 * @return Double valor.
+	 * @return valor del double.
 	 */
 	public double getValor() {
 		return valor;
@@ -39,16 +41,16 @@ public class Largo implements Valor {
 	/**
 	 * Modifica el valor.
 	 * 
-	 * @param valor double valor.
+	 * @param valor valor del double a asignar.
 	 */
 	public void setValor(double valor) {
 		this.valor = valor;
 	}
 
 	/**
-	 * Metodos toString.
+	 * Método toString.
 	 * 
-	 * @return String valor.
+	 * @return valor del double en modo texto.
 	 */
 	@Override
 	public String toString() {

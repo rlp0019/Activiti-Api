@@ -11,13 +11,15 @@ import org.jfree.chart.ChartPanel;
  * Panel que muestra los resultados del cálculo de las metricas de un
  * repositorio.
  * 
- * @author David Blanco Alonso
+ * @author David Blanco Alonso.
  */
 public class PanelResultados extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Creamos el panel.
+	 * 
+	 * @param aplicacion ventana principal.
 	 */
 	public PanelResultados(final Principal aplicacion) {
 		setLayout(null);

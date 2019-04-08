@@ -18,18 +18,18 @@ import motormetricas.valores.Entero;
  */
 public abstract class Metrica implements IMetric {
 	/**
-	 * Descripcion de la métrica.
+	 * Descripción de la métrica.
 	 */
 	protected Descripcion descripcion;
 
 	/**
 	 * Metodo que calcula la métrica y la guarda en el objeto ResultadoMetrica.
 	 * 
-	 * @param lista        lista2 List<?> información necesaria para calcular la
-	 *                     métrica.
+	 * @param lista        lista con información necesaria para calcular la métrica.
+	 * @param lista2       lista con información necesaria para calcular la métrica.
 	 * @param metricResult ResultadoMetrica objeto donde guardar el resultado.
-	 * @return Valor valor obtenido en la métrica.
-	 * @throws IOException
+	 * @return valor obtenido en la métrica.
+	 * @throws IOException excepción de entrada o salida.
 	 */
 	@Override
 	public Valor calculate(List<?> lista, List<?> lista2, ResultadoMetrica metricResult) throws IOException {
@@ -42,10 +42,10 @@ public abstract class Metrica implements IMetric {
 	/**
 	 * Metodo que calcula la métrica y la guarda en el objeto ResultadoMetrica.
 	 * 
-	 * @param lista        List<?> información necesaria para calcular la métrica.
+	 * @param lista        lista con información necesaria para calcular la métrica.
 	 * @param metricResult ResultadoMetrica objeto donde guardar el resultado.
-	 * @return Valor valor obtenido en la métrica.
-	 * @throws IOException
+	 * @return valor obtenido en la métrica.
+	 * @throws IOException excepción de entrada o salida.
 	 */
 	@Override
 	public Valor calculate(List<?> lista, ResultadoMetrica metricResult) throws IOException {
@@ -56,13 +56,13 @@ public abstract class Metrica implements IMetric {
 	}
 
 	/**
-	 * Metodo que calcula la métrica y la guarda en el objeto ResultadoMetrica.
+	 * Método que calcula la métrica y la guarda en el objeto metricResult.
 	 * 
-	 * @param dato         Repository información necesaria para calcular la
+	 * @param dato         repositorio con información necesaria para calcular la
 	 *                     métrica.
-	 * @param metricResult ResultadoMetrica objeto donde guardar el resultado.
-	 * @return Valor valor obtenido en la métrica.
-	 * @throws IOException
+	 * @param metricResult objeto donde guardar el resultado.
+	 * @return valor obtenido en la métrica.
+	 * @throws IOException excepción de entrada o salida.
 	 */
 	@Override
 	public Valor calculate(Repository dato, ResultadoMetrica metricResult) throws IOException {
@@ -73,18 +73,18 @@ public abstract class Metrica implements IMetric {
 	}
 
 	/**
-	 * devulve la descripción de la métrica.
+	 * Devulve la descripción de la métrica.
 	 * 
-	 * @return Descripcion descripción de la métrica.
+	 * @return descripción de la métrica.
 	 */
 	public Descripcion getDescripcion() {
 		return descripcion;
 	}
 
 	/**
-	 * Obtiene el número de cambion por mes.
+	 * Obtiene el número de cambios por mes.
 	 * 
-	 * @param lista List<?> información necesaria, en este caso List<commits>.
+	 * @param lista lista con información necesaria, en este caso los commits.
 	 * @return Conjunto valores obtenidos.
 	 */
 	protected Conjunto obtenerCambiosXMesGitHub(List<?> lista) {
@@ -109,10 +109,10 @@ public abstract class Metrica implements IMetric {
 	}
 
 	/**
-	 * Obtiene el numero de issues cerradas en GitHub.
+	 * Obtiene el número de issues cerradas en GitHub.
 	 * 
-	 * @param lista List<?> información necesaria, en este caso List<issues>.
-	 * @return Entero valor obtenido.
+	 * @param lista lista con información necesaria, en este caso los issues.
+	 * @return valor obtenido.
 	 */
 	protected Entero obternerIssuesCerradasGitHub(List<?> lista) {
 		Entero entero = new Entero(0);
@@ -127,22 +127,23 @@ public abstract class Metrica implements IMetric {
 	}
 
 	/**
-	 * Calcula el valor de la metrica
+	 * Calcula el valor de la métrica.
 	 * 
-	 * @param lista List<?> información necesaria para calcular la métrica.
-	 * @return Valor valor obtenido en la métrica.
-	 * @throws IOException
+	 * @param lista lista con información necesaria para calcular la métrica.
+	 * @return valor obtenido en la métrica.
+	 * @throws IOException excepción de entrada o salida.
 	 */
 	public Valor run(List<?> lista) throws IOException {
 		return null;
 	}
 
 	/**
-	 * Calcula el valor de la metrica
+	 * Calcula el valor de la métrica.
 	 * 
-	 * @param lista lista2 List<?> información necesaria para calcular la métrica.
-	 * @return Valor valor obtenido en la métrica.
-	 * @throws IOException
+	 * @param lista  lista con información necesaria para calcular la métrica.
+	 * @param lista2 lista con información necesaria para calcular la métrica.
+	 * @return valor obtenido en la métrica.
+	 * @throws IOException excepción de entrada o salida.
 	 */
 	public Valor run(List<?> lista, List<?> lista2) throws IOException {
 		return null;
@@ -152,8 +153,8 @@ public abstract class Metrica implements IMetric {
 	 * Calcula el valor de la metrica
 	 * 
 	 * @param dato Repository información necesaria para calcular la métrica.
-	 * @return Valor valor obtenido en la métrica.
-	 * @throws IOException
+	 * @return valor obtenido en la métrica.
+	 * @throws IOException excepción de entrada o salida.
 	 */
 	public Valor run(Repository dato) throws IOException {
 		return null;
