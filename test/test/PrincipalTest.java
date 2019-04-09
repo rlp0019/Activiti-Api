@@ -15,6 +15,8 @@ import lector.FabricaConexion;
 import lector.FabricaConexionGitHub;
 import lector.FachadaConexion;
 import lector.csv.LectorCSV;
+import motormetricas.csv.ManagerCSV;
+import motormetricas.csv.SeparadorMetricas;
 import percentiles.CalculadoraPercentil;
 
 /**
@@ -57,9 +59,7 @@ public class PrincipalTest {
 
 		try {
 			FachadaConexion lector = fabricaLector.crearFachadaConexion(usuario, password);
-
 			String[] repositorios = lector.getNombresRepositorio("pruebarlp");
-
 			assertEquals(repositorios.length, 1);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -79,9 +79,7 @@ public class PrincipalTest {
 		password = "12qe34wr";
 
 		FachadaConexion lector = fabricaLector.crearFachadaConexion(usuario, password);
-
 		lector.getNombresRepositorio("pruebarlp");
-
 		lector.obtenerMetricas("pruebarlp", "ProyectoVacio");
 	}
 
@@ -98,9 +96,7 @@ public class PrincipalTest {
 
 		try {
 			lector = fabricaLector.crearFachadaConexion(usuario, password);
-
 			lector.getNombresRepositorio("dba0010");
-
 			lector.obtenerMetricas("dba0010", "Activiti-Api");
 			Object[] resultadoMetricas = lector.getResultados();
 			String cadena = "Metricas:" + "\n  NumeroIssues: 24" + "\n  ContadorTareas: 0,53"
@@ -130,7 +126,6 @@ public class PrincipalTest {
 		Path path = Paths.get("rsc/datoscsv/DataSet_EvolutionSoftwareMetrics_FYP.csv");
 		LectorCSV lectorCSV = new LectorCSV(path);
 		assert (lectorCSV.getValores() instanceof List);
-		lectorCSV = null;
 	}
 
 	/**
@@ -160,6 +155,74 @@ public class PrincipalTest {
 		assertEquals(calc.getQ3TotalDias(), Double.valueOf(199.96));
 		assertEquals(calc.getQ3CambioPico(), Double.valueOf(0.63));
 		assertEquals(calc.getQ3ActividadPorMes(), Double.valueOf(27.0));
+	}
 
+	/**
+	 * Prueba del separador de los resultados de las métricas.
+	 */
+	@Test
+	public void testSeparadorMetricasCSV() {
+		Path path = Paths.get("rsc/datoscsv/DataSet_EvolutionSoftwareMetrics_FYP.csv");
+		LectorCSV lectorCSV = new LectorCSV(path);
+		CalculadoraPercentil calc = new CalculadoraPercentil();
+		calc.calculaCuartiles(lectorCSV.getValores());
+
+		String usuario;
+		String password;
+		usuario = "pruebarlp";
+		password = "12qe34wr";
+		FachadaConexion lector = null;
+
+		try {
+			lector = fabricaLector.crearFachadaConexion(usuario, password);
+			lector.getNombresRepositorio("dba0010");
+			lector.obtenerMetricas("dba0010", "Activiti-Api");
+
+			SeparadorMetricas separador = new SeparadorMetricas(lector.getResultados()[0]);
+
+			assertEquals(separador.getTotalIssues(), 24.0, 0);
+			assertEquals(separador.getIssuesPorCommit(), 0.53, 0);
+			assertEquals(separador.getPorcentajeCerrados(), 100.0, 0);
+			assertEquals(separador.getMediaDiasCierre(), 91.17, 0);
+			assertEquals(separador.getMediaDiasEntreCommit(), 5.41, 0);
+			assertEquals(separador.getTotalDias(), 243.29, 0);
+			assertEquals(separador.getCambioPico(), 0.40, 0);
+			assertEquals(separador.getActividadCambio(), 5.62, 0);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Prueba de la comparación entre un repositorio y los de la base de datos.
+	 */
+	@Test
+	public void testManagerCSV() {
+		Path path = Paths.get("rsc/datoscsv/DataSet_EvolutionSoftwareMetrics_FYP.csv");
+		ManagerCSV manager;
+		String usuario;
+		String password;
+		usuario = "pruebarlp";
+		password = "12qe34wr";
+		FachadaConexion lector = null;
+
+		try {
+			lector = fabricaLector.crearFachadaConexion(usuario, password);
+			lector.getNombresRepositorio("dba0010");
+			lector.obtenerMetricas("dba0010", "Activiti-Api");
+
+			manager = new ManagerCSV(path, lector.getResultados()[0]);
+
+			assertEquals(manager.comparaTotalIssues(), 0);
+			assertEquals(manager.comparaIssuesPorCommit(), 1);
+			assertEquals(manager.comparaPorcentajeCerrados(), 1);
+			assertEquals(manager.comparaMediaDiasCierre(), -1);
+			assertEquals(manager.comparaMediaDiasEntreCommit(), -1);
+			assertEquals(manager.comparaTotalDias(), 1);
+			assertEquals(manager.comparaCambioPico(), 1);
+			assertEquals(manager.comparaActividadCambio(), -1);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
