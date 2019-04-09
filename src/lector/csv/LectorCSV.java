@@ -3,7 +3,7 @@ package lector.csv;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,11 +15,6 @@ import java.util.List;
  */
 public final class LectorCSV {
 	/**
-	 * Instancia del lector.
-	 */
-	private static LectorCSV instancia;
-
-	/**
 	 * Datos del .csv.
 	 */
 	private List<String> valores;
@@ -27,12 +22,11 @@ public final class LectorCSV {
 	/**
 	 * Constructor del lector de .csv.
 	 */
-	private LectorCSV() {
+	public LectorCSV(Path path) {
 		BufferedReader br = null;
 		valores = new ArrayList<String>();
 		try {
-			br = new BufferedReader(
-					Files.newBufferedReader(Paths.get("rsc/datoscsv/DataSet_EvolutionSoftwareMetrics_FYP.csv")));
+			br = new BufferedReader(Files.newBufferedReader(path));
 
 			String fila;
 			while ((fila = br.readLine()) != null) {
@@ -50,18 +44,6 @@ public final class LectorCSV {
 				}
 			}
 		}
-	}
-
-	/**
-	 * Singleton para obtener la instancia del lector.
-	 * 
-	 * @return instancia del lector.
-	 */
-	public static LectorCSV getInstance() {
-		if (instancia == null) {
-			instancia = new LectorCSV();
-		}
-		return instancia;
 	}
 
 	/**

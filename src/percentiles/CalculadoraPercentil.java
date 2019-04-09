@@ -1,8 +1,9 @@
 package percentiles;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+
+import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
 /**
  * Clase de la calculadora de los cuartiles.
@@ -109,9 +110,6 @@ public class CalculadoraPercentil {
 		reparteDatos(datos, totalIssues, issuesPorCommit, porcentajeIssuesCerrados, diasPorIssue, diasEntreCommit,
 				totalDias, cambioPico, actividadPorMes);
 
-		ordenaListas(totalIssues, issuesPorCommit, porcentajeIssuesCerrados, diasPorIssue, diasEntreCommit, totalDias,
-				cambioPico, actividadPorMes);
-
 		asignaCuartiles(totalIssues, issuesPorCommit, porcentajeIssuesCerrados, diasPorIssue, diasEntreCommit,
 				totalDias, cambioPico, actividadPorMes);
 	}
@@ -167,33 +165,6 @@ public class CalculadoraPercentil {
 	}
 
 	/**
-	 * Ordena las listas de menor a mayor.
-	 * 
-	 * @param totalIssues              lista a rellenar con el total de issues.
-	 * @param issuesPorCommit          lista a rellenar con los issues por commit.
-	 * @param porcentajeIssuesCerrados lista a rellenar con el porcentaje de issues
-	 *                                 cerrados.
-	 * @param diasPorIssue             lista a rellenar con los dias por issue.
-	 * @param diasEntreCommit          lista a rellenar con los dias entre commit.
-	 * @param totalDias                lista a rellenar con el total de dias.
-	 * @param cambioPico               lista a rellenar con el cambio pico máximo.
-	 * @param actividadPorMes          lista a rellenar con la actividad máxima por
-	 *                                 mes.
-	 */
-	private void ordenaListas(List<Double> totalIssues, List<Double> issuesPorCommit,
-			List<Double> porcentajeIssuesCerrados, List<Double> diasPorIssue, List<Double> diasEntreCommit,
-			List<Double> totalDias, List<Double> cambioPico, List<Double> actividadPorMes) {
-		Collections.sort(totalIssues);
-		Collections.sort(issuesPorCommit);
-		Collections.sort(porcentajeIssuesCerrados);
-		Collections.sort(diasPorIssue);
-		Collections.sort(diasEntreCommit);
-		Collections.sort(totalDias);
-		Collections.sort(cambioPico);
-		Collections.sort(actividadPorMes);
-	}
-
-	/**
 	 * Asigna el valor a cada cuartil.
 	 * 
 	 * @param totalIssues              lista a rellenar con el total de issues.
@@ -236,18 +207,13 @@ public class CalculadoraPercentil {
 	 * @return valor del percentil.
 	 */
 	private Double calculaPercentil(List<Double> lista, double percentil) {
-		Double valor = 0.0;
+		DescriptiveStatistics estadisticas = new DescriptiveStatistics();
 
-		int entero = (int) ((percentil * lista.size()) / 100);
-		double decimal = ((percentil * lista.size()) / 100) - entero;
-
-		if (decimal == 0.0) {
-			valor = lista.get(entero + 1);
-		} else {
-			valor = (lista.get(entero) + lista.get(entero + 1)) / 2.0;
+		for (Double val : lista) {
+			estadisticas.addValue(val);
 		}
 
-		return valor;
+		return estadisticas.getPercentile(percentil);
 	}
 
 	/**

@@ -1,9 +1,10 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.junit.After;
@@ -126,8 +127,8 @@ public class PrincipalTest {
 	 */
 	@Test
 	public void testLectorCSV() {
-		LectorCSV lectorCSV = LectorCSV.getInstance();
-		assertFalse(lectorCSV.equals(null));
+		Path path = Paths.get("rsc/datoscsv/DataSet_EvolutionSoftwareMetrics_FYP.csv");
+		LectorCSV lectorCSV = new LectorCSV(path);
 		assert (lectorCSV.getValores() instanceof List);
 		lectorCSV = null;
 	}
@@ -137,27 +138,28 @@ public class PrincipalTest {
 	 */
 	@Test
 	public void testQuartiles() {
-		LectorCSV lectorCSV = LectorCSV.getInstance();
+		Path path = Paths.get("rsc/datoscsv/DataSet_EvolutionSoftwareMetrics_FYP.csv");
+		LectorCSV lectorCSV = new LectorCSV(path);
 		CalculadoraPercentil calc = new CalculadoraPercentil();
 		calc.calculaCuartiles(lectorCSV.getValores());
 
-		assertEquals(calc.getQ1TotalIssues(), Double.valueOf(6.0));
-		assertEquals(calc.getQ1IssuesPorCommit(), Double.valueOf(0.09));
-		assertEquals(calc.getQ1PorcentajeIssuesCerrados(), Double.valueOf(88.5));
-		assertEquals(calc.getQ1DiasPorIssue(), Double.valueOf(2.2199999999999998));
-		assertEquals(calc.getQ1DiasEntreCommit(), Double.valueOf(1.0750000000000002));
-		assertEquals(calc.getQ1TotalDias(), Double.valueOf(81.58000000000001));
-		assertEquals(calc.getQ1CambioPico(), Double.valueOf(0.385));
+		assertEquals(calc.getQ1TotalIssues(), Double.valueOf(4.5));
+		assertEquals(calc.getQ1IssuesPorCommit(), Double.valueOf(0.08));
+		assertEquals(calc.getQ1PorcentajeIssuesCerrados(), Double.valueOf(85.0));
+		assertEquals(calc.getQ1DiasPorIssue(), Double.valueOf(2.0));
+		assertEquals(calc.getQ1DiasEntreCommit(), Double.valueOf(1.07));
+		assertEquals(calc.getQ1TotalDias(), Double.valueOf(79.98));
+		assertEquals(calc.getQ1CambioPico(), Double.valueOf(0.38));
 		assertEquals(calc.getQ1ActividadPorMes(), Double.valueOf(6.0));
 
 		assertEquals(calc.getQ3TotalIssues(), Double.valueOf(48.5));
 		assertEquals(calc.getQ3IssuesPorCommit(), Double.valueOf(0.5900000000000001));
 		assertEquals(calc.getQ3PorcentajeIssuesCerrados(), Double.valueOf(100.0));
-		assertEquals(calc.getQ3DiasPorIssue(), Double.valueOf(20.66));
-		assertEquals(calc.getQ3DiasEntreCommit(), Double.valueOf(4.77));
-		assertEquals(calc.getQ3TotalDias(), Double.valueOf(201.54000000000002));
-		assertEquals(calc.getQ3CambioPico(), Double.valueOf(0.64));
-		assertEquals(calc.getQ3ActividadPorMes(), Double.valueOf(27.335));
+		assertEquals(calc.getQ3DiasPorIssue(), Double.valueOf(20.32));
+		assertEquals(calc.getQ3DiasEntreCommit(), Double.valueOf(4.68));
+		assertEquals(calc.getQ3TotalDias(), Double.valueOf(199.96));
+		assertEquals(calc.getQ3CambioPico(), Double.valueOf(0.63));
+		assertEquals(calc.getQ3ActividadPorMes(), Double.valueOf(27.0));
 
 	}
 }
