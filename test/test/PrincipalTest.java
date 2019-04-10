@@ -1,6 +1,7 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -60,7 +61,7 @@ public class PrincipalTest {
 		try {
 			FachadaConexion lector = fabricaLector.crearFachadaConexion(usuario, password);
 			String[] repositorios = lector.getNombresRepositorio("pruebarlp");
-			assertEquals(repositorios.length, 1);
+			assertEquals("Comprobación de que únicamente existe un repositorio.", repositorios.length, 1);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -112,7 +113,8 @@ public class PrincipalTest {
 					+ "\n  ContadorAutor: 0,04" + "\n  IssuesPorAutor: " + "\n\tdba0010: 21" + "\n\tclopezno: 3"
 					+ "\n  NumeroFavoritos: 1";
 
-			assertEquals(cadena, resultadoMetricas[0]);
+			assertEquals("Comparación de los resultados de las métricas del repositorio.", cadena,
+					resultadoMetricas[0]);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -125,7 +127,7 @@ public class PrincipalTest {
 	public void testLectorCSV() {
 		Path path = Paths.get("rsc/datoscsv/DataSet_EvolutionSoftwareMetrics_FYP.csv");
 		LectorCSV lectorCSV = new LectorCSV(path);
-		assert (lectorCSV.getValores() instanceof List);
+		assertTrue(lectorCSV.getValores() instanceof List);
 	}
 
 	/**
@@ -138,23 +140,45 @@ public class PrincipalTest {
 		CalculadoraPercentil calc = new CalculadoraPercentil();
 		calc.calculaCuartiles(lectorCSV.getValores());
 
-		assertEquals(calc.getQ1TotalIssues(), Double.valueOf(4.5));
-		assertEquals(calc.getQ1IssuesPorCommit(), Double.valueOf(0.08));
-		assertEquals(calc.getQ1PorcentajeIssuesCerrados(), Double.valueOf(85.0));
-		assertEquals(calc.getQ1DiasPorIssue(), Double.valueOf(2.0));
-		assertEquals(calc.getQ1DiasEntreCommit(), Double.valueOf(1.07));
-		assertEquals(calc.getQ1TotalDias(), Double.valueOf(79.98));
-		assertEquals(calc.getQ1CambioPico(), Double.valueOf(0.38));
-		assertEquals(calc.getQ1ActividadPorMes(), Double.valueOf(6.0));
+		assertEquals("Comparación del primer cuartil del total de issues.", calc.getQ1TotalIssues(),
+				Double.valueOf(4.5));
+		assertEquals("Comparación del primer cuartil del total de issues entre el total de commits.",
+				calc.getQ1IssuesPorCommit(), Double.valueOf(0.08));
+		assertEquals(
+				"Comparación del primer cuartil del número de issues cerrados dividido entre el total de issues por 100.",
+				calc.getQ1PorcentajeIssuesCerrados(), Double.valueOf(85.0));
+		assertEquals("Comparación del primer cuartil de la media de días para cerrar un issue.",
+				calc.getQ1DiasPorIssue(), Double.valueOf(2.0));
+		assertEquals("Comparación del primer cuartil de la media de días entre commits.", calc.getQ1DiasEntreCommit(),
+				Double.valueOf(1.07));
+		assertEquals("Comparación del primer cuartil del total de días del proyecto.", calc.getQ1TotalDias(),
+				Double.valueOf(79.98));
+		assertEquals(
+				"Comparación del primer cuartil del número de commits del mes que más ha habido dividido entre el número total de commits.",
+				calc.getQ1CambioPico(), Double.valueOf(0.38));
+		assertEquals(
+				"Comparación del primer cuartil del total de commits dividido entre el total de meses del proyecto.",
+				calc.getQ1ActividadPorMes(), Double.valueOf(6.0));
 
-		assertEquals(calc.getQ3TotalIssues(), Double.valueOf(48.5));
-		assertEquals(calc.getQ3IssuesPorCommit(), Double.valueOf(0.5900000000000001));
-		assertEquals(calc.getQ3PorcentajeIssuesCerrados(), Double.valueOf(100.0));
-		assertEquals(calc.getQ3DiasPorIssue(), Double.valueOf(20.32));
-		assertEquals(calc.getQ3DiasEntreCommit(), Double.valueOf(4.68));
-		assertEquals(calc.getQ3TotalDias(), Double.valueOf(199.96));
-		assertEquals(calc.getQ3CambioPico(), Double.valueOf(0.63));
-		assertEquals(calc.getQ3ActividadPorMes(), Double.valueOf(27.0));
+		assertEquals("Comparación del tercer cuartil del total de issues.", calc.getQ3TotalIssues(),
+				Double.valueOf(48.5));
+		assertEquals("Comparación del tercer cuartil del total de issues entre el total de commits.",
+				calc.getQ3IssuesPorCommit(), Double.valueOf(0.5900000000000001));
+		assertEquals(
+				"Comparación del tercer cuartil del número de issues cerrados dividido entre el total de issues por 100.",
+				calc.getQ3PorcentajeIssuesCerrados(), Double.valueOf(100.0));
+		assertEquals("Comparación del tercer cuartil de la media de días para cerrar un issue.",
+				calc.getQ3DiasPorIssue(), Double.valueOf(20.32));
+		assertEquals("Comparación del tercer cuartil de la media de días entre commits.", calc.getQ3DiasEntreCommit(),
+				Double.valueOf(4.68));
+		assertEquals("Comparación del tercer cuartil del total de días del proyecto.", calc.getQ3TotalDias(),
+				Double.valueOf(199.96));
+		assertEquals(
+				"Comparación del tercer cuartil del número de commits del mes que más ha habido dividido entre el número total de commits.",
+				calc.getQ3CambioPico(), Double.valueOf(0.63));
+		assertEquals(
+				"Comparación del tercer cuartil del total de commits dividido entre el total de meses del proyecto.",
+				calc.getQ3ActividadPorMes(), Double.valueOf(27.0));
 	}
 
 	/**
@@ -180,14 +204,22 @@ public class PrincipalTest {
 
 			SeparadorMetricas separador = new SeparadorMetricas(lector.getResultados()[0]);
 
-			assertEquals(separador.getTotalIssues(), 24.0, 0);
-			assertEquals(separador.getIssuesPorCommit(), 0.53, 0);
-			assertEquals(separador.getPorcentajeCerrados(), 100.0, 0);
-			assertEquals(separador.getMediaDiasCierre(), 91.17, 0);
-			assertEquals(separador.getMediaDiasEntreCommit(), 5.41, 0);
-			assertEquals(separador.getTotalDias(), 243.29, 0);
-			assertEquals(separador.getCambioPico(), 0.40, 0);
-			assertEquals(separador.getActividadCambio(), 5.62, 0);
+			assertEquals("Comparación del total de issues.", separador.getTotalIssues(), 24.0, 0);
+			assertEquals("Comparación del total de issues entre el total de commits.", separador.getIssuesPorCommit(),
+					0.53, 0);
+			assertEquals("Comparación del número de issues cerrados dividido entre el total de issues por 100.",
+					separador.getPorcentajeCerrados(), 100.0, 0);
+			assertEquals("Comparación de la media de días para cerrar un issue.", separador.getMediaDiasCierre(), 91.17,
+					0);
+			assertEquals("Comparación de la media de días entre commits.", separador.getMediaDiasEntreCommit(), 5.41,
+					0);
+			assertEquals("Comparación de los días entre el primer y último commit.", separador.getTotalDias(), 243.29,
+					0);
+			assertEquals(
+					"Comparación del número de commits del mes que más ha habido dividido entre el número total de commits.",
+					separador.getCambioPico(), 0.40, 0);
+			assertEquals("Comparación del total de commits dividido entre el total de meses del proyecto.",
+					separador.getActividadCambio(), 5.62, 0);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -213,14 +245,23 @@ public class PrincipalTest {
 
 			manager = new ManagerCSV(path, lector.getResultados()[0]);
 
-			assertEquals(manager.comparaTotalIssues(), 0);
-			assertEquals(manager.comparaIssuesPorCommit(), 1);
-			assertEquals(manager.comparaPorcentajeCerrados(), 1);
-			assertEquals(manager.comparaMediaDiasCierre(), -1);
-			assertEquals(manager.comparaMediaDiasEntreCommit(), -1);
-			assertEquals(manager.comparaTotalDias(), 1);
-			assertEquals(manager.comparaCambioPico(), 1);
-			assertEquals(manager.comparaActividadCambio(), -1);
+			assertEquals("Resultado comparación del total de issues.", manager.comparaTotalIssues(), 0);
+			assertEquals("Resultado comparación del total de issues entre el total de commits.",
+					manager.comparaIssuesPorCommit(), 1);
+			assertEquals(
+					"Resultado comparación del número de issues cerrados dividido entre el total de issues por 100.",
+					manager.comparaPorcentajeCerrados(), 1);
+			assertEquals("Resultado comparación de la media de días para cerrar un issue.",
+					manager.comparaMediaDiasCierre(), -1);
+			assertEquals("Resultado comparación de la media de días entre commits.",
+					manager.comparaMediaDiasEntreCommit(), -1);
+			assertEquals("Resultado comparación de los días entre el primer y último commit.",
+					manager.comparaTotalDias(), 1);
+			assertEquals(
+					"Resultado comparación del número de commits del mes que más ha habido dividido entre el número total de commits.",
+					manager.comparaCambioPico(), 1);
+			assertEquals("Resultado comparación del total de commits dividido entre el total de meses del proyecto.",
+					manager.comparaActividadCambio(), -1);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
