@@ -16,11 +16,11 @@ public interface FabricaConexion {
 	public FachadaConexion crearFachadaConexion();
 
 	/**
-	 * crea una fachada conexion autenticandola mediante usuario y contraseña.
+	 * Crea una fachada conexion autenticandola mediante usuario y contraseña.
 	 * 
-	 * @param usuario  String usuario para realizar la autenticacion.
+	 * @param usuario  String usuario para realizar la autenticación.
 	 * @param password String contraseña para validar el usuario durante la
-	 *                 utenticacion.
+	 *                 autenticación.
 	 * @return FachadaConexion fachada generada.
 	 * @throws IOException excepción de entrada o salida.
 	 */

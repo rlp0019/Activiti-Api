@@ -138,14 +138,14 @@ public class CalculadoraPercentil {
 			if (!first) {
 				String[] partes = valorFila.split(",");
 
-				anadeParte(partes[3], totalIssues);
-				anadeParte(partes[4], issuesPorCommit);
-				anadeParte(partes[5], porcentajeIssuesCerrados);
-				anadeParte(partes[6], diasPorIssue);
-				anadeParte(partes[7], diasEntreCommit);
-				anadeParte(partes[8], totalDias);
-				anadeParte(partes[9], cambioPico);
-				anadeParte(partes[10], actividadPorMes);
+				addParte(partes[3], totalIssues);
+				addParte(partes[4], issuesPorCommit);
+				addParte(partes[5], porcentajeIssuesCerrados);
+				addParte(partes[6], diasPorIssue);
+				addParte(partes[7], diasEntreCommit);
+				addParte(partes[8], totalDias);
+				addParte(partes[9], cambioPico);
+				addParte(partes[10], actividadPorMes);
 			} else {
 				first = false;
 			}
@@ -158,7 +158,7 @@ public class CalculadoraPercentil {
 	 * @param parte valor a añadir.
 	 * @param lista lista donde se añade.
 	 */
-	private void anadeParte(String parte, List<Double> lista) {
+	private void addParte(String parte, List<Double> lista) {
 		if (!("".contentEquals(parte))) {
 			lista.add(Double.parseDouble(parte));
 		}
@@ -358,5 +358,122 @@ public class CalculadoraPercentil {
 	 */
 	public Double getQ3ActividadPorMes() {
 		return q3_actividadPorMes;
+	}
+
+	/**
+	 * Compara un valor con el primer y tercer cuartil y obtiene el resultado de la
+	 * comparación.
+	 * 
+	 * @param valor             valor a comparar.
+	 * @param opcionComparacion opción para indicar si el mejor es el mayor, el
+	 *                          menor o intermedio.
+	 * @param metrica           tipo de métrica a comparar.
+	 * @return resultado de la comparación.
+	 */
+	public int comparaValor(double valor, int opcionComparacion, int metrica) {
+		int resultado = 0;
+		double min = valueOfQ(true, metrica);
+		double max = valueOfQ(false, metrica);
+
+		if (valor < min) {
+			switch (opcionComparacion) {
+			case 0:
+				resultado = 1;
+				break;
+			default:
+				resultado = -1;
+				break;
+			}
+		} else if (valor >= min && valor <= max) {
+			switch (opcionComparacion) {
+			case 1:
+				resultado = 1;
+				break;
+			default:
+				resultado = 0;
+				break;
+			}
+		} else if (valor > max) {
+			switch (opcionComparacion) {
+			case 2:
+				resultado = 1;
+				break;
+			default:
+				resultado = -1;
+				break;
+			}
+		}
+
+		return resultado;
+	}
+
+	/**
+	 * Obtiene el valor del primer o tercer cuartil para una métrica de entrada.
+	 * 
+	 * @param primer  boolean para indicar si es el primer cuartil o en caso de
+	 *                false el tercer cuartil.
+	 * @param metrica tipo de métrica.
+	 * @return valor del cuartil.
+	 */
+	private double valueOfQ(boolean primer, int metrica) {
+		double valor = 0.0;
+
+		if (primer) {
+			switch (metrica) {
+			case 0:
+				valor = q1_totalIssues;
+				break;
+			case 1:
+				valor = q1_issuesPorCommit;
+				break;
+			case 2:
+				valor = q1_porcentajeIssuesCerrados;
+				break;
+			case 3:
+				valor = q1_diasPorIssue;
+				break;
+			case 4:
+				valor = q1_diasEntreCommit;
+				break;
+			case 5:
+				valor = q1_totalDias;
+				break;
+			case 6:
+				valor = q1_cambioPico;
+				break;
+			case 7:
+				valor = q1_actividadPorMes;
+				break;
+			}
+		} else {
+			switch (metrica) {
+			case 0:
+				valor = q3_totalIssues;
+				break;
+			case 1:
+				valor = q3_issuesPorCommit;
+				break;
+			case 2:
+				valor = q3_porcentajeIssuesCerrados;
+				break;
+			case 3:
+				valor = q3_diasPorIssue;
+				break;
+			case 4:
+				valor = q3_diasEntreCommit;
+				break;
+			case 5:
+				valor = q3_totalDias;
+				break;
+			case 6:
+				valor = q3_cambioPico;
+				break;
+			case 7:
+				valor = q3_actividadPorMes;
+				break;
+			}
+		}
+
+		return valor;
 	}
 }

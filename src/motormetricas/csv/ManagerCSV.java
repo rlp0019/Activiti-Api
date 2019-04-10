@@ -14,11 +14,6 @@ import percentiles.CalculadoraPercentil;
  */
 public class ManagerCSV {
 	/**
-	 * Lector de archivos .csb.
-	 */
-	private LectorCSV lector;
-
-	/**
 	 * Calculadora de cuartiles.
 	 */
 	private CalculadoraPercentil calc;
@@ -35,7 +30,7 @@ public class ManagerCSV {
 	 * @param resultados resultados del análisis de métricas.
 	 */
 	public ManagerCSV(Path path, Object resultados) {
-		lector = new LectorCSV(path);
+		LectorCSV lector = new LectorCSV(path);
 		calc = new CalculadoraPercentil();
 		calc.calculaCuartiles(lector.getValores());
 		separador = new SeparadorMetricas(resultados);
@@ -48,10 +43,8 @@ public class ManagerCSV {
 	 */
 	public int comparaTotalIssues() {
 		double valor = separador.getTotalIssues();
-		double min = calc.getQ1TotalIssues();
-		double max = calc.getQ3TotalIssues();
 
-		return comparaMenorMejor(valor, min, max);
+		return calc.comparaValor(valor, 0, 0);
 	}
 
 	/**
@@ -61,10 +54,8 @@ public class ManagerCSV {
 	 */
 	public int comparaIssuesPorCommit() {
 		double valor = separador.getIssuesPorCommit();
-		double min = calc.getQ1IssuesPorCommit();
-		double max = calc.getQ3IssuesPorCommit();
 
-		return comparaIntermedioMejor(valor, min, max);
+		return calc.comparaValor(valor, 1, 1);
 	}
 
 	/**
@@ -75,10 +66,8 @@ public class ManagerCSV {
 	 */
 	public int comparaPorcentajeCerrados() {
 		double valor = separador.getPorcentajeCerrados();
-		double min = calc.getQ1PorcentajeIssuesCerrados();
-		double max = calc.getQ3PorcentajeIssuesCerrados();
 
-		return comparaIntermedioMejor(valor, min, max);
+		return calc.comparaValor(valor, 1, 2);
 	}
 
 	/**
@@ -89,10 +78,8 @@ public class ManagerCSV {
 	 */
 	public int comparaMediaDiasCierre() {
 		double valor = separador.getMediaDiasCierre();
-		double min = calc.getQ1DiasPorIssue();
-		double max = calc.getQ3DiasPorIssue();
 
-		return comparaMenorMejor(valor, min, max);
+		return calc.comparaValor(valor, 0, 3);
 	}
 
 	/**
@@ -103,10 +90,8 @@ public class ManagerCSV {
 	 */
 	public int comparaMediaDiasEntreCommit() {
 		double valor = separador.getMediaDiasEntreCommit();
-		double min = calc.getQ1DiasEntreCommit();
-		double max = calc.getQ3DiasEntreCommit();
 
-		return comparaMenorMejor(valor, min, max);
+		return calc.comparaValor(valor, 0, 4);
 	}
 
 	/**
@@ -116,10 +101,8 @@ public class ManagerCSV {
 	 */
 	public int comparaTotalDias() {
 		double valor = separador.getTotalDias();
-		double min = calc.getQ1TotalDias();
-		double max = calc.getQ3TotalDias();
 
-		return comparaMayorMejor(valor, min, max);
+		return calc.comparaValor(valor, 2, 5);
 	}
 
 	/**
@@ -130,10 +113,8 @@ public class ManagerCSV {
 	 */
 	public int comparaCambioPico() {
 		double valor = separador.getCambioPico();
-		double min = calc.getQ1CambioPico();
-		double max = calc.getQ3CambioPico();
 
-		return comparaIntermedioMejor(valor, min, max);
+		return calc.comparaValor(valor, 1, 6);
 	}
 
 	/**
@@ -144,66 +125,7 @@ public class ManagerCSV {
 	 */
 	public int comparaActividadCambio() {
 		double valor = separador.getActividadCambio();
-		double min = calc.getQ1ActividadPorMes();
-		double max = calc.getQ3ActividadPorMes();
 
-		return comparaIntermedioMejor(valor, min, max);
-	}
-
-	/**
-	 * Compara un valor entre un mínimo y un máximo. Mejor cuanto menor es el valor.
-	 * 
-	 * @return 1 si es menor que min, 0 si está entre ambos o -1 si es mayor que
-	 *         max.
-	 */
-	private int comparaMenorMejor(double valor, double min, double max) {
-		int resultado = 0;
-
-		if (valor < min) {
-			resultado = 1;
-		} else if (valor >= min && valor <= max) {
-			resultado = 0;
-		} else if (valor > max) {
-			resultado = -1;
-		}
-
-		return resultado;
-	}
-
-	/**
-	 * Compara un valor entre un mínimo y un máximo. Mejor cuanto mayor es el valor.
-	 * 
-	 * @return -1 si es menor que min, 0 si está entre ambos o 1 si es mayor que
-	 *         max.
-	 */
-	private int comparaMayorMejor(double valor, double min, double max) {
-		int resultado = 0;
-
-		if (valor < min) {
-			resultado = -1;
-		} else if (valor >= min && valor <= max) {
-			resultado = 0;
-		} else if (valor > max) {
-			resultado = 1;
-		}
-
-		return resultado;
-	}
-
-	/**
-	 * Compara un valor entre un mínimo y un máximo. Mejor si está entre ambos.
-	 * 
-	 * @return 1 si está entre ambos o -1 si es mayor que max o menor que min.
-	 */
-	private int comparaIntermedioMejor(double valor, double min, double max) {
-		int resultado = 0;
-
-		if (valor >= min && valor <= max) {
-			resultado = 1;
-		} else {
-			resultado = -1;
-		}
-
-		return resultado;
+		return calc.comparaValor(valor, 1, 7);
 	}
 }

@@ -57,14 +57,14 @@ public class SeparadorMetricas {
 		String resultado = (String) resultadoMetricas;
 		String[] partes = resultado.split(" ");
 
-		totalIssues = obtenDouble(partes[3]);
-		issuesPorCommit = obtenDouble(partes[6]);
-		porcentajeCerrados = obtenDouble(partes[12]);
-		mediaDiasCierre = obtenDouble(partes[15]);
-		mediaDiasEntreCommit = obtenDouble(partes[21]);
-		totalDias = obtenDouble(partes[24]);
-		cambioPico = obtenDouble(partes[53]);
-		actividadCambio = obtenDouble(partes[56]);
+		totalIssues = stringToDouble(partes[3]);
+		issuesPorCommit = stringToDouble(partes[6]);
+		porcentajeCerrados = stringToDouble(partes[12]);
+		mediaDiasCierre = stringToDouble(partes[15]);
+		mediaDiasEntreCommit = stringToDouble(partes[21]);
+		totalDias = stringToDouble(partes[24]);
+		cambioPico = stringToDouble(partes[53]);
+		actividadCambio = stringToDouble(partes[56]);
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class SeparadorMetricas {
 	 * @param parte string con el valor.
 	 * @return valor del double.
 	 */
-	private Double obtenDouble(String parte) {
+	private Double stringToDouble(String parte) {
 		String valor = parte.replaceAll(",", ".");
 		return Double.parseDouble(valor);
 	}
