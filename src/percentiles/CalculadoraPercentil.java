@@ -138,14 +138,14 @@ public class CalculadoraPercentil {
 			if (!first) {
 				String[] partes = valorFila.split(",");
 
-				addParte(partes[3], totalIssues);
-				addParte(partes[4], issuesPorCommit);
-				addParte(partes[5], porcentajeIssuesCerrados);
-				addParte(partes[6], diasPorIssue);
-				addParte(partes[7], diasEntreCommit);
-				addParte(partes[8], totalDias);
-				addParte(partes[9], cambioPico);
-				addParte(partes[10], actividadPorMes);
+				addParte(partes[1], totalIssues);
+				addParte(partes[2], issuesPorCommit);
+				addParte(partes[3], porcentajeIssuesCerrados);
+				addParte(partes[4], diasPorIssue);
+				addParte(partes[5], diasEntreCommit);
+				addParte(partes[6], totalDias);
+				addParte(partes[7], cambioPico);
+				addParte(partes[8], actividadPorMes);
 			} else {
 				first = false;
 			}
@@ -444,6 +444,8 @@ public class CalculadoraPercentil {
 			case 7:
 				valor = q1_actividadPorMes;
 				break;
+			default:
+				break;
 			}
 		} else {
 			switch (metrica) {
@@ -470,6 +472,8 @@ public class CalculadoraPercentil {
 				break;
 			case 7:
 				valor = q3_actividadPorMes;
+				break;
+			default:
 				break;
 			}
 		}

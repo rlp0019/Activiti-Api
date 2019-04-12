@@ -135,7 +135,7 @@ public class PrincipalTest {
 	 */
 	@Test
 	public void testQuartiles() {
-		Path path = Paths.get("rsc/datoscsv/DataSet_EvolutionSoftwareMetrics_FYP.csv");
+		Path path = Paths.get("rsc/datoscsv/PruebaCuartiles.csv");
 		LectorCSV lectorCSV = new LectorCSV(path);
 		CalculadoraPercentil calc = new CalculadoraPercentil();
 		calc.calculaCuartiles(lectorCSV.getValores());
@@ -226,7 +226,8 @@ public class PrincipalTest {
 	}
 
 	/**
-	 * Prueba de la comparación entre un repositorio y los de la base de datos.
+	 * Prueba de la comparación entre un repositorio y los de la base de datos y el
+	 * método para añadir las métricas calculadas del proyecto.
 	 */
 	@Test
 	public void testManagerCSV() {
@@ -240,8 +241,8 @@ public class PrincipalTest {
 
 		try {
 			lector = fabricaLector.crearFachadaConexion(usuario, password);
-			lector.getNombresRepositorio("dba0010");
 			lector.obtenerMetricas("dba0010", "Activiti-Api");
+			String proyecto = lector.getNombreRepositorio();
 
 			manager = new ManagerCSV(path, lector.getResultados()[0]);
 
@@ -262,6 +263,17 @@ public class PrincipalTest {
 					manager.comparaCambioPico(), 1);
 			assertEquals("Resultado comparación del total de commits dividido entre el total de meses del proyecto.",
 					manager.comparaActividadCambio(), -1);
+
+			int valoresPreAdd = manager.getNumeroProyectosCSV();
+
+			if (manager.hasProyecto(proyecto)) {
+				manager.addMetricasProyecto(proyecto);
+				assertEquals("Comprobación de no añadir un proyecto porque ya está en la base de datos.", valoresPreAdd,
+						manager.getNumeroProyectosCSV());
+			} else {
+				manager.addMetricasProyecto(proyecto);
+				assertEquals("Comprobación de añadir un proyecto.", valoresPreAdd + 1, manager.getNumeroProyectosCSV());
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

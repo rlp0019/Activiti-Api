@@ -14,6 +14,11 @@ import percentiles.CalculadoraPercentil;
  */
 public class ManagerCSV {
 	/**
+	 * Lector y escritor de archivos .csv.
+	 */
+	private LectorCSV lector;
+
+	/**
 	 * Calculadora de cuartiles.
 	 */
 	private CalculadoraPercentil calc;
@@ -30,7 +35,7 @@ public class ManagerCSV {
 	 * @param resultados resultados del análisis de métricas.
 	 */
 	public ManagerCSV(Path path, Object resultados) {
-		LectorCSV lector = new LectorCSV(path);
+		lector = new LectorCSV(path);
 		calc = new CalculadoraPercentil();
 		calc.calculaCuartiles(lector.getValores());
 		separador = new SeparadorMetricas(resultados);
@@ -127,5 +132,41 @@ public class ManagerCSV {
 		double valor = separador.getActividadCambio();
 
 		return calc.comparaValor(valor, 1, 7);
+	}
+
+	/**
+	 * Añade las métricas calculadas del proyecto al archivo .csv a través del
+	 * lectorCSV.
+	 * 
+	 * @param nombre nombre del proyecto.
+	 */
+	public void addMetricasProyecto(String nombre) {
+		String metricas = nombre + "," + Double.toString(separador.getTotalIssues()) + ","
+				+ Double.toString(separador.getIssuesPorCommit()) + ","
+				+ Double.toString(separador.getPorcentajeCerrados()) + ","
+				+ Double.toString(separador.getMediaDiasCierre()) + ","
+				+ Double.toString(separador.getMediaDiasEntreCommit()) + "," + Double.toString(separador.getTotalDias())
+				+ "," + Double.toString(separador.getCambioPico()) + ","
+				+ Double.toString(separador.getActividadCambio()) + "," + ",";
+		lector.addMetricasProyecto(nombre, metricas);
+	}
+
+	/**
+	 * Obtiene el el número de proyectos guardados en el .csv.
+	 * 
+	 * @return número de proyectos guardados.
+	 */
+	public int getNumeroProyectosCSV() {
+		return lector.getValores().size();
+	}
+
+	/**
+	 * Devuelve si el .csv contiene o no un proyecto dado un nombre.
+	 * 
+	 * @param nombre nombre del proyecto.
+	 * @return true si lo contiene o false si no.
+	 */
+	public boolean hasProyecto(String nombre) {
+		return lector.hasProyecto(nombre);
 	}
 }
