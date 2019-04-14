@@ -53,10 +53,8 @@ public class PrincipalTest {
 	 */
 	@Test
 	public void testConexion() {
-		String usuario;
-		String password;
-		usuario = "pruebarlp";
-		password = "12qe34wr";
+		String usuario = "pruebarlp";
+		String password = "12qe34wr";
 
 		try {
 			FachadaConexion lector = fabricaLector.crearFachadaConexion(usuario, password);
@@ -74,10 +72,8 @@ public class PrincipalTest {
 	 */
 	@Test(expected = IOException.class)
 	public void testRepositorioVacio() throws IOException {
-		String usuario;
-		String password;
-		usuario = "pruebarlp";
-		password = "12qe34wr";
+		String usuario = "pruebarlp";
+		String password = "12qe34wr";
 
 		FachadaConexion lector = fabricaLector.crearFachadaConexion(usuario, password);
 		lector.getNombresRepositorio("pruebarlp");
@@ -89,11 +85,9 @@ public class PrincipalTest {
 	 */
 	@Test
 	public void testRepositorioGrande() {
-		String usuario;
-		String password;
-		usuario = "pruebarlp";
-		password = "12qe34wr";
-		FachadaConexion lector = null;
+		String usuario = "pruebarlp";
+		String password = "12qe34wr";
+		FachadaConexion lector;
 
 		try {
 			lector = fabricaLector.crearFachadaConexion(usuario, password);
@@ -191,11 +185,9 @@ public class PrincipalTest {
 		CalculadoraPercentil calc = new CalculadoraPercentil();
 		calc.calculaCuartiles(lectorCSV.getValores());
 
-		String usuario;
-		String password;
-		usuario = "pruebarlp";
-		password = "12qe34wr";
-		FachadaConexion lector = null;
+		String usuario = "pruebarlp";
+		String password = "12qe34wr";
+		FachadaConexion lector;
 
 		try {
 			lector = fabricaLector.crearFachadaConexion(usuario, password);
@@ -233,10 +225,8 @@ public class PrincipalTest {
 	public void testManagerCSV() {
 		Path path = Paths.get("rsc/datoscsv/DataSet_EvolutionSoftwareMetrics_FYP.csv");
 		ManagerCSV manager;
-		String usuario;
-		String password;
-		usuario = "pruebarlp";
-		password = "12qe34wr";
+		String usuario = "pruebarlp";
+		String password = "12qe34wr";
 		FachadaConexion lector = null;
 
 		try {

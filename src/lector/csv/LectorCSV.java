@@ -32,27 +32,8 @@ public final class LectorCSV {
 	 */
 	public LectorCSV(Path path) {
 		this.path = path;
-		BufferedReader br = null;
 		valores = new ArrayList<String>();
-		try {
-			br = new BufferedReader(Files.newBufferedReader(path));
-
-			String fila;
-			while ((fila = br.readLine()) != null) {
-				valores.add(fila);
-			}
-			br.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (br != null) {
-				try {
-					br.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
+		reloadValores();
 	}
 
 	/**

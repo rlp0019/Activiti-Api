@@ -98,43 +98,35 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 					switch (nLinea) {
 					case 0:
 						this.numIssues = new NumeroIssues();
-						medida = new Medida(this.numIssues,
-								new Entero(Integer.parseInt(linea.substring(linea.indexOf(":") + 2))));
+						medida = new Medida(this.numIssues, new Entero(stringToInt(linea)));
 						break;
 					case 1:
 						this.contadorTareas = new ContadorTareas();
-						medida = new Medida(this.contadorTareas,
-								new Largo(Double.parseDouble(linea.substring(linea.indexOf(":") + 2))));
+						medida = new Medida(this.contadorTareas, new Largo(stringToDouble(linea)));
 						break;
 					case 2:
 						this.numIssuesCerradas = new NumeroIssuesCerradas();
-						medida = new Medida(this.numIssuesCerradas,
-								new Entero(Integer.parseInt(linea.substring(linea.indexOf(":") + 2))));
+						medida = new Medida(this.numIssuesCerradas, new Entero(stringToInt(linea)));
 						break;
 					case 3:
 						this.porcentajeIssuesCerradas = new PorcentajeIssuesCerradas();
-						medida = new Medida(this.porcentajeIssuesCerradas,
-								new Largo(Double.parseDouble(linea.substring(linea.indexOf(":") + 2))));
+						medida = new Medida(this.porcentajeIssuesCerradas, new Largo(stringToDouble(linea)));
 						break;
 					case 4:
 						this.mediaDiasCierre = new MediaDiasCierre();
-						medida = new Medida(this.mediaDiasCierre,
-								new Largo(Double.parseDouble(linea.substring(linea.indexOf(":") + 2))));
+						medida = new Medida(this.mediaDiasCierre, new Largo(stringToDouble(linea)));
 						break;
 					case 5:
 						this.numCambiosSinMensaje = new NumeroCambiosSinMensaje();
-						medida = new Medida(this.numCambiosSinMensaje,
-								new Entero(Integer.parseInt(linea.substring(linea.indexOf(":") + 2))));
+						medida = new Medida(this.numCambiosSinMensaje, new Entero(stringToInt(linea)));
 						break;
 					case 6:
 						this.mediaDiasCambios = new MediaDiasCambio();
-						medida = new Medida(this.mediaDiasCambios,
-								new Largo(Double.parseDouble(linea.substring(linea.indexOf(":") + 2))));
+						medida = new Medida(this.mediaDiasCambios, new Largo(stringToDouble(linea)));
 						break;
 					case 7:
 						this.diasPrimerUltimoCommit = new DiasPrimerUltimoCommit();
-						medida = new Medida(this.diasPrimerUltimoCommit,
-								new Largo(Double.parseDouble(linea.substring(linea.indexOf(":") + 2))));
+						medida = new Medida(this.diasPrimerUltimoCommit, new Largo(stringToDouble(linea)));
 						break;
 					case 8:
 						this.ultimaModificacion = new UltimaModificacion();
@@ -149,16 +141,8 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 						break;
 					case 9:
 						this.commitXMes = new CommitPorMes();
-						Conjunto valores = new Conjunto();
-						int tamano = Integer.parseInt(linea.substring(linea.indexOf(":") + 2));
-						for (int i = 0; i < tamano; i++) {
-							linea = archivo.readLine();
-							if (linea != null) {
-								valores.setValor(linea.substring(0, linea.indexOf(":")),
-										new Entero(Integer.parseInt(linea.substring(linea.indexOf(":") + 2))));
-							}
-						}
-						medida = new Medida(this.commitXMes, valores);
+
+						medida = calculateValor(archivo, linea, commitXMes);
 						break;
 					case 10:
 						this.relacionMesPico = new RelacionMesPico();
@@ -166,62 +150,34 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 						break;
 					case 11:
 						this.contadorCambiosPico = new ContadorCambiosPico();
-						medida = new Medida(this.contadorCambiosPico,
-								new Largo(Double.parseDouble(linea.substring(linea.indexOf(":") + 2))));
+						medida = new Medida(this.contadorCambiosPico, new Largo(stringToDouble(linea)));
 						break;
 					case 12:
 						this.ratioActividadCambio = new RatioActividadCambio();
-						medida = new Medida(this.ratioActividadCambio,
-								new Largo(Double.parseDouble(linea.substring(linea.indexOf(":") + 2))));
+						medida = new Medida(this.ratioActividadCambio, new Largo(stringToDouble(linea)));
 						break;
 					case 13:
 						this.commitXDia = new CommitPorDia();
-						valores = new Conjunto();
-						tamano = Integer.parseInt(linea.substring(linea.indexOf(":") + 2));
-						for (int i = 0; i < tamano; i++) {
-							linea = archivo.readLine();
-							if (linea != null) {
-								valores.setValor(linea.substring(0, linea.indexOf(":")),
-										new Entero(Integer.parseInt(linea.substring(linea.indexOf(":") + 2))));
-							}
-						}
-						medida = new Medida(this.commitXDia, valores);
+
+						medida = calculateValor(archivo, linea, commitXDia);
 						break;
 					case 14:
 						this.commitXAutor = new CambioPorAutor();
-						valores = new Conjunto();
-						tamano = Integer.parseInt(linea.substring(linea.indexOf(":") + 2));
-						for (int i = 0; i < tamano; i++) {
-							linea = archivo.readLine();
-							if (linea != null) {
-								valores.setValor(linea.substring(0, linea.indexOf(":")),
-										new Entero(Integer.parseInt(linea.substring(linea.indexOf(":") + 2))));
-							}
-						}
-						medida = new Medida(this.commitXAutor, valores);
+
+						medida = calculateValor(archivo, linea, commitXAutor);
 						break;
 					case 15:
 						this.contadorAutor = new ContadorAutor();
-						medida = new Medida(this.contadorAutor,
-								new Largo(Double.parseDouble(linea.substring(linea.indexOf(":") + 2))));
+						medida = new Medida(this.contadorAutor, new Largo(stringToDouble(linea)));
 						break;
 					case 16:
 						this.issueXAutor = new IssuesPorAutor();
-						valores = new Conjunto();
-						tamano = Integer.parseInt(linea.substring(linea.indexOf(":") + 2));
-						for (int i = 0; i < tamano; i++) {
-							linea = archivo.readLine();
-							if (linea != null) {
-								valores.setValor(linea.substring(0, linea.indexOf(":")),
-										new Entero(Integer.parseInt(linea.substring(linea.indexOf(":") + 2))));
-							}
-						}
-						medida = new Medida(this.issueXAutor, valores);
+
+						medida = calculateValor(archivo, linea, issueXAutor);
 						break;
 					case 17:
 						this.numFavoritos = new NumeroFavoritos();
-						medida = new Medida(this.numFavoritos,
-								new Entero(Integer.parseInt(linea.substring(linea.indexOf(":") + 2))));
+						medida = new Medida(this.numFavoritos, new Entero(stringToInt(linea)));
 						break;
 					default:
 						break;
@@ -303,6 +259,43 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 
 		this.numFavoritos = new NumeroFavoritos();
 		this.numFavoritos.calculate(repositorio, metricas);
+	}
+
+	/**
+	 * Convierte un string en double.
+	 * 
+	 * @param linea string con el valor a convertir.
+	 * @return valor del double.
+	 */
+	private double stringToDouble(String linea) {
+		return Double.parseDouble(linea.substring(linea.indexOf(":") + 2));
+	}
+
+	/**
+	 * Convierte un string en int.
+	 * 
+	 * @param linea string con el valor a convertir.
+	 * @return valor del int.
+	 */
+	private int stringToInt(String linea) {
+		return Integer.parseInt(linea.substring(linea.indexOf(":") + 2));
+	}
+
+	private Medida calculateValor(BufferedReader archivo, String linea, Metrica metrica) {
+		Conjunto valores = new Conjunto();
+		int tamano = stringToInt(linea);
+		for (int i = 0; i < tamano; i++) {
+			try {
+				linea = archivo.readLine();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			if (linea != null) {
+				valores.setValor(linea.substring(0, linea.indexOf(":")), new Entero(stringToInt(linea)));
+			}
+		}
+
+		return new Medida(metrica, valores);
 	}
 
 	/**
