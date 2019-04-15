@@ -3,6 +3,7 @@ package gui.fx.herramientas;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Background;
@@ -51,5 +52,20 @@ public class CreadorElementos {
 		tf.setMaxWidth(maxW);
 
 		return tf;
+	}
+
+	public static PasswordField createPasswordField(String textoP, double tamF, String tooltip, int posX, int posY,
+			int maxW) {
+		PasswordField pf = new PasswordField();
+		pf.setPromptText(textoP);
+		pf.setFont(new Font("Arial", tamF));
+		Tooltip tfTooltip = new Tooltip(tooltip);
+		tfTooltip.setFont(new Font("Arial", 12));
+		pf.setTooltip(tfTooltip);
+		pf.setTranslateX(posX);
+		pf.setTranslateY(posY);
+		pf.setMaxWidth(maxW);
+
+		return pf;
 	}
 }

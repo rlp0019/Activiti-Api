@@ -285,13 +285,14 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 		Conjunto valores = new Conjunto();
 		int tamano = stringToInt(linea);
 		for (int i = 0; i < tamano; i++) {
+			String nuevaLinea = null;
 			try {
-				linea = archivo.readLine();
+				nuevaLinea = archivo.readLine();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			if (linea != null) {
-				valores.setValor(linea.substring(0, linea.indexOf(":")), new Entero(stringToInt(linea)));
+			if (nuevaLinea != null) {
+				valores.setValor(nuevaLinea.substring(0, nuevaLinea.indexOf(":")), new Entero(stringToInt(nuevaLinea)));
 			}
 		}
 

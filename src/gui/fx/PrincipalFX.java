@@ -1,5 +1,6 @@
 package gui.fx;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import javafx.application.Application;
@@ -18,7 +19,11 @@ public class PrincipalFX extends Application {
 	private Stage ventana;
 	private Scene[] escenas;
 	private FabricaConexion fabConexion;
-	private FachadaConexion conexion;
+
+	private Alert alert;
+	private Alert alert2;
+
+	private FachadaConexion lector;
 
 	public static void main(String[] args) {
 		Application.launch(args);
@@ -28,9 +33,15 @@ public class PrincipalFX extends Application {
 	public void start(Stage pStage) throws Exception {
 		fabConexion = FabricaConexionGitHub.getInstance();
 
+		alert = new Alert(AlertType.NONE, "Los datos de la conexión no son correctos.", ButtonType.CLOSE);
+		alert.setTitle("Error");
+
+		alert2 = new Alert(AlertType.NONE, "El usuario introducido no es correcto.", ButtonType.CLOSE);
+		alert2.setTitle("Error");
+
 		ventana = pStage;
 		ventana.setTitle("Activiti-Api");
-		ventana.getIcons().add(new Image("/imagenes/Ubu.png"));
+		ventana.getIcons().add(new Image(new FileInputStream("rsc/imagenes/Ubu.png")));
 		ventana.setWidth(720);
 		ventana.setHeight(530);
 
@@ -45,7 +56,7 @@ public class PrincipalFX extends Application {
 	}
 
 	private void iniciaEscenas() {
-		escenas = new Scene[4];
+		escenas = new Scene[5];
 
 		EscenaInicio eInicio = new EscenaInicio(this);
 		escenas[0] = new Scene(eInicio);
@@ -58,20 +69,42 @@ public class PrincipalFX extends Application {
 
 		EscenaConex eConex = new EscenaConex(this);
 		escenas[3] = new Scene(eConex);
+
+		EscenaUsuarioRep eUsuario = new EscenaUsuarioRep(this);
+		escenas[4] = new Scene(eUsuario);
+	}
+
+	public String[] buscaRepositorios(String usuario) {
+		String[] repositorios = null;
+		try {
+			repositorios = lector.getNombresRepositorio(usuario);
+		} catch (IOException e) {
+			alert2.showAndWait();
+			e.printStackTrace();
+		}
+		return repositorios;
+	}
+
+	public Object[] getMetricasRepositorio(String repo) {
+
+		return null;
 	}
 
 	public void createModoDesconectado() {
-		conexion = fabConexion.crearFachadaConexion();
+		lector = fabConexion.crearFachadaConexion();
 	}
 
-	public void createModoUsuario(String usuario, String contrasena) {
+	public boolean createModoUsuario(String usuario, String contrasena) {
+		boolean resultado = false;
+
 		try {
-			conexion = fabConexion.crearFachadaConexion(usuario, contrasena);
+			lector = fabConexion.crearFachadaConexion(usuario, contrasena);
+			resultado = true;
 		} catch (IOException e) {
-			Alert alert = new Alert(AlertType.NONE, "Ha ocurrido un error durante la conexión.", ButtonType.CLOSE);
-			alert.setTitle("Error");
 			alert.showAndWait();
 			e.printStackTrace();
 		}
+
+		return resultado;
 	}
 }

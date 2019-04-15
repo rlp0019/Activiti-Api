@@ -164,8 +164,7 @@ public class Principal {
 	private void initialize() {
 		frmFormulario = new JFrame();
 		frmFormulario.setResizable(false);
-		frmFormulario
-				.setIconImage(Toolkit.getDefaultToolkit().getImage(Principal.class.getResource("/imagenes/Ubu.png")));
+		frmFormulario.setIconImage(Toolkit.getDefaultToolkit().getImage("rsc/imagenes/Ubu.png"));
 		frmFormulario.setTitle("Activiti-Api");
 		frmFormulario.setBounds(100, 100, 700, 530);
 		frmFormulario.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
