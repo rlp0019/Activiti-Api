@@ -12,10 +12,10 @@ import javafx.scene.layout.StackPane;
 
 public class EscenaUsuarioRep extends StackPane {
 
+	private String nombreUsuario;
+
 	public EscenaUsuarioRep(PrincipalFX aplicacion) {
 		this.setBackground(CreadorElementos.createBackground());
-
-		// ListView<String> listaRepo = new ListView<String>();
 
 		ComboBox<String> desplegableRepo = new ComboBox<String>();
 		desplegableRepo.setTranslateX(-30);
@@ -37,27 +37,30 @@ public class EscenaUsuarioRep extends StackPane {
 		Label repositorio = CreadorElementos.createLabel("Selecciona un repositorio tras introducir el usuario:", 20,
 				"#505050", 0, 40);
 
-		TextField tfUsuario = CreadorElementos.createTextField("Nombre del usuario a buscar.", 20,
-				"Introduce el nombre del usuario a buscar.", -30, -20, 250);
+		TextField tfUsuario = CreadorElementos.createTextField("Nombre del usuario.", 20,
+				"Introduce el nombre del usuario a buscar.", -30, -30, 250);
 
 		Button repoB = CreadorElementos.createButton("Analizar", 20, "Selecciona el repositorio.", 150, 100, 100);
 		repoB.setOnAction(e -> {
 			if (desplegableRepo.getSelectionModel().isEmpty()) {
 				alert2.showAndWait();
 			} else {
-				//
+				aplicacion.calculaMetricasRepositorio(nombreUsuario, desplegableRepo.getValue());
+				EscenaResultados.setResultadoMetricas(aplicacion);
+				aplicacion.cambiaEscena(5);
 			}
 		});
 		repoB.setDisable(true);
 
 		Button buscarB = CreadorElementos.createButton("Buscar", 20, "Busca los repositorios del usuario introducido.",
-				150, -20, 100);
+				150, -30, 100);
 		buscarB.setOnAction(e -> {
 			if (tfUsuario.getText().isEmpty()) {
 				alert.showAndWait();
 			} else {
 				String[] repositorios = aplicacion.buscaRepositorios(tfUsuario.getText());
 				if (repositorios != null) {
+					nombreUsuario = tfUsuario.getText();
 					tfUsuario.clear();
 					desplegableRepo.getItems().addAll(repositorios);
 					repoB.setDisable(false);

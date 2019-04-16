@@ -11,7 +11,7 @@
   <property name="dist.dir" value="dist"/>
   <property name="dclase.dir" value="rsc/diagramasclase"/>
   <property name="dsecuencia.dir" value="rsc/diagramassecuencia"/>
-  <property name="imagenes.dir" value="src/imagenes"/>
+  <property name="imagenes.dir" value="rsc/imagenes"/>
   <property name="ayuda.dir" value="src/gui/ayuda"/>
   <property name="lib.dir" value="rsc/lib"/>
   <property name="libclasses.dir" value="libc"/>
@@ -38,7 +38,8 @@
   <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
     <classpath path="${lib.dir}/jacocoant.jar"/>
   </taskdef>
-	
+
+  <!-- Realiza los preparativos. -->
   <target name="inicio" description="Crea timestamp y carpetas">
   	<!-- Crea el timestamp--> 
   	<tstamp/>
@@ -56,14 +57,17 @@
   	<mkdir dir="${build.tests.dir}"/>
   </target>
 	
+  <!-- Compila el código. -->
   <target name="compilar" depends="inicio" description="Compila el programa">
   	<javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false" debug="true" classpathref="compile.path" encoding="utf-8"/>
   </target>
 	
+  <!-- Compila los test. -->	
   <target name="compilar-tests" depends="compilar" description="Compila el programa">
   	<javac srcdir="${tests.dir}" destdir="${build.tests.dir}" includeantruntime="false" debug="true" classpathref="compile.tests.path" encoding="utf-8"/>
   </target>
-	
+
+  <!-- Ejecuta los test y crea el archivo del coverage mediante jacoco. -->
   <target name="tests" depends="compilar-tests">
     <jacoco:coverage>
   	  <junit printsummary="on" haltonfailure="no" fork="true">
@@ -108,23 +112,22 @@
   	</java>
   </target>
 	
-  <!-- Crea la documentación -->
+  <!-- Crea la documentación. -->
   <target name="javadoc" depends="inicio" description="generate documentation">
 	<javadoc sourcepath="${src.dir}" destdir="${doc.dir}" classpathref="compile.tests.path"/>
   </target>
-	
+
+  <!-- Crea el .jar. -->
   <target name="distr" depends="inicio,compilar" description="Genera la distribución">
   	<unjar dest="${libclasses.dir}">
   	  <fileset dir="${lib.dir}" includes="*.jar"/>
   	</unjar>
   	
-	<!-- Toda la build al .jar -->
 	<jar jarfile="${dist.dir}/Activiti-${DSTAMP}.jar" basedir="${build.dir}">
 	  <manifest>
 	  	<attribute name="Main-Class" value="gui/Principal"/>
 	  </manifest>
 		
-	  <!-- Incluyo el resto de archivos -->
 	  <zipfileset dir="${dclase.dir}" prefix="${dclase.dir}"/>
 	  <zipfileset dir="${dsecuencia.dir}" prefix="${dsecuencia.dir}"/>
 	  <zipfileset dir="${imagenes.dir}" prefix="imagenes"/>
@@ -133,8 +136,8 @@
 	</jar>
   </target>
 	
+  <!-- Elimina las carpertas y archivos creados. -->
   <target name="limpiar" description="Elimina las carpetas creadas">
-	<!-- Elimina las carpertas y archivos creados -->
     <delete dir="build"/>
 	<delete dir="${dist.dir}"/>
   	<delete dir="${libclasses.dir}"/>

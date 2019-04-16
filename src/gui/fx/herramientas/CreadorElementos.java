@@ -1,6 +1,5 @@
 package gui.fx.herramientas;
 
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -8,13 +7,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class CreadorElementos {
 	public static Background createBackground() {
-		return new Background(new BackgroundFill(Color.web("#e6f2ff"), CornerRadii.EMPTY, Insets.EMPTY));
+		return new Background(new BackgroundFill(Color.web("#e6f2ff"), null, null));
 	}
 
 	public static Label createLabel(String texto, double tamF, String color, int posX, int posY) {

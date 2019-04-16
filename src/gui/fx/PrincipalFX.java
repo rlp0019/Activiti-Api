@@ -22,6 +22,7 @@ public class PrincipalFX extends Application {
 
 	private Alert alert;
 	private Alert alert2;
+	private Alert alert3;
 
 	private FachadaConexion lector;
 
@@ -34,16 +35,21 @@ public class PrincipalFX extends Application {
 		fabConexion = FabricaConexionGitHub.getInstance();
 
 		alert = new Alert(AlertType.NONE, "Los datos de la conexión no son correctos.", ButtonType.CLOSE);
-		alert.setTitle("Error");
+		alert.setTitle("Error de conexión");
 
 		alert2 = new Alert(AlertType.NONE, "El usuario introducido no es correcto.", ButtonType.CLOSE);
-		alert2.setTitle("Error");
+		alert2.setTitle("Error de usuario");
+
+		alert3 = new Alert(AlertType.NONE, "La combinación de usuario-repositorio introducida no es correcta.",
+				ButtonType.CLOSE);
+		alert3.setTitle("Error de cálculo de métricas");
 
 		ventana = pStage;
 		ventana.setTitle("Activiti-Api");
 		ventana.getIcons().add(new Image(new FileInputStream("rsc/imagenes/Ubu.png")));
 		ventana.setWidth(720);
 		ventana.setHeight(530);
+		ventana.setResizable(false);
 
 		iniciaEscenas();
 
@@ -56,7 +62,7 @@ public class PrincipalFX extends Application {
 	}
 
 	private void iniciaEscenas() {
-		escenas = new Scene[5];
+		escenas = new Scene[6];
 
 		EscenaInicio eInicio = new EscenaInicio(this);
 		escenas[0] = new Scene(eInicio);
@@ -72,6 +78,9 @@ public class PrincipalFX extends Application {
 
 		EscenaUsuarioRep eUsuario = new EscenaUsuarioRep(this);
 		escenas[4] = new Scene(eUsuario);
+
+		EscenaResultados eResultados = new EscenaResultados(this);
+		escenas[5] = new Scene(eResultados);
 	}
 
 	public String[] buscaRepositorios(String usuario) {
@@ -85,9 +94,17 @@ public class PrincipalFX extends Application {
 		return repositorios;
 	}
 
-	public Object[] getMetricasRepositorio(String repo) {
+	public void calculaMetricasRepositorio(String usuario, String repositorio) {
+		try {
+			lector.obtenerMetricas(usuario, repositorio);
+		} catch (IOException e) {
+			alert3.showAndWait();
+			e.printStackTrace();
+		}
+	}
 
-		return null;
+	public Object[] getMetricasRepositorio() {
+		return lector.getResultados();
 	}
 
 	public void createModoDesconectado() {

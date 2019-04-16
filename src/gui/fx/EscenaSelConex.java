@@ -23,7 +23,6 @@ public class EscenaSelConex extends StackPane {
 				"Conectarse para poder tener un mayor número de peticiones (5000 por hora). Se necesita una cuenta en la plataforma.",
 				0, -50, 250);
 		usuarioB.setOnAction(e -> {
-			;
 			aplicacion.cambiaEscena(3);
 		});
 
