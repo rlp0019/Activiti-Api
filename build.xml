@@ -16,6 +16,7 @@
   <property name="lib.dir" value="rsc/lib"/>
   <property name="libclasses.dir" value="libc"/>
   <property name="doc.dir" value="doc"/>
+  <property name="informes.dir" value="rsc/informes"/>
 	
   <path id="compile.path">
   	<pathelement location="${lib.dir}/gson-2.3.1.jar"/>

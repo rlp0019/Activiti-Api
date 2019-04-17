@@ -8,7 +8,20 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 
+/**
+ * Escena que contiene el método de conexión, mediante un log in o como
+ * desconectado.
+ * 
+ * @author Roberto Luquero Peñacoba
+ *
+ */
 public class EscenaSelConex extends StackPane {
+
+	/**
+	 * Constructor de la escena.
+	 * 
+	 * @param aplicacion aplicación principal.
+	 */
 	public EscenaSelConex(PrincipalFX aplicacion) {
 		this.setBackground(CreadorElementos.createBackground());
 

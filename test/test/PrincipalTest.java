@@ -3,6 +3,9 @@ package test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -106,6 +109,41 @@ public class PrincipalTest {
 					+ "\n\tViernes: 2" + "\n\tSabado: 8" + "\n  CambioPorAutor: " + "\n\tdba0010: 43" + "\n\tNazalik: 2"
 					+ "\n  ContadorAutor: 0,04" + "\n  IssuesPorAutor: " + "\n\tdba0010: 21" + "\n\tclopezno: 3"
 					+ "\n  NumeroFavoritos: 1";
+
+			assertEquals("Comparación de los resultados de las métricas del repositorio.", cadena,
+					resultadoMetricas[0]);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Prueba sobre el cargado de métricas.
+	 */
+	@Test
+	public void testCargar() {
+		try {
+			FachadaConexion lector = fabricaLector.crearFachadaConexion();
+			File archivo = new File("rsc/informes/test.txt");
+			FileReader lee = new FileReader(archivo);
+			BufferedReader contenido = new BufferedReader(lee);
+			contenido.readLine();
+
+			lector.leerArchivo(contenido);
+
+			Object[] resultadoMetricas = lector.getResultados();
+			String cadena = "Metricas:" + "\n  NumeroIssues: 24" + "\n  ContadorTareas: 0,53"
+					+ "\n  NumeroIssuesCerradas: 24" + "\n  PorcentajeIssuesCerradas: 100,00"
+					+ "\n  MediaDiasCierre: 91,17" + "\n  NumeroCambiosSinMensaje: 0" + "\n  MediaDiasCambio: 5,41"
+					+ "\n  DiasPrimerUltimoCommit: 243,29" + "\n  UltimaModificacion: Fri Feb 05 00:49:28 CET 2016"
+					+ "\n  CommitPorMes: " + "\n\t Enero: 18" + "\n\t Febrero: 13" + "\n\t Marzo: 0" + "\n\t Abril: 0"
+					+ "\n\t Mayo: 0" + "\n\t Junio: 6" + "\n\t Julio: 1" + "\n\t Agosto: 0" + "\n\t Septiembre: 0"
+					+ "\n\t Octubre: 0" + "\n\t Noviembre: 2" + "\n\t Diciembre: 5" + "\n  RelacionMesPico: Enero"
+					+ "\n  ContadorCambiosPico: 0,40" + "\n  RatioActividadCambio: 5,62" + "\n  CommitPorDia: "
+					+ "\n\t Domingo: 2" + "\n\t Lunes: 14" + "\n\t Martes: 5" + "\n\t Miercoles: 7" + "\n\t Jueves: 7"
+					+ "\n\t Viernes: 2" + "\n\t Sabado: 8" + "\n  CambioPorAutor: " + "\n\t dba0010: 43"
+					+ "\n\t Nazalik: 2" + "\n  ContadorAutor: 0,04" + "\n  IssuesPorAutor: " + "\n\t dba0010: 21"
+					+ "\n\t clopezno: 3" + "\n  NumeroFavoritos: 1";
 
 			assertEquals("Comparación de los resultados de las métricas del repositorio.", cadena,
 					resultadoMetricas[0]);

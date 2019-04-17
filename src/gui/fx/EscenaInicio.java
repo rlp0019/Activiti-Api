@@ -5,7 +5,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 
+/**
+ * Escena de selección de función a realizar.
+ * 
+ * @author Roberto Luquero Peñacoba
+ *
+ */
 public class EscenaInicio extends StackPane {
+
+	/**
+	 * Constructor de la escena.
+	 * 
+	 * @param aplicacion aplicación principal.
+	 */
 	public EscenaInicio(PrincipalFX aplicacion) {
 		this.setBackground(CreadorElementos.createBackground());
 
@@ -19,7 +31,7 @@ public class EscenaInicio extends StackPane {
 
 		Button cargarInformeB = CreadorElementos.createButton("Cargar informe", 22,
 				"Cargar un informe para importar sus métricas.", 0, 30, 250);
-		// cargarInformeB.setOnAction(e -> PrincipalFX.cambiaEscena());
+		cargarInformeB.setOnAction(e -> aplicacion.loadArchivo());
 
 		Button compararInformesB = CreadorElementos.createButton("Comparar informes", 22,
 				"Cargar dos informes para comparar sus métricas.", 0, 110, 250);

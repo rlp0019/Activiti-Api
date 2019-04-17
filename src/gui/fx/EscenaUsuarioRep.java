@@ -10,10 +10,24 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 
+/**
+ * Escena de búsqueda de repositorio.
+ * 
+ * @author Roberto Luquero Peñacoba
+ *
+ */
 public class EscenaUsuarioRep extends StackPane {
 
+	/**
+	 * Usuario que contiene los repositorios.
+	 */
 	private String nombreUsuario;
 
+	/**
+	 * Constructor de la escena.
+	 * 
+	 * @param aplicacion aplicación principal.
+	 */
 	public EscenaUsuarioRep(PrincipalFX aplicacion) {
 		this.setBackground(CreadorElementos.createBackground());
 
@@ -46,7 +60,7 @@ public class EscenaUsuarioRep extends StackPane {
 				alert2.showAndWait();
 			} else {
 				aplicacion.calculaMetricasRepositorio(nombreUsuario, desplegableRepo.getValue());
-				EscenaResultados.setResultadoMetricas(aplicacion);
+				EscenaResultados.setResultadoMetricas((String) aplicacion.getMetricasRepositorio()[0]);
 				aplicacion.cambiaEscena(5);
 			}
 		});

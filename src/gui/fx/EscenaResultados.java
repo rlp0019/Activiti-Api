@@ -8,9 +8,24 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.layout.StackPane;
 
+/**
+ * Escena que muestra los resultados de las métricas, tanto calculadas como
+ * importadas.
+ * 
+ * @author Roberto Luquero Peñacoba
+ *
+ */
 public class EscenaResultados extends StackPane {
-	private static Label contenido;
+	/**
+	 * Label que contiene las métricas a mostrar.
+	 */
+	private static Label contenido = CreadorElementos.createLabel("", 14, "#000000", 0, 0);
 
+	/**
+	 * Constructor de la escena.
+	 * 
+	 * @param aplicacion aplicación principal.
+	 */
 	public EscenaResultados(PrincipalFX aplicacion) {
 		this.setBackground(CreadorElementos.createBackground());
 
@@ -19,7 +34,11 @@ public class EscenaResultados extends StackPane {
 		panelContenido.setHbarPolicy(ScrollBarPolicy.NEVER);
 		panelContenido.setBackground(CreadorElementos.createBackground());
 
-		contenido = CreadorElementos.createLabel("", 14, "#000000", 0, 0);
+		Button guardarB = CreadorElementos.createButton("Guardar", 16, "Guardar el informe de resultados.", 0, 227,
+				100);
+		guardarB.setOnAction(e -> {
+			aplicacion.saveArchivo();
+		});
 
 		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", -300, 227, 100);
 		atrasB.setOnAction(e -> {
@@ -27,11 +46,16 @@ public class EscenaResultados extends StackPane {
 		});
 
 		panelContenido.setContent(contenido);
-		this.getChildren().addAll(panelContenido, atrasB);
+		this.getChildren().addAll(panelContenido, guardarB, atrasB);
 		EscenaResultados.setAlignment(panelContenido, Pos.TOP_CENTER);
 	}
 
-	public static void setResultadoMetricas(PrincipalFX aplicacion) {
-		contenido.setText((String) aplicacion.getMetricasRepositorio()[0]);
+	/**
+	 * Set que establece las métricas en la label.
+	 * 
+	 * @param resultado resultado de las métricas.
+	 */
+	public static void setResultadoMetricas(String resultado) {
+		contenido.setText(resultado);
 	}
 }

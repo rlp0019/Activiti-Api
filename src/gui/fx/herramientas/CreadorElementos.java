@@ -10,11 +10,32 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
+/**
+ * Clase que contiene la creación de los nodos usados en las escenas.
+ * 
+ * @author Roberto Luquero Peñacoba
+ *
+ */
 public class CreadorElementos {
+	/**
+	 * Crea un background y lo devuelve.
+	 * 
+	 * @return background.
+	 */
 	public static Background createBackground() {
 		return new Background(new BackgroundFill(Color.web("#e6f2ff"), null, null));
 	}
 
+	/**
+	 * Crea una label y la devuelve.
+	 * 
+	 * @param texto texto que muestra la label.
+	 * @param tamF  tamaño de la fuente.
+	 * @param color color de la fuente.
+	 * @param posX  posición x.
+	 * @param posY  posición y.
+	 * @return label.
+	 */
 	public static Label createLabel(String texto, double tamF, String color, int posX, int posY) {
 		Label label = new Label(texto);
 		label.setFont(new Font("Arial", tamF));
@@ -25,6 +46,17 @@ public class CreadorElementos {
 		return label;
 	}
 
+	/**
+	 * Crea un botón y lo devuelve.
+	 * 
+	 * @param texto   texto que muestra el botón.
+	 * @param tamF    tamaño de la fuente.
+	 * @param tooltip texto del tooltip.
+	 * @param posX    posición x.
+	 * @param posY    posición y.
+	 * @param minW    tamaño mínimo del botón.
+	 * @return botón.
+	 */
 	public static Button createButton(String texto, double tamF, String tooltip, int posX, int posY, int minW) {
 		Button button = new Button(texto);
 		button.setFont(new Font("Arial", tamF));
@@ -38,6 +70,17 @@ public class CreadorElementos {
 		return button;
 	}
 
+	/**
+	 * Crea un campo de texto y lo devuelve.
+	 * 
+	 * @param textoP  texto que contiene cuando está vacío.
+	 * @param tamF    tamaño de la fuente.
+	 * @param tooltip texto del tooltip.
+	 * @param posX    posición x.
+	 * @param posY    posición y.
+	 * @param maxW    tamaño máximo del campo.
+	 * @return textfield.
+	 */
 	public static TextField createTextField(String textoP, double tamF, String tooltip, int posX, int posY, int maxW) {
 		TextField tf = new TextField();
 		tf.setPromptText(textoP);
@@ -52,6 +95,17 @@ public class CreadorElementos {
 		return tf;
 	}
 
+	/**
+	 * Crea un campo de contraseña y lo devuelve.
+	 * 
+	 * @param textoP  texto que contiene cuando está vacío.
+	 * @param tamF    tamaño de la fuente.
+	 * @param tooltip texto del tooltip.
+	 * @param posX    posición x.
+	 * @param posY    posición y.
+	 * @param maxW    tamaño máximo del campo.
+	 * @return passwordfield.
+	 */
 	public static PasswordField createPasswordField(String textoP, double tamF, String tooltip, int posX, int posY,
 			int maxW) {
 		PasswordField pf = new PasswordField();

@@ -5,8 +5,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 
+/**
+ * Escena que contiene la selección de plataforma.
+ * 
+ * @author Roberto Luquero Peñacoba
+ *
+ */
 public class EscenaSelPlataforma extends StackPane {
 
+	/**
+	 * Constructor de la escena.
+	 * 
+	 * @param aplicacion aplicación principal.
+	 */
 	public EscenaSelPlataforma(PrincipalFX aplicacion) {
 		this.setBackground(CreadorElementos.createBackground());
 
