@@ -371,13 +371,15 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 
 		switch (valor) {
 		case 0:
-			resultadoComparacion += comparaEnteros(i, valorMetrica, valorComparacion, color1, color2);
+			resultadoComparacion += comparaEnteros(valorMetrica, valorComparacion, color1, color2);
 			break;
 		case 1:
-			resultadoComparacion += comparaLargos(i, valorMetrica, valorComparacion, color1, color2);
+			resultadoComparacion += comparaLargos(valorMetrica, valorComparacion, color1, color2);
 			break;
 		case 2:
-			resultadoComparacion += comparaFechas(i, valorMetrica, valorComparacion, color1, color2);
+			resultadoComparacion += comparaFechas(valorMetrica, valorComparacion, color1, color2);
+			break;
+		default:
 			break;
 		}
 
@@ -396,7 +398,7 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 	 * @param color2           texto con el color de la segunda comprobación.
 	 * @return texto resultante de la comparación.
 	 */
-	private String comparaEnteros(int i, Valor valorMetrica, Valor valorComparacion, String color1, String color2) {
+	private String comparaEnteros(Valor valorMetrica, Valor valorComparacion, String color1, String color2) {
 		String resultadoComparacion = "";
 
 		if (((Entero) valorMetrica).getValor() < ((Entero) valorComparacion).getValor()) {
@@ -423,7 +425,7 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 	 * @param color2           texto con el color de la segunda comprobación.
 	 * @return texto resultante de la comparación.
 	 */
-	private String comparaLargos(int i, Valor valorMetrica, Valor valorComparacion, String color1, String color2) {
+	private String comparaLargos(Valor valorMetrica, Valor valorComparacion, String color1, String color2) {
 		String resultadoComparacion = "";
 
 		if (((Largo) valorMetrica).getValor() < ((Largo) valorComparacion).getValor()) {
@@ -450,7 +452,7 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 	 * @param color2           texto con el color de la segunda comprobación.
 	 * @return texto resultante de la comparación.
 	 */
-	private String comparaFechas(int i, Valor valorMetrica, Valor valorComparacion, String color1, String color2) {
+	private String comparaFechas(Valor valorMetrica, Valor valorComparacion, String color1, String color2) {
 		String resultadoComparacion = "";
 
 		if (((Fecha) valorMetrica).getValor().getTime() < ((Fecha) valorComparacion).getValor().getTime()) {
