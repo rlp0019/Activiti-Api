@@ -35,6 +35,7 @@ import metricas.UltimaModificacion;
 import motormetricas.Medida;
 import motormetricas.Metrica;
 import motormetricas.ResultadoMetrica;
+import motormetricas.Valor;
 import motormetricas.valores.Cadena;
 import motormetricas.valores.Conjunto;
 import motormetricas.valores.Entero;
@@ -302,8 +303,8 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 	/**
 	 * Realiza la comparacion con otra conexion.
 	 * 
-	 * @param comparacion FachadaConexion conexion con la que comparar.
-	 * @return String texto resultante del a comparacion.
+	 * @param comparacion conexion con la que comparar.
+	 * @return String texto resultante de la comparacion.
 	 */
 	@Override
 	public String comparar(FachadaConexion comparacion) {
@@ -312,173 +313,157 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 			switch (metricas.getMedida(i).getMetrica().getDescripcion().getNombre()) {
 			case "NumeroIssues":
 			case "NumeroCambiosSinMensaje":
-				resultadoComparacion += "<tr>";
-				resultadoComparacion += "<td>" + metricas.getMedida(i).getMetrica().getDescripcion().getNombre()
-						+ "</td>";
-				if (((Entero) metricas.getMedida(i).getValue())
-						.getValor() < ((Entero) comparacion.getMetricas().getResultadoMetrica().getMedida(i).getValue())
-								.getValor()) {
-					resultadoComparacion += "<td class=\"verde\">"
-							+ ((Entero) metricas.getMedida(i).getValue()).getValor() + "</td>";
-					resultadoComparacion += "<td class=\"rojo\">"
-							+ ((Entero) comparacion.getMetricas().getResultadoMetrica().getMedida(i).getValue())
-									.getValor()
-							+ "</td>";
-				} else if (((Entero) metricas.getMedida(i).getValue())
-						.getValor() > ((Entero) comparacion.getMetricas().getResultadoMetrica().getMedida(i).getValue())
-								.getValor()) {
-					resultadoComparacion += "<td class=\"rojo\">"
-							+ ((Entero) metricas.getMedida(i).getValue()).getValor() + "</td>";
-					resultadoComparacion += "<td class=\"verde\">"
-							+ ((Entero) comparacion.getMetricas().getResultadoMetrica().getMedida(i).getValue())
-									.getValor()
-							+ "</td>";
-				} else {
-					resultadoComparacion += "<td>" + ((Entero) metricas.getMedida(i).getValue()).getValor() + "</td>";
-					resultadoComparacion += "<td>"
-							+ ((Entero) comparacion.getMetricas().getResultadoMetrica().getMedida(i).getValue())
-									.getValor()
-							+ "</td>";
-				}
-				resultadoComparacion += "</tr>";
+				resultadoComparacion += comparaValores(comparacion, i, true, 0);
 				break;
 			case "NumeroIssuesCerradas":
 			case "NumeroFavoritos":
-				resultadoComparacion += "<tr>";
-				resultadoComparacion += "<td>" + metricas.getMedida(i).getMetrica().getDescripcion().getNombre()
-						+ "</td>";
-				if (((Entero) metricas.getMedida(i).getValue())
-						.getValor() > ((Entero) comparacion.getMetricas().getResultadoMetrica().getMedida(i).getValue())
-								.getValor()) {
-					resultadoComparacion += "<td class=\"verde\">"
-							+ ((Entero) metricas.getMedida(i).getValue()).getValor() + "</td>";
-					resultadoComparacion += "<td class=\"rojo\">"
-							+ ((Entero) comparacion.getMetricas().getResultadoMetrica().getMedida(i).getValue())
-									.getValor()
-							+ "</td>";
-				} else if (((Entero) metricas.getMedida(i).getValue())
-						.getValor() < ((Entero) comparacion.getMetricas().getResultadoMetrica().getMedida(i).getValue())
-								.getValor()) {
-					resultadoComparacion += "<td class=\"rojo\">"
-							+ ((Entero) metricas.getMedida(i).getValue()).getValor() + "</td>";
-					resultadoComparacion += "<td class=\"verde\">"
-							+ ((Entero) comparacion.getMetricas().getResultadoMetrica().getMedida(i).getValue())
-									.getValor()
-							+ "</td>";
-				} else {
-					resultadoComparacion += "<td>" + ((Entero) metricas.getMedida(i).getValue()).getValor() + "</td>";
-					resultadoComparacion += "<td>"
-							+ ((Entero) comparacion.getMetricas().getResultadoMetrica().getMedida(i).getValue())
-									.getValor()
-							+ "</td>";
-				}
-				resultadoComparacion += "</tr>";
+				resultadoComparacion += comparaValores(comparacion, i, false, 0);
 				break;
 			case "ContadorTareas":
 			case "PorcentajeIssuesCerradas":
 			case "DiasPrimerUltimoCommit":
 			case "ContadorCambiosPico":
 			case "RatioActividadCambio":
-				resultadoComparacion += "<tr>";
-				resultadoComparacion += "<td>" + metricas.getMedida(i).getMetrica().getDescripcion().getNombre()
-						+ "</td>";
-				if (((Largo) metricas.getMedida(i).getValue())
-						.getValor() > ((Largo) comparacion.getMetricas().getResultadoMetrica().getMedida(i).getValue())
-								.getValor()) {
-					resultadoComparacion += "<td class=\"verde\">"
-							+ formateador.format(((Largo) metricas.getMedida(i).getValue()).getValor()) + "</td>";
-					resultadoComparacion += "<td class=\"rojo\">" + formateador
-							.format(((Largo) comparacion.getMetricas().getResultadoMetrica().getMedida(i).getValue())
-									.getValor())
-							+ "</td>";
-				} else if (((Largo) metricas.getMedida(i).getValue())
-						.getValor() < ((Largo) comparacion.getMetricas().getResultadoMetrica().getMedida(i).getValue())
-								.getValor()) {
-					resultadoComparacion += "<td class=\"rojo\">"
-							+ formateador.format(((Largo) metricas.getMedida(i).getValue()).getValor()) + "</td>";
-					resultadoComparacion += "<td class=\"verde\">" + formateador
-							.format(((Largo) comparacion.getMetricas().getResultadoMetrica().getMedida(i).getValue())
-									.getValor())
-							+ "</td>";
-				} else {
-					resultadoComparacion += "<td>"
-							+ formateador.format(((Largo) metricas.getMedida(i).getValue()).getValor()) + "</td>";
-					resultadoComparacion += "<td>" + formateador
-							.format(((Largo) comparacion.getMetricas().getResultadoMetrica().getMedida(i).getValue())
-									.getValor())
-							+ "</td>";
-				}
-				resultadoComparacion += "</tr>";
+				resultadoComparacion += comparaValores(comparacion, i, false, 1);
 				break;
 			case "MediaDiasCierre":
 			case "MediaDiasCambio":
 			case "ContadorAutor":
-				resultadoComparacion += "<tr>";
-				resultadoComparacion += "<td>" + metricas.getMedida(i).getMetrica().getDescripcion().getNombre()
-						+ "</td>";
-				if (((Largo) metricas.getMedida(i).getValue())
-						.getValor() < ((Largo) comparacion.getMetricas().getResultadoMetrica().getMedida(i).getValue())
-								.getValor()) {
-					resultadoComparacion += "<td class=\"verde\">"
-							+ formateador.format(((Largo) metricas.getMedida(i).getValue()).getValor()) + "</td>";
-					resultadoComparacion += "<td class=\"rojo\">" + formateador
-							.format(((Largo) comparacion.getMetricas().getResultadoMetrica().getMedida(i).getValue())
-									.getValor())
-							+ "</td>";
-				} else if (((Largo) metricas.getMedida(i).getValue())
-						.getValor() > ((Largo) comparacion.getMetricas().getResultadoMetrica().getMedida(i).getValue())
-								.getValor()) {
-					resultadoComparacion += "<td class=\"rojo\">"
-							+ formateador.format(((Largo) metricas.getMedida(i).getValue()).getValor()) + "</td>";
-					resultadoComparacion += "<td class=\"verde\">" + formateador
-							.format(((Largo) comparacion.getMetricas().getResultadoMetrica().getMedida(i).getValue())
-									.getValor())
-							+ "</td>";
-				} else {
-					resultadoComparacion += "<td>"
-							+ formateador.format(((Largo) metricas.getMedida(i).getValue()).getValor()) + "</td>";
-					resultadoComparacion += "<td>" + formateador
-							.format(((Largo) comparacion.getMetricas().getResultadoMetrica().getMedida(i).getValue())
-									.getValor())
-							+ "</td>";
-				}
-				resultadoComparacion += "</tr>";
+				resultadoComparacion += comparaValores(comparacion, i, true, 1);
 				break;
 			case "UltimaModificacion":
-				resultadoComparacion += "<tr>";
-				resultadoComparacion += "<td>" + metricas.getMedida(i).getMetrica().getDescripcion().getNombre()
-						+ "</td>";
-				if (((Fecha) metricas.getMedida(i).getValue()).getValor()
-						.getTime() > ((Fecha) comparacion.getMetricas().getResultadoMetrica().getMedida(i).getValue())
-								.getValor().getTime()) {
-					resultadoComparacion += "<td class=\"verde\">"
-							+ ((Fecha) metricas.getMedida(i).getValue()).getValor() + "</td>";
-					resultadoComparacion += "<td class=\"rojo\">"
-							+ ((Fecha) comparacion.getMetricas().getResultadoMetrica().getMedida(i).getValue())
-									.getValor()
-							+ "</td>";
-				} else if (((Fecha) metricas.getMedida(i).getValue()).getValor()
-						.getTime() < ((Fecha) comparacion.getMetricas().getResultadoMetrica().getMedida(i).getValue())
-								.getValor().getTime()) {
-					resultadoComparacion += "<td class=\"rojo\">"
-							+ ((Fecha) metricas.getMedida(i).getValue()).getValor() + "</td>";
-					resultadoComparacion += "<td class=\"verde\">"
-							+ ((Fecha) comparacion.getMetricas().getResultadoMetrica().getMedida(i).getValue())
-									.getValor()
-							+ "</td>";
-				} else {
-					resultadoComparacion += "<td>" + ((Fecha) metricas.getMedida(i).getValue()).getValor() + "</td>";
-					resultadoComparacion += "<td>"
-							+ ((Fecha) comparacion.getMetricas().getResultadoMetrica().getMedida(i).getValue())
-									.getValor()
-							+ "</td>";
-				}
-				resultadoComparacion += "</tr>";
+				resultadoComparacion += comparaValores(comparacion, i, false, 2);
 				break;
 			default:
 				break;
 			}
 		}
+		return resultadoComparacion;
+	}
+
+	/**
+	 * Compara los valores de los distintos resultados de métricas.
+	 * 
+	 * @param comparacion conexion con la que comparar.
+	 * @param i           índice de la métrica a comparar.
+	 * @param menor       indica si menor es mejor.
+	 * @param valor       tipo de valor, 0 es Entero, 1 es Largo y 2 es Fecha.
+	 * @return texto resultante de la comparación.
+	 */
+	private String comparaValores(FachadaConexion comparacion, int i, boolean menor, int valor) {
+		String color1 = "";
+		String color2 = "";
+		String resultadoComparacion = "";
+
+		Valor valorMetrica = metricas.getMedida(i).getValue();
+		Valor valorComparacion = comparacion.getMetricas().getResultadoMetrica().getMedida(i).getValue();
+
+		if (menor) {
+			color1 = "<td class=\"verde\">";
+			color2 = "<td class=\"rojo\">";
+		} else {
+			color1 = "<td class=\"rojo\">";
+			color2 = "<td class=\"verde\">";
+		}
+
+		resultadoComparacion += "<tr>";
+		resultadoComparacion += "<td>" + metricas.getMedida(i).getMetrica().getDescripcion().getNombre() + "</td>";
+
+		switch (valor) {
+		case 0:
+			resultadoComparacion += comparaEnteros(i, valorMetrica, valorComparacion, color1, color2);
+			break;
+		case 1:
+			resultadoComparacion += comparaLargos(i, valorMetrica, valorComparacion, color1, color2);
+			break;
+		case 2:
+			resultadoComparacion += comparaFechas(i, valorMetrica, valorComparacion, color1, color2);
+			break;
+		}
+
+		resultadoComparacion += "</tr>";
+
+		return resultadoComparacion;
+	}
+
+	/**
+	 * Comparala los valores de los enteros.
+	 * 
+	 * @param i                índice de la métrica a comparar.
+	 * @param valorMetrica     valor del primer resultado a comparar.
+	 * @param valorComparacion valor del segundo resultado a comparar.
+	 * @param color1           texto con el color de la primera comprobación.
+	 * @param color2           texto con el color de la segunda comprobación.
+	 * @return texto resultante de la comparación.
+	 */
+	private String comparaEnteros(int i, Valor valorMetrica, Valor valorComparacion, String color1, String color2) {
+		String resultadoComparacion = "";
+
+		if (((Entero) valorMetrica).getValor() < ((Entero) valorComparacion).getValor()) {
+			resultadoComparacion += color1 + ((Entero) valorMetrica).getValor() + "</td>";
+			resultadoComparacion += color2 + ((Entero) valorComparacion).getValor() + "</td>";
+		} else if (((Entero) valorMetrica).getValor() > ((Entero) valorComparacion).getValor()) {
+			resultadoComparacion += color2 + ((Entero) valorMetrica).getValor() + "</td>";
+			resultadoComparacion += color1 + ((Entero) valorComparacion).getValor() + "</td>";
+		} else {
+			resultadoComparacion += "<td>" + ((Entero) valorMetrica).getValor() + "</td>";
+			resultadoComparacion += "<td>" + ((Entero) valorComparacion).getValor() + "</td>";
+		}
+
+		return resultadoComparacion;
+	}
+
+	/**
+	 * Comparala los valores de los largos.
+	 * 
+	 * @param i                índice de la métrica a comparar.
+	 * @param valorMetrica     valor del primer resultado a comparar.
+	 * @param valorComparacion valor del segundo resultado a comparar.
+	 * @param color1           texto con el color de la primera comprobación.
+	 * @param color2           texto con el color de la segunda comprobación.
+	 * @return texto resultante de la comparación.
+	 */
+	private String comparaLargos(int i, Valor valorMetrica, Valor valorComparacion, String color1, String color2) {
+		String resultadoComparacion = "";
+
+		if (((Largo) valorMetrica).getValor() < ((Largo) valorComparacion).getValor()) {
+			resultadoComparacion += color1 + formateador.format(((Largo) valorMetrica).getValor()) + "</td>";
+			resultadoComparacion += color2 + formateador.format(((Largo) valorComparacion).getValor()) + "</td>";
+		} else if (((Largo) valorMetrica).getValor() > ((Largo) valorComparacion).getValor()) {
+			resultadoComparacion += color2 + formateador.format(((Largo) valorMetrica).getValor()) + "</td>";
+			resultadoComparacion += color1 + formateador.format(((Largo) valorComparacion).getValor()) + "</td>";
+		} else {
+			resultadoComparacion += "<td>" + formateador.format(((Largo) valorMetrica).getValor()) + "</td>";
+			resultadoComparacion += "<td>" + formateador.format(((Largo) valorComparacion).getValor()) + "</td>";
+		}
+
+		return resultadoComparacion;
+	}
+
+	/**
+	 * Comparala los valores de las fechas.
+	 * 
+	 * @param i                índice de la métrica a comparar.
+	 * @param valorMetrica     valor del primer resultado a comparar.
+	 * @param valorComparacion valor del segundo resultado a comparar.
+	 * @param color1           texto con el color de la primera comprobación.
+	 * @param color2           texto con el color de la segunda comprobación.
+	 * @return texto resultante de la comparación.
+	 */
+	private String comparaFechas(int i, Valor valorMetrica, Valor valorComparacion, String color1, String color2) {
+		String resultadoComparacion = "";
+
+		if (((Fecha) valorMetrica).getValor().getTime() < ((Fecha) valorComparacion).getValor().getTime()) {
+			resultadoComparacion += color1 + ((Fecha) valorMetrica).getValor() + "</td>";
+			resultadoComparacion += color2 + ((Fecha) valorComparacion).getValor() + "</td>";
+		} else if (((Fecha) valorMetrica).getValor().getTime() > ((Fecha) valorComparacion).getValor().getTime()) {
+			resultadoComparacion += color2 + ((Fecha) valorMetrica).getValor() + "</td>";
+			resultadoComparacion += color1 + ((Fecha) valorComparacion).getValor() + "</td>";
+		} else {
+			resultadoComparacion += "<td>" + ((Fecha) valorMetrica).getValor() + "</td>";
+			resultadoComparacion += "<td>" + ((Fecha) valorComparacion).getValor() + "</td>";
+		}
+
 		return resultadoComparacion;
 	}
 
