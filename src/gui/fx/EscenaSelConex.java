@@ -25,7 +25,7 @@ public class EscenaSelConex extends StackPane {
 	public EscenaSelConex(PrincipalFX aplicacion) {
 		this.setBackground(CreadorElementos.createBackground());
 
-		Label selecciona = CreadorElementos.createLabel("Selecciona el tipo de conexión:", 32, "#0076a3", 0, -150);
+		Label selecciona = CreadorElementos.createLabel("Selecciona el tipo de conexión:", 32, "#0076a3", 0, -175);
 
 		Alert alerta = new Alert(AlertType.NONE,
 				"Usando este modo pueden surgir problemas por el número de peticiones. ¿Quiéres continuar de todas formas?",

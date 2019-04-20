@@ -21,9 +21,9 @@ public class EscenaSelPlataforma extends StackPane {
 	public EscenaSelPlataforma(PrincipalFX aplicacion) {
 		this.setBackground(CreadorElementos.createBackground());
 
-		Label selecciona = CreadorElementos.createLabel("Selecciona la plataforma:", 32, "#0076a3", 0, -150);
+		Label selecciona = CreadorElementos.createLabel("Selecciona la plataforma:", 32, "#0076a3", 0, -175);
 
-		Button githubB = CreadorElementos.createButton("GitHub", 24, "Trabajar con la plataforma GitHub.", 0, 0, 200);
+		Button githubB = CreadorElementos.createButton("GitHub", 22, "Trabajar con la plataforma GitHub.", 0, 0, 200);
 		githubB.setOnAction(e -> aplicacion.cambiaEscena(2));
 
 		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", -300, 227, 100);

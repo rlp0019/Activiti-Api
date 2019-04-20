@@ -149,7 +149,7 @@ public class PrincipalFX extends Application {
 	 * Inicialización de las escenas.
 	 */
 	private void iniciaEscenas() {
-		escenas = new Scene[6];
+		escenas = new Scene[8];
 
 		EscenaInicio eInicio = new EscenaInicio(this);
 		escenas[0] = new Scene(eInicio);
@@ -168,6 +168,12 @@ public class PrincipalFX extends Application {
 
 		EscenaResultados eResultados = new EscenaResultados(this);
 		escenas[5] = new Scene(eResultados);
+
+		EscenaComparacion eComparacion = new EscenaComparacion(this);
+		escenas[6] = new Scene(eComparacion);
+
+		EscenaResultadoComparacion eResComp = new EscenaResultadoComparacion(this);
+		escenas[7] = new Scene(eResComp);
 	}
 
 	/**
@@ -306,5 +312,14 @@ public class PrincipalFX extends Application {
 			alertaEGuardar.showAndWait();
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * Devuelve la stage.
+	 * 
+	 * @return la stage.
+	 */
+	public Stage getVentana() {
+		return ventana;
 	}
 }

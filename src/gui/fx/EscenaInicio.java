@@ -35,7 +35,7 @@ public class EscenaInicio extends StackPane {
 
 		Button compararInformesB = CreadorElementos.createButton("Comparar informes", 22,
 				"Cargar dos informes para comparar sus métricas.", 0, 110, 250);
-		// compararInformesB.setOnAction(e -> PrincipalFX.cambiaEscena());
+		compararInformesB.setOnAction(e -> aplicacion.cambiaEscena(6));
 
 		this.getChildren().addAll(activiti, selecciona, buscarRepoB, cargarInformeB, compararInformesB);
 	}

@@ -32,7 +32,7 @@ public class EscenaResultados extends StackPane {
 		ScrollPane panelContenido = new ScrollPane();
 		panelContenido.setMaxSize(715, 450);
 		panelContenido.setHbarPolicy(ScrollBarPolicy.NEVER);
-		panelContenido.setBackground(CreadorElementos.createBackground());
+		panelContenido.getStylesheets().add(getClass().getResource("/css/scrollpanel.css").toExternalForm());
 
 		Button guardarB = CreadorElementos.createButton("Guardar", 16, "Guardar el informe de resultados.", 0, 227,
 				100);
@@ -42,7 +42,7 @@ public class EscenaResultados extends StackPane {
 
 		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", -300, 227, 100);
 		atrasB.setOnAction(e -> {
-			aplicacion.cambiaEscena(4);
+			aplicacion.cambiaEscena(0);
 		});
 
 		panelContenido.setContent(contenido);

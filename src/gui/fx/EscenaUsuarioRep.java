@@ -43,7 +43,7 @@ public class EscenaUsuarioRep extends StackPane {
 		Alert alert2 = new Alert(AlertType.NONE, "La selección de repositorio no puede estar vacía.", ButtonType.CLOSE);
 		alert.setTitle("Error");
 
-		Label usuarioRep = CreadorElementos.createLabel("Buscar repositorios de:", 32, "#0076a3", 0, -150);
+		Label usuarioRep = CreadorElementos.createLabel("Seleccionar repositorio:", 32, "#0076a3", 0, -175);
 
 		Label usuario = CreadorElementos.createLabel("Introduce el nombre del usuario a buscar:", 20, "#505050", 0,
 				-100);
