@@ -1,6 +1,6 @@
-package gui.fx;
+package gui;
 
-import gui.fx.herramientas.CreadorElementos;
+import gui.herramientas.CreadorElementos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
@@ -27,7 +27,7 @@ public class EscenaInicio extends StackPane {
 
 		Button buscarRepoB = CreadorElementos.createButton("Buscar repositorio", 22,
 				"Buscar un repositorio para calcular sus métricas.", 0, -50, 250);
-		buscarRepoB.setOnAction(e -> aplicacion.cambiaEscena(1));
+		buscarRepoB.setOnAction(e -> aplicacion.cambiaEscena(2));
 
 		Button cargarInformeB = CreadorElementos.createButton("Cargar informe", 22,
 				"Cargar un informe para importar sus métricas.", 0, 30, 250);

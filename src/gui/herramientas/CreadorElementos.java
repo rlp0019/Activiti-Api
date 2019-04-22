@@ -1,6 +1,9 @@
-package gui.fx.herramientas;
+package gui.herramientas;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -119,5 +122,21 @@ public class CreadorElementos {
 		pf.setMaxWidth(maxW);
 
 		return pf;
+	}
+
+	/**
+	 * Crea una alera y la devuelve.
+	 * 
+	 * @param cabecera texto de la cabecera.
+	 * @param contexto texto del contexto.
+	 * @param titulo   título de la alerta.
+	 * @return la alerta.
+	 */
+	public static Alert createAlertaError(String cabecera, String contexto, String titulo) {
+		Alert alerta = new Alert(AlertType.ERROR, contexto, ButtonType.CANCEL);
+		alerta.setHeaderText(cabecera);
+		alerta.setTitle(titulo);
+
+		return alerta;
 	}
 }

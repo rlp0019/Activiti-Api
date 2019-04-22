@@ -1,6 +1,6 @@
-package gui.fx;
+package gui;
 
-import gui.fx.herramientas.CreadorElementos;
+import gui.herramientas.CreadorElementos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -27,9 +27,10 @@ public class EscenaSelConex extends StackPane {
 
 		Label selecciona = CreadorElementos.createLabel("Selecciona el tipo de conexión:", 32, "#0076a3", 0, -175);
 
-		Alert alerta = new Alert(AlertType.NONE,
+		Alert alerta = new Alert(AlertType.WARNING,
 				"Usando este modo pueden surgir problemas por el número de peticiones. ¿Quiéres continuar de todas formas?",
 				ButtonType.YES, ButtonType.NO);
+		alerta.setHeaderText("Confirmación de conexión.");
 		alerta.setTitle("Advertencia");
 
 		Button usuarioB = CreadorElementos.createButton("Modo usuario", 22,
@@ -50,7 +51,7 @@ public class EscenaSelConex extends StackPane {
 			}
 		});
 
-		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", -300, 227, 100);
+		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", -315, 227, 100);
 		atrasB.setOnAction(e -> aplicacion.cambiaEscena(1));
 
 		this.getChildren().addAll(selecciona, usuarioB, desconectadoB, atrasB);

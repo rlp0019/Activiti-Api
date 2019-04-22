@@ -15,6 +15,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import javafx.embed.swing.JFXPanel;
 import lector.FabricaConexion;
 import lector.FabricaConexionGitHub;
 import lector.FachadaConexion;
@@ -40,6 +41,9 @@ public class PrincipalTest {
 	 */
 	@Before
 	public void setUp() {
+		// Es necesario para que se inicie JavaFX.
+		new JFXPanel();
+
 		fabricaLector = FabricaConexionGitHub.getInstance();
 	}
 

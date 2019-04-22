@@ -1,10 +1,8 @@
-package gui.fx;
+package gui;
 
-import gui.fx.herramientas.CreadorElementos;
+import gui.herramientas.CreadorElementos;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -32,16 +30,16 @@ public class EscenaUsuarioRep extends StackPane {
 		this.setBackground(CreadorElementos.createBackground());
 
 		ComboBox<String> desplegableRepo = new ComboBox<String>();
-		desplegableRepo.setTranslateX(-30);
+		desplegableRepo.setTranslateX(-50);
 		desplegableRepo.setTranslateY(100);
 		desplegableRepo.setMinWidth(250);
 		desplegableRepo.setMinHeight(40);
 
-		Alert alert = new Alert(AlertType.NONE, "El campo usuario no puede estar vacío.", ButtonType.CLOSE);
-		alert.setTitle("Error");
+		Alert alert = CreadorElementos.createAlertaError("Campo vacío.", "El campo usuario no puede estar vacío.",
+				"Error de datos.");
 
-		Alert alert2 = new Alert(AlertType.NONE, "La selección de repositorio no puede estar vacía.", ButtonType.CLOSE);
-		alert.setTitle("Error");
+		Alert alert2 = CreadorElementos.createAlertaError("Campo vacío.",
+				"La selección de repositorio no puede estar vacía.", "Error de datos.");
 
 		Label usuarioRep = CreadorElementos.createLabel("Seleccionar repositorio:", 32, "#0076a3", 0, -175);
 
@@ -52,22 +50,23 @@ public class EscenaUsuarioRep extends StackPane {
 				"#505050", 0, 40);
 
 		TextField tfUsuario = CreadorElementos.createTextField("Nombre del usuario.", 20,
-				"Introduce el nombre del usuario a buscar.", -30, -30, 250);
+				"Introduce el nombre del usuario a buscar.", -50, -30, 250);
 
-		Button repoB = CreadorElementos.createButton("Analizar", 20, "Selecciona el repositorio.", 150, 100, 100);
+		Button repoB = CreadorElementos.createButton("Analizar", 20, "Selecciona el repositorio.", 175, 100, 100);
 		repoB.setOnAction(e -> {
 			if (desplegableRepo.getSelectionModel().isEmpty()) {
 				alert2.showAndWait();
 			} else {
 				aplicacion.calculaMetricasRepositorio(nombreUsuario, desplegableRepo.getValue());
-				EscenaResultados.setResultadoMetricas((String) aplicacion.getMetricasRepositorio()[0]);
+				EscenaResultados.setResultadoMetricas(aplicacion.getMetricasRepositorio());
+				desplegableRepo.getItems().clear();
 				aplicacion.cambiaEscena(5);
 			}
 		});
 		repoB.setDisable(true);
 
 		Button buscarB = CreadorElementos.createButton("Buscar", 20, "Busca los repositorios del usuario introducido.",
-				150, -30, 100);
+				175, -30, 100);
 		buscarB.setOnAction(e -> {
 			if (tfUsuario.getText().isEmpty()) {
 				alert.showAndWait();
@@ -82,9 +81,10 @@ public class EscenaUsuarioRep extends StackPane {
 			}
 		});
 
-		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", -300, 227, 100);
+		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", -315, 227, 100);
 		atrasB.setOnAction(e -> {
 			tfUsuario.clear();
+			desplegableRepo.getItems().clear();
 			aplicacion.cambiaEscena(2);
 		});
 

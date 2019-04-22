@@ -1,10 +1,8 @@
-package gui.fx;
+package gui;
 
-import gui.fx.herramientas.CreadorElementos;
+import gui.herramientas.CreadorElementos;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -25,8 +23,8 @@ public class EscenaConex extends StackPane {
 	public EscenaConex(PrincipalFX aplicacion) {
 		this.setBackground(CreadorElementos.createBackground());
 
-		Alert alerta = new Alert(AlertType.NONE, "Ambos campos son obligatorios.", ButtonType.OK);
-		alerta.setTitle("Error");
+		Alert alerta = CreadorElementos.createAlertaError("Campo vacío.", "Ambos campos son obligatorios.",
+				"Error de datos.");
 
 		Label introduce = CreadorElementos.createLabel("Introduce los datos:", 32, "#0076a3", 0, -175);
 
@@ -54,7 +52,7 @@ public class EscenaConex extends StackPane {
 			}
 		});
 
-		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", -300, 227, 100);
+		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", -315, 227, 100);
 		atrasB.setOnAction(e -> {
 			tfUsuario.clear();
 			pfContra.clear();

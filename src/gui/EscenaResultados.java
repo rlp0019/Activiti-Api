@@ -1,6 +1,6 @@
-package gui.fx;
+package gui;
 
-import gui.fx.herramientas.CreadorElementos;
+import gui.herramientas.CreadorElementos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -34,19 +34,24 @@ public class EscenaResultados extends StackPane {
 		panelContenido.setHbarPolicy(ScrollBarPolicy.NEVER);
 		panelContenido.getStylesheets().add(getClass().getResource("/css/scrollpanel.css").toExternalForm());
 
-		Button guardarB = CreadorElementos.createButton("Guardar", 16, "Guardar el informe de resultados.", 0, 227,
-				100);
+		Button guardarB = CreadorElementos.createButton("Guardar informe", 16, "Guardar el informe de resultados.",
+				-150, 227, 100);
 		guardarB.setOnAction(e -> {
 			aplicacion.saveArchivo();
 		});
 
-		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", -300, 227, 100);
-		atrasB.setOnAction(e -> {
-			aplicacion.cambiaEscena(0);
+		Button graficosB = CreadorElementos.createButton("Ver gráficos", 16, "Cambiar a la pantalla de gráficos.", 10,
+				227, 100);
+		graficosB.setOnAction(e -> {
+			EscenaGraficos.loadGrafico(aplicacion, 1);
+			aplicacion.cambiaEscena(8);
 		});
 
+		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", -315, 227, 100);
+		atrasB.setOnAction(e -> aplicacion.cambiaEscena(0));
+
 		panelContenido.setContent(contenido);
-		this.getChildren().addAll(panelContenido, guardarB, atrasB);
+		this.getChildren().addAll(panelContenido, guardarB, graficosB, atrasB);
 		EscenaResultados.setAlignment(panelContenido, Pos.TOP_CENTER);
 	}
 
@@ -55,7 +60,7 @@ public class EscenaResultados extends StackPane {
 	 * 
 	 * @param resultado resultado de las métricas.
 	 */
-	public static void setResultadoMetricas(String resultado) {
-		contenido.setText(resultado);
+	public static void setResultadoMetricas(Object[] resultado) {
+		contenido.setText((String) resultado[0]);
 	}
 }

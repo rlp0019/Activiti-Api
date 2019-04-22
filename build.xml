@@ -12,6 +12,9 @@
   <property name="dclase.dir" value="rsc/diagramasclase"/>
   <property name="dsecuencia.dir" value="rsc/diagramassecuencia"/>
   <property name="imagenes.dir" value="rsc/imagenes"/>
+  <property name="css.dir" value="rsc/css"/>
+  <property name="datoscsv.dir" value="rsc/datoscsv"/>
+  <property name="informes.dir" value="rsc/informes"/>
   <property name="ayuda.dir" value="src/gui/ayuda"/>
   <property name="lib.dir" value="rsc/lib"/>
   <property name="libclasses.dir" value="libc"/>
@@ -126,12 +129,15 @@
   	
 	<jar jarfile="${dist.dir}/Activiti-${DSTAMP}.jar" basedir="${build.dir}">
 	  <manifest>
-	  	<attribute name="Main-Class" value="gui/Principal"/>
+	  	<attribute name="Main-Class" value="gui.PrincipalFX"/>
 	  </manifest>
 		
-	  <zipfileset dir="${dclase.dir}" prefix="${dclase.dir}"/>
-	  <zipfileset dir="${dsecuencia.dir}" prefix="${dsecuencia.dir}"/>
+	  <zipfileset dir="${dclase.dir}" prefix="diagramasclase"/>
+	  <zipfileset dir="${dsecuencia.dir}" prefix="diagramassecuencia"/>
 	  <zipfileset dir="${imagenes.dir}" prefix="imagenes"/>
+	  <zipfileset dir="${css.dir}" prefix="css"/>
+	  <zipfileset dir="${datoscsv.dir}" prefix="datoscsv"/>
+	  <zipfileset dir="${informes.dir}" prefix="informes"/>
 	  <zipfileset dir="${ayuda.dir}" prefix="gui/ayuda"/>
 	  <zipfileset dir="${libclasses.dir}"/>
 	</jar>

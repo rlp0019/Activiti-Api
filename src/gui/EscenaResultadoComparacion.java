@@ -1,6 +1,6 @@
-package gui.fx;
+package gui;
 
-import gui.fx.herramientas.CreadorElementos;
+import gui.herramientas.CreadorElementos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
@@ -21,7 +21,7 @@ public class EscenaResultadoComparacion extends StackPane {
 		StackPane panelContenido = new StackPane();
 		panelContenido.setBackground(CreadorElementos.createBackground());
 
-		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", -300, 227, 100);
+		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", -315, 227, 100);
 		atrasB.setOnAction(e -> aplicacion.cambiaEscena(0));
 
 		panelContenido.getChildren().add(wv);

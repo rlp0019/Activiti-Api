@@ -1,12 +1,12 @@
-package gui.fx;
+package gui;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import gui.herramientas.CreadorElementos;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -99,34 +99,34 @@ public class PrincipalFX extends Application {
 	public void start(Stage pStage) throws Exception {
 		fabConexion = FabricaConexionGitHub.getInstance();
 
-		alertaConexion = new Alert(AlertType.NONE, "Los datos de la conexión no son correctos.", ButtonType.CLOSE);
-		alertaConexion.setTitle("Error de conexión");
+		alertaConexion = CreadorElementos.createAlertaError("Datos erróneos.",
+				"Los datos de la conexión no son correctos.", "Error de conexión");
 
-		alertaUsuario = new Alert(AlertType.NONE, "El usuario introducido no es correcto.", ButtonType.CLOSE);
-		alertaUsuario.setTitle("Error de usuario");
+		alertaUsuario = CreadorElementos.createAlertaError("Datos erróneos.", "El usuario introducido no es correcto.",
+				"Error de usuario");
 
-		alertaRepositorio = new Alert(AlertType.NONE,
-				"La combinación de usuario-repositorio introducida no es correcta.", ButtonType.CLOSE);
-		alertaRepositorio.setTitle("Error de cálculo de métricas");
+		alertaRepositorio = CreadorElementos.createAlertaError("Datos erróneos.",
+				"La combinación de usuario-repositorio introducida no es correcta.", "Error de cálculo de métricas");
 
-		alertaArchivo = new Alert(AlertType.NONE, "El archivo seleccionado no se ha podido abrir correctamente.",
-				ButtonType.CLOSE);
-		alertaArchivo.setTitle("Error al abrir el archivo");
+		alertaArchivo = CreadorElementos.createAlertaError("Error de apertura del archivo.",
+				"El archivo seleccionado no se ha podido abrir correctamente.", "Error de apertura");
 
-		alertaSobreescribir = new Alert(AlertType.NONE, "¿Quiére sobreescribir el archivo?", ButtonType.YES,
+		alertaSobreescribir = new Alert(AlertType.CONFIRMATION, "¿Quiére sobreescribir el archivo?", ButtonType.YES,
 				ButtonType.NO);
-		alertaSobreescribir.setTitle("Sobreescribir el archivo");
+		alertaSobreescribir.setHeaderText("Confirmación de sobreescritura del archivo.");
+		alertaSobreescribir.setTitle("Sobreescritura del archivo");
 
-		alertaGuardado = new Alert(AlertType.NONE, "Informe guardado correctamente.", ButtonType.OK);
+		alertaGuardado = new Alert(AlertType.CONFIRMATION, "Informe guardado correctamente.", ButtonType.OK);
+		alertaGuardado.setHeaderText("Confirmación de guardado del archivo.");
 		alertaGuardado.setTitle("Archivo guardado");
 
-		alertaEGuardar = new Alert(AlertType.NONE, "Error al guardar el informe.", ButtonType.CLOSE);
-		alertaEGuardar.setTitle("Error de guardado");
+		alertaEGuardar = CreadorElementos.createAlertaError("Error de guardado del informe.",
+				"Ha ocurrido un error al guardar el informe.", "Error de guardado");
 
 		ventana = pStage;
 		ventana.setTitle("Activiti-Api");
-		ventana.getIcons().add(new Image(new FileInputStream("rsc/imagenes/Ubu.png")));
-		ventana.setWidth(720);
+		ventana.getIcons().add(new Image(getClass().getClassLoader().getResource("imagenes/Ubu.png").toExternalForm()));
+		ventana.setWidth(750);
 		ventana.setHeight(530);
 		ventana.setResizable(false);
 
@@ -149,7 +149,7 @@ public class PrincipalFX extends Application {
 	 * Inicialización de las escenas.
 	 */
 	private void iniciaEscenas() {
-		escenas = new Scene[8];
+		escenas = new Scene[9];
 
 		EscenaInicio eInicio = new EscenaInicio(this);
 		escenas[0] = new Scene(eInicio);
@@ -174,6 +174,9 @@ public class PrincipalFX extends Application {
 
 		EscenaResultadoComparacion eResComp = new EscenaResultadoComparacion(this);
 		escenas[7] = new Scene(eResComp);
+
+		EscenaGraficos eGraficos = new EscenaGraficos(this);
+		escenas[8] = new Scene(eGraficos);
 	}
 
 	/**
@@ -267,7 +270,7 @@ public class PrincipalFX extends Application {
 				contenido.close();
 				lee.close();
 
-				EscenaResultados.setResultadoMetricas((String) lector.getResultados()[0]);
+				EscenaResultados.setResultadoMetricas(lector.getResultados());
 				this.cambiaEscena(5);
 			}
 		} catch (IOException | NullPointerException e) {
@@ -285,19 +288,8 @@ public class PrincipalFX extends Application {
 			ExtensionFilter filtro = new ExtensionFilter("*.txt", "txt");
 			selector.setSelectedExtensionFilter(filtro);
 			File archivo = selector.showSaveDialog(ventana);
-			boolean respuesta = false;
 
-			if (archivo.exists() && archivo.isFile()) {
-				alertaSobreescribir.showAndWait();
-
-				if (alertaSobreescribir.getResult() == ButtonType.YES) {
-					respuesta = true;
-				}
-			} else {
-				respuesta = true;
-			}
-
-			if (respuesta) {
+			if (archivo != null) {
 				FileWriter save = new FileWriter(archivo);
 				save.write(lector.generarArchivo());
 				save.close();
@@ -308,6 +300,7 @@ public class PrincipalFX extends Application {
 				}
 				alertaGuardado.showAndWait();
 			}
+			/* } */
 		} catch (IOException e) {
 			alertaEGuardar.showAndWait();
 			e.printStackTrace();

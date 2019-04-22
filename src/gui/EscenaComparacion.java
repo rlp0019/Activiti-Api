@@ -1,15 +1,13 @@
-package gui.fx;
+package gui;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-import gui.fx.herramientas.CreadorElementos;
+import gui.herramientas.CreadorElementos;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
@@ -62,7 +60,7 @@ public class EscenaComparacion extends StackPane {
 		Button comparar = CreadorElementos.createButton("Comparar", 16, "Realizar la comparación.", 0, 125, 100);
 		comparar.setOnAction(e -> leerFicheros(aplicacion, archivo1, archivo2));
 
-		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", -300, 227, 100);
+		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", -315, 227, 100);
 		atrasB.setOnAction(e -> aplicacion.cambiaEscena(0));
 
 		this.getChildren().addAll(selecciona, selecciona1, selecciona2, archivo1, archivo2, s1B, s2B, comparar, atrasB);
@@ -93,15 +91,14 @@ public class EscenaComparacion extends StackPane {
 	 * @param tf2        campo de texto con el segundo informe.
 	 */
 	private void leerFicheros(PrincipalFX aplicacion, TextField tf1, TextField tf2) {
-		Alert alerta = new Alert(AlertType.NONE,
-				"Deben seleccionarse dos informes distintos para proceder a la comparación.", ButtonType.CANCEL);
-		alerta.setTitle("Error");
+		Alert alerta = CreadorElementos.createAlertaError("Son necesarios dos informes.",
+				"Deben seleccionarse dos informes distintos para proceder a la comparación.", "Error de datos.");
 
-		Alert alerta2 = new Alert(AlertType.NONE, "Estás intentando comparar el mismo informe.", ButtonType.CANCEL);
-		alerta2.setTitle("Error");
+		Alert alerta2 = CreadorElementos.createAlertaError("Informes iguales.",
+				"Estás intentando comparar el mismo informe.", "Error de datos.");
 
-		Alert alerta3 = new Alert(AlertType.NONE, "Error al abrir los informes.", ButtonType.CANCEL);
-		alerta3.setTitle("Error");
+		Alert alerta3 = CreadorElementos.createAlertaError("Error de apertura.", "Error al abrir los informes.",
+				"Error de datos.");
 
 		if (tf1.getText().equals("") || tf2.getText().equals("")) {
 			alerta.showAndWait();

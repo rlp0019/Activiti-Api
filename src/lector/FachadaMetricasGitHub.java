@@ -6,14 +6,22 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.eclipse.egit.github.core.Issue;
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.RepositoryCommit;
 
-import charts.Graficos;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import metricas.CambioPorAutor;
 import metricas.CommitPorDia;
 import metricas.CommitPorMes;
@@ -505,39 +513,37 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 	public Object[] getResultados() {
 		Object[] resultados = new Object[6];
 
-		// String con toda la lista de métricas y sus resultados.
 		resultados[0] = metricas.getMetricas();
 
-		int[] valoresPieChart = new int[2];
-		// Recorremos las metricas para recoger los valores que necesitaremos para los
-		// graficos.
+		ObservableList<PieChart.Data> datosPieChart = FXCollections.observableArrayList();
+
 		for (int i = 0; i < metricas.size(); i++) {
 			switch (metricas.getMedida(i).getMetrica().getDescripcion().getNombre()) {
 			case "NumeroIssues":
-				valoresPieChart[0] = ((Entero) metricas.getMedida(i).getValue()).getValor();
+				datosPieChart
+						.add(new PieChart.Data("Abiertas", ((Entero) metricas.getMedida(i).getValue()).getValor()));
 				break;
 			case "NumeroIssuesCerradas":
-				valoresPieChart[0] -= ((Entero) metricas.getMedida(i).getValue()).getValor();
-				valoresPieChart[1] = ((Entero) metricas.getMedida(i).getValue()).getValor();
-				// Grafico de tarta para mostrar el porcentaje de cierre de issues.
-				resultados[1] = Graficos.crearGraficoTarta(new String[] { "Abiertas", "Cerradas" }, valoresPieChart,
-						"Issues abiertas - cerradas");
+				datosPieChart
+						.add(new PieChart.Data("Cerradas", ((Entero) metricas.getMedida(i).getValue()).getValor()));
+				datosPieChart.get(0)
+						.setPieValue(datosPieChart.get(0).getPieValue() - datosPieChart.get(1).getPieValue());
+
+				PieChart tarta = new PieChart(datosPieChart);
+				tarta.setTitle("Issues");
+				resultados[1] = tarta;
 				break;
 			case "CommitPorMes":
-				resultados[2] = Graficos.crearGraficoBarra3d((Conjunto) metricas.getMedida(i).getValue(),
-						"Commits por mes", "Meses", "Nº Commits");
+				resultados[2] = creaGraficoBarras(i, "Meses", "Nº Commits", "Commits por mes");
 				break;
 			case "CommitPorDia":
-				resultados[3] = Graficos.crearGraficoBarra3d((Conjunto) metricas.getMedida(i).getValue(),
-						"Commits por Día", "Días", "Nº Commits");
+				resultados[3] = creaGraficoBarras(i, "Días", "Nº Commits", "Commits por día");
 				break;
 			case "CambioPorAutor":
-				resultados[4] = Graficos.crearGraficoBarra3d((Conjunto) metricas.getMedida(i).getValue(),
-						"Cambio por autor", "Autor", "Nº Commits");
+				resultados[4] = creaGraficoBarras(i, "Autor", "Nº Commits", "Cambio por autor");
 				break;
 			case "IssuesPorAutor":
-				resultados[5] = Graficos.crearGraficoBarra3d((Conjunto) metricas.getMedida(i).getValue(),
-						"Issues por autor", "Autor", "Nº Issues");
+				resultados[5] = creaGraficoBarras(i, "Autor", "Nº Issues", "Issues por autor");
 				break;
 			default:
 				break;
@@ -545,5 +551,33 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 		}
 
 		return resultados;
+	}
+
+	private BarChart<String, Number> creaGraficoBarras(int i, String x, String y, String titulo) {
+		Map<String, Entero> valores = ((Conjunto) metricas.getMedida(i).getValue()).getValor();
+		ObservableList<String> valoresXAxis = FXCollections
+				.observableArrayList(new ArrayList<String>(valores.keySet()));
+
+		CategoryAxis xAxis = new CategoryAxis(valoresXAxis);
+		xAxis.setLabel(x);
+
+		NumberAxis yAxis = new NumberAxis();
+		yAxis.setAutoRanging(false);
+		yAxis.setTickUnit(2);
+		yAxis.setMinorTickLength(1);
+		yAxis.setLabel(y);
+
+		BarChart<String, Number> barrasMes = new BarChart<String, Number>(xAxis, yAxis);
+		barrasMes.setTitle(titulo);
+
+		XYChart.Series<String, Number> serie = new XYChart.Series<String, Number>();
+		serie.setName(titulo);
+		for (String valor : valoresXAxis) {
+			serie.getData().add(new XYChart.Data<String, Number>(valor, valores.get(valor).getValor()));
+		}
+
+		barrasMes.getData().add(serie);
+
+		return barrasMes;
 	}
 }
