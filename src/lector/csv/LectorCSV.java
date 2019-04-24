@@ -2,8 +2,11 @@ package lector.csv;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -52,14 +55,15 @@ public final class LectorCSV {
 	 * 
 	 * @param nombre   nombre del proyecto.
 	 * @param metricas métricas a añadir al .csv.
+	 * @return true si el archivo se ha guardado, false de lo contrario.
 	 */
 	public boolean addMetricasProyecto(String nombre, String metricas) {
 		boolean guardado = false;
-		FileWriter fw = null;
+		Writer fw = null;
 
 		if (!hasProyecto(nombre)) {
 			try {
-				fw = new FileWriter(path.toString(), true);
+				fw = new OutputStreamWriter(new FileOutputStream(path.toString(), true), StandardCharsets.UTF_8);
 				fw.append(metricas);
 				fw.append("\n");
 
@@ -83,7 +87,7 @@ public final class LectorCSV {
 			}
 
 			try {
-				fw = new FileWriter(copia, false);
+				fw = new OutputStreamWriter(new FileOutputStream(path.toString(), false), StandardCharsets.UTF_8);
 
 				for (String valor : valores) {
 					String[] partes = valor.split(",");

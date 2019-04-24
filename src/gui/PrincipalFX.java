@@ -5,7 +5,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Paths;
+
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
+import javax.swing.JButton;
 
 import gui.herramientas.CreadorElementos;
 import javafx.application.Application;
@@ -46,26 +51,6 @@ public class PrincipalFX extends Application {
 	private FabricaConexion fabConexion;
 
 	/**
-	 * Alerta de error de conexión.
-	 */
-	private Alert alertaConexion;
-
-	/**
-	 * Alerta de error de usuario.
-	 */
-	private Alert alertaUsuario;
-
-	/**
-	 * Alerta de error de combinación usuario/repositorio.
-	 */
-	private Alert alertaRepositorio;
-
-	/**
-	 * Alerta de error de apertura de archivo.
-	 */
-	private Alert alertaArchivo;
-
-	/**
 	 * Alerta de guardado correcto.
 	 */
 	private Alert alertaGuardado;
@@ -100,18 +85,6 @@ public class PrincipalFX extends Application {
 	@Override
 	public void start(Stage pStage) throws Exception {
 		fabConexion = FabricaConexionGitHub.getInstance();
-
-		alertaConexion = CreadorElementos.createAlertaError("Datos erróneos.",
-				"Los datos de la conexión no son correctos.", "Error de conexión");
-
-		alertaUsuario = CreadorElementos.createAlertaError("Datos erróneos.", "El usuario introducido no es correcto.",
-				"Error de usuario");
-
-		alertaRepositorio = CreadorElementos.createAlertaError("Datos erróneos.",
-				"La combinación de usuario-repositorio introducida no es correcta.", "Error de cálculo de métricas");
-
-		alertaArchivo = CreadorElementos.createAlertaError("Error de apertura del archivo.",
-				"El archivo seleccionado no se ha podido abrir correctamente.", "Error de apertura");
 
 		alertaGuardado = new Alert(AlertType.CONFIRMATION, "Guardado correctamente.", ButtonType.OK);
 		alertaGuardado.setHeaderText("Confirmación de guardado correcto.");
@@ -187,6 +160,8 @@ public class PrincipalFX extends Application {
 		try {
 			repositorios = lector.getNombresRepositorio(usuario);
 		} catch (IOException e) {
+			Alert alertaUsuario = CreadorElementos.createAlertaError("Datos erróneos.",
+					"El usuario introducido no es correcto.", "Error de usuario");
 			alertaUsuario.showAndWait();
 			e.printStackTrace();
 		}
@@ -203,6 +178,9 @@ public class PrincipalFX extends Application {
 		try {
 			lector.obtenerMetricas(usuario, repositorio);
 		} catch (IOException e) {
+			Alert alertaRepositorio = CreadorElementos.createAlertaError("Datos erróneos.",
+					"La combinación de usuario-repositorio introducida no es correcta.",
+					"Error de cálculo de métricas");
 			alertaRepositorio.showAndWait();
 			e.printStackTrace();
 		}
@@ -238,6 +216,8 @@ public class PrincipalFX extends Application {
 			lector = fabConexion.crearFachadaConexion(usuario, contrasena);
 			resultado = true;
 		} catch (IOException e) {
+			Alert alertaConexion = CreadorElementos.createAlertaError("Datos erróneos.",
+					"Los datos de la conexión no son correctos.", "Error de conexión");
 			alertaConexion.showAndWait();
 			e.printStackTrace();
 		}
@@ -271,6 +251,8 @@ public class PrincipalFX extends Application {
 				this.cambiaEscena(5);
 			}
 		} catch (IOException | NullPointerException e) {
+			Alert alertaArchivo = CreadorElementos.createAlertaError("Error de apertura del archivo.",
+					"El archivo seleccionado no se ha podido abrir correctamente.", "Error de apertura");
 			alertaArchivo.showAndWait();
 			e.printStackTrace();
 		}
@@ -352,5 +334,23 @@ public class PrincipalFX extends Application {
 		}
 
 		return resultado;
+	}
+
+	public void cargarAyuda(JButton boton) {
+		Alert alertaArchivo = CreadorElementos.createAlertaError("Error de apertura de la ayuda.",
+				"La ayuda no se ha podido abrir correctamente.", "Error de apertura");
+
+		try {
+			URL hsURL = getClass().getResource("/gui/ayuda/ayuda.hs");
+			if (hsURL == null) {
+				alertaArchivo.showAndWait();
+			}
+			HelpSet helpset = new HelpSet(null, hsURL);
+			HelpBroker helpbroker = helpset.createHelpBroker();
+			helpbroker.enableHelpOnButton(boton, "Principal", helpset);
+		} catch (Exception e) {
+			alertaArchivo.showAndWait();
+			e.printStackTrace();
+		}
 	}
 }

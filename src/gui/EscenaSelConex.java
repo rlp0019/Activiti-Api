@@ -1,6 +1,7 @@
 package gui;
 
 import gui.herramientas.CreadorElementos;
+import javafx.embed.swing.SwingNode;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -51,9 +52,11 @@ public class EscenaSelConex extends StackPane {
 			}
 		});
 
+		SwingNode nodoS = CreadorElementos.createBotonAyuda(aplicacion);
+
 		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", -315, 227, 100);
 		atrasB.setOnAction(e -> aplicacion.cambiaEscena(1));
 
-		this.getChildren().addAll(selecciona, usuarioB, desconectadoB, atrasB);
+		this.getChildren().addAll(selecciona, usuarioB, desconectadoB, nodoS, atrasB);
 	}
 }

@@ -1,6 +1,7 @@
 package gui;
 
 import gui.herramientas.CreadorElementos;
+import javafx.embed.swing.SwingNode;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -34,11 +35,13 @@ public class EscenaGraficos extends StackPane {
 				"Mostrar gráfico con los issues por autor.", 305, 227, 100);
 		graficoIssues2B.setOnAction(e -> loadGrafico(aplicacion, 5));
 
+		SwingNode nodoS = CreadorElementos.createBotonAyuda(aplicacion);
+
 		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", -315, 227, 100);
 		atrasB.setOnAction(e -> aplicacion.cambiaEscena(5));
 
 		this.getChildren().addAll(grafico, graficoIssuesB, graficoCommitsB, graficoCommits2B, graficoCambioB,
-				graficoIssues2B, atrasB);
+				graficoIssues2B, nodoS, atrasB);
 		EscenaGraficos.setAlignment(grafico, Pos.TOP_LEFT);
 	}
 

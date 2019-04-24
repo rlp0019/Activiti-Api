@@ -1,5 +1,9 @@
 package gui.herramientas;
 
+import javax.swing.JButton;
+
+import gui.PrincipalFX;
+import javafx.embed.swing.SwingNode;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -138,5 +142,22 @@ public class CreadorElementos {
 		alerta.setTitle(titulo);
 
 		return alerta;
+	}
+
+	/**
+	 * Crea un botón que muestra la ayuda de la aplicación
+	 * 
+	 * @param aplicacion aplicacion principal.
+	 * @return el SwingNode que contiene el botón.
+	 */
+	public static SwingNode createBotonAyuda(PrincipalFX aplicacion) {
+		JButton ayudaB = new JButton("Ayuda");
+		aplicacion.cargarAyuda(ayudaB);
+		SwingNode nodoS = new SwingNode();
+		nodoS.setContent(ayudaB);
+		nodoS.setTranslateX(300);
+		nodoS.setTranslateY(-237);
+
+		return nodoS;
 	}
 }

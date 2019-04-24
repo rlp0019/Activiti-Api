@@ -1,10 +1,14 @@
 <toc version="1.0" categoryclosedimage="FolderClosed" categoryopenimage="FolderOpened"  topicimage="ItemIco">
     <tocitem text="Aplicación" target="Principal"/>
     <tocitem text="Pantalla Inicio" target="Inicio"/>
+    <tocitem text="Pantalla Seleccion Plataforma" target="Plataforma"/>
+    <tocitem text="Pantalla Tipo De Conexion" target="TipoConexion"/>
     <tocitem text="Pantalla Conexion" target="Conexion"/>
     <tocitem text="Pantalla Repositorios" target="Repositorios"/>
     <tocitem text="Pantalla Resultados" target="Resultados"/>
+    <tocitem text="Pantalla Graficos" target="Graficos"/>
     <tocitem text="Pantalla Comparar" target="Comparar"/>
+    <tocitem text="Pantalla Comparar Con BD" target="ComparacionBD"/>
     <tocitem text="Pantalla Comparar Resultados" target="CompararResultados"/>
     <tocitem text="Metricas">
     	<tocitem text="CambioPorAutor" target="CambioPorAutor"/>

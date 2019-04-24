@@ -1,6 +1,7 @@
 package gui;
 
 import gui.herramientas.CreadorElementos;
+import javafx.embed.swing.SwingNode;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
@@ -27,7 +28,7 @@ public class EscenaInicio extends StackPane {
 
 		Button buscarRepoB = CreadorElementos.createButton("Buscar repositorio", 22,
 				"Buscar un repositorio para calcular sus métricas.", 0, -50, 250);
-		buscarRepoB.setOnAction(e -> aplicacion.cambiaEscena(2));
+		buscarRepoB.setOnAction(e -> aplicacion.cambiaEscena(1));
 
 		Button cargarInformeB = CreadorElementos.createButton("Cargar informe", 22,
 				"Cargar un informe para importar sus métricas.", 0, 30, 250);
@@ -37,6 +38,8 @@ public class EscenaInicio extends StackPane {
 				"Cargar dos informes para comparar sus métricas.", 0, 110, 250);
 		compararInformesB.setOnAction(e -> aplicacion.cambiaEscena(6));
 
-		this.getChildren().addAll(activiti, selecciona, buscarRepoB, cargarInformeB, compararInformesB);
+		SwingNode nodoS = CreadorElementos.createBotonAyuda(aplicacion);
+
+		this.getChildren().addAll(activiti, selecciona, buscarRepoB, cargarInformeB, compararInformesB, nodoS);
 	}
 }

@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import gui.herramientas.CreadorElementos;
+import javafx.embed.swing.SwingNode;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -60,10 +61,13 @@ public class EscenaComparacion extends StackPane {
 		Button comparar = CreadorElementos.createButton("Comparar", 16, "Realizar la comparación.", 0, 125, 100);
 		comparar.setOnAction(e -> leerFicheros(aplicacion, archivo1, archivo2));
 
+		SwingNode nodoS = CreadorElementos.createBotonAyuda(aplicacion);
+
 		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", -315, 227, 100);
 		atrasB.setOnAction(e -> aplicacion.cambiaEscena(0));
 
-		this.getChildren().addAll(selecciona, selecciona1, selecciona2, archivo1, archivo2, s1B, s2B, comparar, atrasB);
+		this.getChildren().addAll(selecciona, selecciona1, selecciona2, archivo1, archivo2, s1B, s2B, comparar, nodoS,
+				atrasB);
 	}
 
 	/**
@@ -123,7 +127,7 @@ public class EscenaComparacion extends StackPane {
 
 					EscenaResultadoComparacion.setCSV(false);
 					EscenaResultadoComparacion.setTabla(compararInformes(conexion1, conexion2));
-					EscenaResultadoComparacion.setNota("");
+					EscenaResultadoComparacion.enableNota(false);
 
 					aplicacion.cambiaEscena(7);
 				}

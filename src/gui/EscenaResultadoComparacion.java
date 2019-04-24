@@ -1,6 +1,7 @@
 package gui;
 
 import gui.herramientas.CreadorElementos;
+import javafx.embed.swing.SwingNode;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -32,6 +33,18 @@ public class EscenaResultadoComparacion extends StackPane {
 	private static Label nota = CreadorElementos.createLabel("", 24, "#000000", 0, 50);
 
 	/**
+	 * Botón para obtener la nota poco estricta.
+	 */
+	private static Button notaB = CreadorElementos.createButton("Obtener nota", 16, "Muestra la nota poco estricta.", 0,
+			227, 100);
+
+	/**
+	 * Botón para obtener la nota estricta.
+	 */
+	private static Button notaSB = CreadorElementos.createButton("Obtener nota estricta", 16,
+			"Muestra la nota estricta.", 278, 227, 100);
+
+	/**
 	 * Constructor de la escena.
 	 * 
 	 * @param aplicacion aplicación principal.
@@ -41,6 +54,13 @@ public class EscenaResultadoComparacion extends StackPane {
 
 		StackPane panelContenido = new StackPane();
 		panelContenido.setBackground(CreadorElementos.createBackground());
+		panelContenido.setTranslateY(25);
+
+		notaB.setOnAction(e -> EscenaResultadoComparacion.setNota(aplicacion.getNota(false)));
+
+		notaSB.setOnAction(e -> EscenaResultadoComparacion.setNota(aplicacion.getNota(true)));
+
+		SwingNode nodoS = CreadorElementos.createBotonAyuda(aplicacion);
 
 		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", -315, 227, 100);
 		atrasB.setOnAction(e -> {
@@ -52,7 +72,7 @@ public class EscenaResultadoComparacion extends StackPane {
 		});
 
 		panelContenido.getChildren().add(wv);
-		this.getChildren().addAll(panelContenido, nota, atrasB);
+		this.getChildren().addAll(panelContenido, nota, notaB, notaSB, nodoS, atrasB);
 		EscenaResultadoComparacion.setAlignment(panelContenido, Pos.TOP_LEFT);
 	}
 
@@ -76,11 +96,42 @@ public class EscenaResultadoComparacion extends StackPane {
 		csv = valor;
 	}
 
-	public static void setNota(String valor) {
-		if (!("".contentEquals(valor))) {
-			nota.setText("La nota del desarrollo del proyecto es " + valor + " sobre 8.");
+	/**
+	 * Establece el texto a mostrar en la nota.
+	 * 
+	 * @param valor valor de la nota.
+	 */
+	public static void setNota(double valor) {
+		String calificacion = "";
+
+		if (valor < 4.0) {
+			calificacion = "Suspenso";
+		} else if (valor >= 4.0 && valor < 5.0) {
+			calificacion = "Aprobado";
+		} else if (valor >= 5.0 && valor < 6.0) {
+			calificacion = "Bien";
+		} else if (valor >= 6.0 && valor < 7.0) {
+			calificacion = "Notable";
+		} else if (valor >= 7.0 && valor < 8.0) {
+			calificacion = "Sobresaliente";
 		} else {
-			nota.setText(valor);
+			calificacion = "Matrícula de honor";
 		}
+
+		String valorS = Double.toString(valor);
+		if (!("".contentEquals(valorS))) {
+			nota.setText("Calificación del desarrollo del proyecto: " + calificacion + "(" + valor + ")");
+		}
+	}
+
+	/**
+	 * Establece la visualización de la nota y los botones.
+	 * 
+	 * @param activar booleano para desactivar o activar la nota.
+	 */
+	public static void enableNota(boolean activar) {
+		nota.setVisible(activar);
+		notaB.setVisible(activar);
+		notaSB.setVisible(activar);
 	}
 }

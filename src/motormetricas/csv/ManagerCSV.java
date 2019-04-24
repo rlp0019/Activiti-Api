@@ -139,6 +139,7 @@ public class ManagerCSV {
 	 * lectorCSV.
 	 * 
 	 * @param nombre nombre del proyecto.
+	 * @return true si se han añadido o false de lo contrario.
 	 */
 	public boolean addMetricasProyecto(String nombre) {
 		String metricas = nombre + "," + Double.toString(separador.getTotalIssues()) + ","
@@ -250,6 +251,7 @@ public class ManagerCSV {
 	/**
 	 * Califica un proyecto dependiendo de su comparación con la base de datos .csv.
 	 * 
+	 * @param estricto booleano para indicar si el cálculo es estricto o no.
 	 * @return nota del proyecto.
 	 */
 	public double calculaNota(boolean estricto) {
