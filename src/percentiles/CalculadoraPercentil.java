@@ -375,7 +375,7 @@ public class CalculadoraPercentil {
 		double min = valueOfQ(true, metrica);
 		double max = valueOfQ(false, metrica);
 
-		if (valor < min) {
+		if (valor <= min) {
 			switch (opcionComparacion) {
 			case 0:
 				resultado = 1;
@@ -384,7 +384,7 @@ public class CalculadoraPercentil {
 				resultado = -1;
 				break;
 			}
-		} else if (valor >= min && valor <= max) {
+		} else if (valor > min && valor < max) {
 			switch (opcionComparacion) {
 			case 1:
 				resultado = 1;
@@ -393,7 +393,7 @@ public class CalculadoraPercentil {
 				resultado = 0;
 				break;
 			}
-		} else if (valor > max) {
+		} else if (valor >= max) {
 			switch (opcionComparacion) {
 			case 2:
 				resultado = 1;

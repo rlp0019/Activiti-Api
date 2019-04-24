@@ -317,6 +317,7 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 	@Override
 	public String comparar(FachadaConexion comparacion) {
 		String resultadoComparacion = "";
+
 		for (int i = 0; i < metricas.size(); i++) {
 			switch (metricas.getMedida(i).getMetrica().getDescripcion().getNombre()) {
 			case "NumeroIssues":
@@ -346,6 +347,7 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 				break;
 			}
 		}
+
 		return resultadoComparacion;
 	}
 
@@ -529,6 +531,8 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 				datosPieChart.get(0)
 						.setPieValue(datosPieChart.get(0).getPieValue() - datosPieChart.get(1).getPieValue());
 
+				datosPieChart
+						.forEach(data -> data.nameProperty().set(data.getName() + " (" + data.getPieValue() + ")"));
 				PieChart tarta = new PieChart(datosPieChart);
 				tarta.setTitle("Issues");
 				resultados[1] = tarta;
@@ -567,8 +571,8 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 		yAxis.setMinorTickLength(1);
 		yAxis.setLabel(y);
 
-		BarChart<String, Number> barrasMes = new BarChart<String, Number>(xAxis, yAxis);
-		barrasMes.setTitle(titulo);
+		BarChart<String, Number> barras = new BarChart<String, Number>(xAxis, yAxis);
+		barras.setTitle(titulo);
 
 		XYChart.Series<String, Number> serie = new XYChart.Series<String, Number>();
 		serie.setName(titulo);
@@ -576,8 +580,9 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 			serie.getData().add(new XYChart.Data<String, Number>(valor, valores.get(valor).getValor()));
 		}
 
-		barrasMes.getData().add(serie);
+		barras.getData().add(serie);
+		barras.setLegendVisible(false);
 
-		return barrasMes;
+		return barras;
 	}
 }

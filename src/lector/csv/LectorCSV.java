@@ -1,6 +1,7 @@
 package lector.csv;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -52,23 +53,57 @@ public final class LectorCSV {
 	 * @param nombre   nombre del proyecto.
 	 * @param metricas métricas a añadir al .csv.
 	 */
-	public void addMetricasProyecto(String nombre, String metricas) {
+	public boolean addMetricasProyecto(String nombre, String metricas) {
+		boolean guardado = false;
 		FileWriter fw = null;
 
 		if (!hasProyecto(nombre)) {
 			try {
 				fw = new FileWriter(path.toString(), true);
 				fw.append(metricas);
+				fw.append("\n");
 
-				fw.flush();
-				fw.close();
-
-				reloadValores();
+				guardado = true;
 			} catch (IOException e) {
 				e.printStackTrace();
 			} finally {
 				if (fw != null) {
 					try {
+						fw.flush();
+						fw.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		} else {
+			File copia = new File(path.toString());
+			if (copia.exists()) {
+				copia.delete();
+			}
+
+			try {
+				fw = new FileWriter(copia, false);
+
+				for (String valor : valores) {
+					String[] partes = valor.split(",");
+
+					if (partes[0].contentEquals(nombre)) {
+						valor = metricas;
+					}
+
+					fw.append(valor);
+					fw.append("\n");
+				}
+
+				guardado = true;
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				if (fw != null) {
+					try {
+						fw.flush();
 						fw.close();
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -76,6 +111,10 @@ public final class LectorCSV {
 				}
 			}
 		}
+
+		reloadValores();
+
+		return guardado;
 	}
 
 	/**

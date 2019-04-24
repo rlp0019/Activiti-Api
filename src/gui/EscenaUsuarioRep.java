@@ -75,6 +75,7 @@ public class EscenaUsuarioRep extends StackPane {
 				if (repositorios != null) {
 					nombreUsuario = tfUsuario.getText();
 					tfUsuario.clear();
+					desplegableRepo.getItems().clear();
 					desplegableRepo.getItems().addAll(repositorios);
 					repoB.setDisable(false);
 				}

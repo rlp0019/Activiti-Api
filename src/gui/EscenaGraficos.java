@@ -7,12 +7,11 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 
 public class EscenaGraficos extends StackPane {
-	private static StackPane grafico;
+	private static StackPane grafico = new StackPane();
 
 	public EscenaGraficos(PrincipalFX aplicacion) {
 		this.setBackground(CreadorElementos.createBackground());
 
-		grafico = new StackPane();
 		grafico.setMaxHeight(450);
 
 		Button graficoIssuesB = CreadorElementos.createButton("Issues", 16, "Mostrar gráfico con los issues.", -217,

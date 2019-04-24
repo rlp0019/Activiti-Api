@@ -38,7 +38,7 @@ public class EscenaConex extends StackPane {
 		PasswordField pfContra = CreadorElementos.createPasswordField("Contraseña.", 20, "Introduce la contraseña.", 0,
 				40, 250);
 
-		Button ident = CreadorElementos.createButton("Conectarse", 24,
+		Button ident = CreadorElementos.createButton("Conectarse", 20,
 				"Crear conexión con el usuario y la contraseña introducidos.", 0, 140, 150);
 		ident.setOnAction(e -> {
 			if (tfUsuario.getText().isEmpty() || pfContra.getText().isEmpty()) {

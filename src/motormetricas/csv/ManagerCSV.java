@@ -1,6 +1,7 @@
 package motormetricas.csv;
 
 import java.nio.file.Path;
+import java.util.List;
 
 import lector.csv.LectorCSV;
 import percentiles.CalculadoraPercentil;
@@ -67,12 +68,12 @@ public class ManagerCSV {
 	 * Compara el porcentaje de issues cerrados entre el proyecto y la base de
 	 * datos.
 	 * 
-	 * @return 1 -1 si es menor que Q1 o mayor que Q3, 1 si está entre ambos.
+	 * @return 1 -1 si es menor que Q1, 1 si es mayor que Q3, 0 si está entre ambos.
 	 */
 	public int comparaPorcentajeCerrados() {
 		double valor = separador.getPorcentajeCerrados();
 
-		return calc.comparaValor(valor, 1, 2);
+		return calc.comparaValor(valor, 2, 2);
 	}
 
 	/**
@@ -123,8 +124,7 @@ public class ManagerCSV {
 	}
 
 	/**
-	 * Compara la relacción entre el mes que más cambios se han realizado y el total
-	 * de cambios entre el proyecto y la base de datos.
+	 * Compara la actividad por mes del proyecto y la base de datos.
 	 * 
 	 * @return -1 si es menor que Q1 o mayor que Q3, 1 si está entre ambos.
 	 */
@@ -140,15 +140,15 @@ public class ManagerCSV {
 	 * 
 	 * @param nombre nombre del proyecto.
 	 */
-	public void addMetricasProyecto(String nombre) {
+	public boolean addMetricasProyecto(String nombre) {
 		String metricas = nombre + "," + Double.toString(separador.getTotalIssues()) + ","
 				+ Double.toString(separador.getIssuesPorCommit()) + ","
 				+ Double.toString(separador.getPorcentajeCerrados()) + ","
 				+ Double.toString(separador.getMediaDiasCierre()) + ","
 				+ Double.toString(separador.getMediaDiasEntreCommit()) + "," + Double.toString(separador.getTotalDias())
 				+ "," + Double.toString(separador.getCambioPico()) + ","
-				+ Double.toString(separador.getActividadCambio()) + "," + ",";
-		lector.addMetricasProyecto(nombre, metricas);
+				+ Double.toString(separador.getActividadCambio()) + ",";
+		return lector.addMetricasProyecto(nombre, metricas);
 	}
 
 	/**
@@ -160,6 +160,10 @@ public class ManagerCSV {
 		return lector.getValores().size();
 	}
 
+	public List<String> getCSV() {
+		return lector.getValores();
+	}
+
 	/**
 	 * Devuelve si el .csv contiene o no un proyecto dado un nombre.
 	 * 
@@ -168,5 +172,194 @@ public class ManagerCSV {
 	 */
 	public boolean hasProyecto(String nombre) {
 		return lector.hasProyecto(nombre);
+	}
+
+	/**
+	 * Crea una tabla html con la comparación de un proyecto y la base de datos en
+	 * formato .csv.
+	 * 
+	 * @param nombre nombre del proyecto.
+	 * @return String con la tabla en html.
+	 */
+	public String creaTabla(String nombre) {
+		String tabla = "<table>";
+		tabla += "<tr>";
+		tabla += "<th>Métrica</th>";
+		tabla += "<th>Q1</th>";
+		tabla += "<th>" + nombre + "</th>";
+		tabla += "<th>Q3</th>";
+		tabla += "<th>Mejor valor</th>";
+		tabla += "</tr>";
+
+		tabla += "<html>" + "<head><style>" + "table {font-weight: bold; margin: 0 auto; text-align: center}"
+				+ "table td {background-color: #C0C0C0;}" + "table .rojo {background-color: #ff4646;}"
+				+ "table .verde {background-color: #62ff79;}" + "table .amarillo {background-color: #f8f23e}"
+				+ "</style></head>" + "<body bgcolor='#e6f2ff'>";
+
+		tabla += creaDatosTabla();
+
+		tabla += "</body></html>";
+
+		return tabla;
+	}
+
+	/**
+	 * Devuelve un String con los datos de la comparación de las métricas del
+	 * proyecto y los cuartiles en formato html.
+	 * 
+	 * @return String con los datos de las métricas.
+	 */
+	private String creaDatosTabla() {
+		String datos = "";
+
+		int issuesT = comparaTotalIssues();
+		datos += addCelda("NumeroIssues", calc.getQ1TotalIssues(), calc.getQ3TotalIssues(), issuesT,
+				separador.getTotalIssues(), 0);
+
+		int issuesC = comparaIssuesPorCommit();
+		datos += addCelda("ContadorTareas", calc.getQ1IssuesPorCommit(), calc.getQ3IssuesPorCommit(), issuesC,
+				separador.getIssuesPorCommit(), 2);
+
+		int issuesCerr = comparaPorcentajeCerrados();
+		datos += addCelda("PorcentajeIssuesCerradas", calc.getQ1PorcentajeIssuesCerrados(),
+				calc.getQ3PorcentajeIssuesCerrados(), issuesCerr, separador.getPorcentajeCerrados(), 1);
+
+		int mediaCerr = comparaMediaDiasCierre();
+		datos += addCelda("MediaDiasCierre", calc.getQ1DiasPorIssue(), calc.getQ3DiasPorIssue(), mediaCerr,
+				separador.getMediaDiasCierre(), 0);
+
+		int mediaEntre = comparaMediaDiasEntreCommit();
+		datos += addCelda("MediaDiasCambio", calc.getQ1DiasEntreCommit(), calc.getQ3DiasEntreCommit(), mediaEntre,
+				separador.getMediaDiasEntreCommit(), 0);
+
+		int diasT = comparaTotalDias();
+		datos += addCelda("DiasPrimerUltimoCommit", calc.getQ1TotalDias(), calc.getQ3TotalDias(), diasT,
+				separador.getTotalDias(), 1);
+
+		int cambioP = comparaCambioPico();
+		datos += addCelda("ContadorCambiosPico", calc.getQ1CambioPico(), calc.getQ3CambioPico(), cambioP,
+				separador.getCambioPico(), 2);
+
+		int actividadC = comparaActividadCambio();
+		datos += addCelda("RatioActividadCambio", calc.getQ1ActividadPorMes(), calc.getQ3ActividadPorMes(), actividadC,
+				separador.getActividadCambio(), 2);
+
+		return datos;
+	}
+
+	/**
+	 * Califica un proyecto dependiendo de su comparación con la base de datos .csv.
+	 * 
+	 * @return nota del proyecto.
+	 */
+	public double calculaNota(boolean estricto) {
+		double nota = 0.0;
+
+		int issuesT = comparaTotalIssues();
+		nota += sumaNota(issuesT, estricto);
+
+		int issuesC = comparaIssuesPorCommit();
+		nota += sumaNota(issuesC, estricto);
+
+		int issuesCerr = comparaPorcentajeCerrados();
+		nota += sumaNota(issuesCerr, estricto);
+
+		int mediaCerr = comparaMediaDiasCierre();
+		nota += sumaNota(mediaCerr, estricto);
+
+		int mediaEntre = comparaMediaDiasEntreCommit();
+		nota += sumaNota(mediaEntre, estricto);
+
+		int diasT = comparaTotalDias();
+		nota += sumaNota(diasT, estricto);
+
+		int cambioP = comparaCambioPico();
+		nota += sumaNota(cambioP, estricto);
+
+		int actividadC = comparaActividadCambio();
+		nota += sumaNota(actividadC, estricto);
+
+		return nota;
+	}
+
+	/**
+	 * Suma un valor a la nota dependiendo de la comparación del proyecto con la
+	 * base de datos .csv.
+	 * 
+	 * @param valor valor de la comparación.
+	 * @return nota a sumar.
+	 */
+	private double sumaNota(int valor, boolean estricto) {
+		double suma = 0.0;
+
+		if (valor == 1) {
+			suma += 1;
+		} else if (valor == 0) {
+			if (estricto) {
+				suma += 0.5;
+			} else {
+				suma += 1;
+			}
+		}
+
+		return suma;
+	}
+
+	/**
+	 * Devuelve un String con una fila de celdas que contiene los datos de una
+	 * métrica en formato html.
+	 * 
+	 * @param metrica   nombre de la métrica.
+	 * @param q1        primer cuartil del .csv.
+	 * @param q3        tercer cuartil del .csv.
+	 * @param valorComp valor del proyecto.
+	 * @param valorMet  valor de la métrica del proyecto.
+	 * @return String con la fila de celdas.
+	 */
+	private String addCelda(String metrica, Double q1, Double q3, int valorComp, double valorMet, int mejor) {
+		String datos = "";
+
+		datos += "<tr>";
+		datos += "<td>" + metrica + "</td>";
+		datos += "<td>" + q1 + "</td>";
+		datos += addClase(valorComp, valorMet);
+		datos += "<td>" + q3 + "</td>";
+
+		datos += "<td>";
+		if (mejor == 0) {
+			datos += "Menor o igual que Q1";
+		} else if (mejor == 1) {
+			datos += "Mayor o igual que Q3";
+		} else {
+			datos += "Entre Q1 y Q3";
+		}
+		datos += "</td>";
+
+		datos += "</tr>";
+
+		return datos;
+	}
+
+	/**
+	 * Devuelve un String con una clase de un determinado color debido a su
+	 * resultado en la comparación en formato html.
+	 * 
+	 * @param resultado resultado de la comparación.
+	 * @return string con la clase de un color.
+	 */
+	private String addClase(int resultado, double valor) {
+		String datos = "";
+
+		if (resultado == 1) {
+			datos += "<td class=\"verde\">";
+		} else if (resultado == -1) {
+			datos += "<td class=\"rojo\">";
+		} else {
+			datos += "<td class=\"amarillo\">";
+		}
+
+		datos += valor + "</td>";
+
+		return datos;
 	}
 }

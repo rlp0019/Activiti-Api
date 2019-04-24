@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 import gui.herramientas.CreadorElementos;
 import javafx.application.Application;
@@ -19,6 +20,7 @@ import javafx.stage.Stage;
 import lector.FabricaConexion;
 import lector.FabricaConexionGitHub;
 import lector.FachadaConexion;
+import motormetricas.csv.ManagerCSV;
 
 /**
  * Clase principal que ejecuta la interfaz gráfica.
@@ -64,11 +66,6 @@ public class PrincipalFX extends Application {
 	private Alert alertaArchivo;
 
 	/**
-	 * Alerta de opción de sobreescripción.
-	 */
-	private Alert alertaSobreescribir;
-
-	/**
 	 * Alerta de guardado correcto.
 	 */
 	private Alert alertaGuardado;
@@ -82,6 +79,11 @@ public class PrincipalFX extends Application {
 	 * Lector de métricas.
 	 */
 	private FachadaConexion lector;
+
+	/**
+	 * Manager de los datos del .csv.
+	 */
+	private ManagerCSV manager;
 
 	/**
 	 * Hilo de ejecución principal.
@@ -111,14 +113,9 @@ public class PrincipalFX extends Application {
 		alertaArchivo = CreadorElementos.createAlertaError("Error de apertura del archivo.",
 				"El archivo seleccionado no se ha podido abrir correctamente.", "Error de apertura");
 
-		alertaSobreescribir = new Alert(AlertType.CONFIRMATION, "¿Quiére sobreescribir el archivo?", ButtonType.YES,
-				ButtonType.NO);
-		alertaSobreescribir.setHeaderText("Confirmación de sobreescritura del archivo.");
-		alertaSobreescribir.setTitle("Sobreescritura del archivo");
-
-		alertaGuardado = new Alert(AlertType.CONFIRMATION, "Informe guardado correctamente.", ButtonType.OK);
-		alertaGuardado.setHeaderText("Confirmación de guardado del archivo.");
-		alertaGuardado.setTitle("Archivo guardado");
+		alertaGuardado = new Alert(AlertType.CONFIRMATION, "Guardado correctamente.", ButtonType.OK);
+		alertaGuardado.setHeaderText("Confirmación de guardado correcto.");
+		alertaGuardado.setTitle("Guardado satisfactorio");
 
 		alertaEGuardar = CreadorElementos.createAlertaError("Error de guardado del informe.",
 				"Ha ocurrido un error al guardar el informe.", "Error de guardado");
@@ -270,7 +267,7 @@ public class PrincipalFX extends Application {
 				contenido.close();
 				lee.close();
 
-				EscenaResultados.setResultadoMetricas(lector.getResultados());
+				EscenaResultados.setResultadoMetricas(this.getMetricasRepositorio());
 				this.cambiaEscena(5);
 			}
 		} catch (IOException | NullPointerException e) {
@@ -314,5 +311,46 @@ public class PrincipalFX extends Application {
 	 */
 	public Stage getVentana() {
 		return ventana;
+	}
+
+	/**
+	 * Devuelve el manager de .csv.
+	 * 
+	 * @return manager de .csv.
+	 */
+	public String creaTablaCSV() {
+		manager = new ManagerCSV(Paths.get("rsc/datoscsv/DataSet_EvolutionSoftwareMetrics_FYP.csv"),
+				lector.getResultados()[0]);
+
+		return manager.creaTabla(lector.getNombreRepositorio());
+	}
+
+	/**
+	 * Devuelve la nota del proyecto analizado.
+	 * 
+	 * @param estricto indica si la obtención de la nota toma en mayor o menor
+	 *                 medida el valor de resultados intermedios.
+	 * @return nota del proyecto.
+	 */
+	public double getNota(boolean estricto) {
+		return manager.calculaNota(estricto);
+	}
+
+	/**
+	 * Guarda los resultados en el .csv si no están guardados ya.
+	 * 
+	 * @return 0 si ha dado error, 1 si ha guardado correctamente, 2 si el archivo
+	 *         ya se encuentra en la base de datos.
+	 */
+	public boolean guardarEnCSV() {
+		boolean resultado = manager.addMetricasProyecto(lector.getNombreRepositorio());
+
+		if (resultado) {
+			alertaGuardado.showAndWait();
+		} else {
+			alertaEGuardar.showAndWait();
+		}
+
+		return resultado;
 	}
 }

@@ -222,7 +222,7 @@ public class PrincipalTest {
 	 */
 	@Test
 	public void testSeparadorMetricasCSV() {
-		Path path = Paths.get("rsc/datoscsv/DataSet_EvolutionSoftwareMetrics_FYP.csv");
+		Path path = Paths.get("rsc/datoscsv/PruebaCuartiles.csv");
 		LectorCSV lectorCSV = new LectorCSV(path);
 		CalculadoraPercentil calc = new CalculadoraPercentil();
 		calc.calculaCuartiles(lectorCSV.getValores());
@@ -265,7 +265,7 @@ public class PrincipalTest {
 	 */
 	@Test
 	public void testManagerCSV() {
-		Path path = Paths.get("rsc/datoscsv/DataSet_EvolutionSoftwareMetrics_FYP.csv");
+		Path path = Paths.get("rsc/datoscsv/PruebaGuardar.csv");
 		ManagerCSV manager;
 		String usuario = "pruebarlp";
 		String password = "12qe34wr";
@@ -304,7 +304,8 @@ public class PrincipalTest {
 						manager.getNumeroProyectosCSV());
 			} else {
 				manager.addMetricasProyecto(proyecto);
-				assertEquals("Comprobación de añadir un proyecto.", valoresPreAdd + 1, manager.getNumeroProyectosCSV());
+				assertEquals("Comprobación de añadir un proyecto.", (valoresPreAdd + 1),
+						manager.getNumeroProyectosCSV());
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

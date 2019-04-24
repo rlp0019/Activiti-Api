@@ -55,16 +55,16 @@ public class SeparadorMetricas {
 	 */
 	public SeparadorMetricas(Object resultadoMetricas) {
 		String resultado = (String) resultadoMetricas;
-		String[] partes = resultado.split(" ");
+		String[] partes = resultado.split("\\s+");
 
-		totalIssues = stringToDouble(partes[3]);
-		issuesPorCommit = stringToDouble(partes[6]);
-		porcentajeCerrados = stringToDouble(partes[12]);
-		mediaDiasCierre = stringToDouble(partes[15]);
-		mediaDiasEntreCommit = stringToDouble(partes[21]);
-		totalDias = stringToDouble(partes[24]);
-		cambioPico = stringToDouble(partes[53]);
-		actividadCambio = stringToDouble(partes[56]);
+		totalIssues = stringToDouble(partes[2]);
+		issuesPorCommit = stringToDouble(partes[4]);
+		porcentajeCerrados = stringToDouble(partes[8]);
+		mediaDiasCierre = stringToDouble(partes[10]);
+		mediaDiasEntreCommit = stringToDouble(partes[14]);
+		totalDias = stringToDouble(partes[16]);
+		cambioPico = stringToDouble(partes[52]);
+		actividadCambio = stringToDouble(partes[54]);
 	}
 
 	/**

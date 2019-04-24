@@ -121,7 +121,9 @@ public class EscenaComparacion extends StackPane {
 					conexion1.leerArchivo(contenido1);
 					conexion2.leerArchivo(contenido2);
 
-					EscenaResultadoComparacion.setComparacion(compararInformes(conexion1, conexion2));
+					EscenaResultadoComparacion.setCSV(false);
+					EscenaResultadoComparacion.setTabla(compararInformes(conexion1, conexion2));
+					EscenaResultadoComparacion.setNota("");
 
 					aplicacion.cambiaEscena(7);
 				}
@@ -143,7 +145,10 @@ public class EscenaComparacion extends StackPane {
 	 * @return String con los resultados de la comparacion en formato HTML.
 	 */
 	private String compararInformes(FachadaConexion conexion1, FachadaConexion conexion2) {
-		String texto = "<table>";
+		String texto = "<html><head><style> table {font-weight: bold; margin: 0 auto; text-align: center}"
+				+ "table td {background-color: #C0C0C0;} table .rojo {background-color: #ff4646;}"
+				+ "table .verde {background-color: #62ff79;} </style></head> <body bgcolor='#e6f2ff'>";
+		texto += "<table>";
 		texto += "<tr>";
 		texto += "<th>Métrica</th>";
 		texto += "<th>" + conexion1.getNombreRepositorio() + "</th>";
@@ -152,7 +157,7 @@ public class EscenaComparacion extends StackPane {
 
 		texto += conexion1.comparar(conexion2);
 
-		texto += "</table>";
+		texto += "</table></body></html>";
 
 		return texto;
 	}
