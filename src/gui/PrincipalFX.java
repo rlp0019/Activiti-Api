@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import javax.help.HelpBroker;
 import javax.help.HelpSet;
 import javax.swing.JButton;
+import javax.swing.filechooser.FileSystemView;
 
 import gui.herramientas.CreadorElementos;
 import javafx.application.Application;
@@ -233,6 +234,12 @@ public class PrincipalFX extends Application {
 			FileChooser selector = new FileChooser();
 			ExtensionFilter filtro = new ExtensionFilter("*.txt", "txt");
 			selector.setSelectedExtensionFilter(filtro);
+
+			File inicial = FileSystemView.getFileSystemView().getDefaultDirectory();
+			if (inicial.exists()) {
+				selector.setInitialDirectory(inicial);
+			}
+
 			File archivo = selector.showOpenDialog(ventana);
 
 			if (archivo != null && archivo.exists() && archivo.isFile()) {
@@ -352,13 +359,5 @@ public class PrincipalFX extends Application {
 			alertaArchivo.showAndWait();
 			e.printStackTrace();
 		}
-	}
-
-	public double getAlto() {
-		return ventana.getMaxHeight();
-	}
-
-	public double getAncho() {
-		return ventana.getMaxWidth();
 	}
 }
