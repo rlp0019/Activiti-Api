@@ -213,7 +213,7 @@ public class CalculadoraPercentil {
 			estadisticas.addValue(val);
 		}
 
-		return estadisticas.getPercentile(percentil);
+		return (double) Math.round(estadisticas.getPercentile(percentil) * 100) / 100;
 	}
 
 	/**
