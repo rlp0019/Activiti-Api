@@ -7,6 +7,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.help.HelpBroker;
 import javax.help.HelpSet;
@@ -35,6 +37,10 @@ import motormetricas.csv.ManagerCSV;
  *
  */
 public class PrincipalFX extends Application {
+	/**
+	 * Logger.
+	 */
+	private static final Logger LOGGER = Logger.getLogger(PrincipalFX.class.getName());
 
 	/**
 	 * Stage de la aplicación.
@@ -163,8 +169,8 @@ public class PrincipalFX extends Application {
 		} catch (IOException e) {
 			Alert alertaUsuario = CreadorElementos.createAlertaError("Datos erróneos.",
 					"El usuario introducido no es correcto.", "Error de usuario");
+			LOGGER.log(Level.SEVERE, e.getMessage());
 			alertaUsuario.showAndWait();
-			e.printStackTrace();
 		}
 		return repositorios;
 	}
@@ -182,8 +188,8 @@ public class PrincipalFX extends Application {
 			Alert alertaRepositorio = CreadorElementos.createAlertaError("Datos erróneos.",
 					"La combinación de usuario-repositorio introducida no es correcta.",
 					"Error de cálculo de métricas");
+			LOGGER.log(Level.SEVERE, e.getMessage());
 			alertaRepositorio.showAndWait();
-			e.printStackTrace();
 		}
 	}
 
@@ -219,8 +225,8 @@ public class PrincipalFX extends Application {
 		} catch (IOException e) {
 			Alert alertaConexion = CreadorElementos.createAlertaError("Datos erróneos.",
 					"Los datos de la conexión no son correctos.", "Error de conexión");
+			LOGGER.log(Level.SEVERE, e.getMessage());
 			alertaConexion.showAndWait();
-			e.printStackTrace();
 		}
 
 		return resultado;
@@ -260,8 +266,8 @@ public class PrincipalFX extends Application {
 		} catch (IOException | NullPointerException e) {
 			Alert alertaArchivo = CreadorElementos.createAlertaError("Error de apertura del archivo.",
 					"El archivo seleccionado no se ha podido abrir correctamente.", "Error de apertura");
+			LOGGER.log(Level.SEVERE, e.getMessage());
 			alertaArchivo.showAndWait();
-			e.printStackTrace();
 		}
 	}
 
@@ -288,8 +294,8 @@ public class PrincipalFX extends Application {
 			}
 			/* } */
 		} catch (IOException e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
 			alertaEGuardar.showAndWait();
-			e.printStackTrace();
 		}
 	}
 
@@ -337,6 +343,7 @@ public class PrincipalFX extends Application {
 		if (resultado) {
 			alertaGuardado.showAndWait();
 		} else {
+			LOGGER.log(Level.SEVERE, alertaEGuardar.getContentText());
 			alertaEGuardar.showAndWait();
 		}
 
@@ -356,8 +363,8 @@ public class PrincipalFX extends Application {
 			HelpBroker helpbroker = helpset.createHelpBroker();
 			helpbroker.enableHelpOnButton(boton, "Principal", helpset);
 		} catch (Exception e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
 			alertaArchivo.showAndWait();
-			e.printStackTrace();
 		}
 	}
 }

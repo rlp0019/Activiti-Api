@@ -1,5 +1,8 @@
 package gui;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import gui.herramientas.CreadorElementos;
 import javafx.embed.swing.SwingNode;
 import javafx.scene.control.Alert;
@@ -15,6 +18,10 @@ import javafx.scene.layout.StackPane;
  *
  */
 public class EscenaConex extends StackPane {
+	/**
+	 * Logger.
+	 */
+	private static final Logger LOGGER = Logger.getLogger(PrincipalFX.class.getName());
 
 	/**
 	 * Constructor de la escena.
@@ -43,6 +50,7 @@ public class EscenaConex extends StackPane {
 				"Crear conexión con el usuario y la contraseña introducidos.", 0, 140, 150);
 		ident.setOnAction(e -> {
 			if (tfUsuario.getText().isEmpty() || pfContra.getText().isEmpty()) {
+				LOGGER.log(Level.SEVERE, alerta.getContentText());
 				alerta.showAndWait();
 			} else {
 				if (aplicacion.createModoUsuario(tfUsuario.getText(), pfContra.getText())) {

@@ -1,5 +1,8 @@
 package gui;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import gui.herramientas.CreadorElementos;
 import javafx.embed.swing.SwingNode;
 import javafx.scene.control.Alert;
@@ -16,6 +19,10 @@ import javafx.scene.layout.StackPane;
  *
  */
 public class EscenaUsuarioRep extends StackPane {
+	/**
+	 * Logger.
+	 */
+	private static final Logger LOGGER = Logger.getLogger(EscenaUsuarioRep.class.getName());
 
 	/**
 	 * Usuario que contiene los repositorios.
@@ -56,6 +63,7 @@ public class EscenaUsuarioRep extends StackPane {
 		Button repoB = CreadorElementos.createButton("Analizar", 20, "Selecciona el repositorio.", 175, 100, 100);
 		repoB.setOnAction(e -> {
 			if (desplegableRepo.getSelectionModel().isEmpty()) {
+				LOGGER.log(Level.SEVERE, alert2.getContentText());
 				alert2.showAndWait();
 			} else {
 				aplicacion.calculaMetricasRepositorio(nombreUsuario, desplegableRepo.getValue());
@@ -70,6 +78,7 @@ public class EscenaUsuarioRep extends StackPane {
 				175, -30, 100);
 		buscarB.setOnAction(e -> {
 			if (tfUsuario.getText().isEmpty()) {
+				LOGGER.log(Level.SEVERE, alert.getContentText());
 				alert.showAndWait();
 			} else {
 				String[] repositorios = aplicacion.buscaRepositorios(tfUsuario.getText());

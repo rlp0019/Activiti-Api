@@ -199,7 +199,7 @@ public class PrincipalTest {
 		assertEquals("Comparación del tercer cuartil del total de issues.", calc.getQ3TotalIssues(),
 				Double.valueOf(48.5));
 		assertEquals("Comparación del tercer cuartil del total de issues entre el total de commits.",
-				calc.getQ3IssuesPorCommit(), Double.valueOf(0.5900000000000001));
+				calc.getQ3IssuesPorCommit(), Double.valueOf(0.59));
 		assertEquals(
 				"Comparación del tercer cuartil del número de issues cerrados dividido entre el total de issues por 100.",
 				calc.getQ3PorcentajeIssuesCerrados(), Double.valueOf(100.0));

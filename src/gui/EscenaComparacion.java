@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.filechooser.FileSystemView;
 
@@ -27,6 +29,10 @@ import lector.FachadaConexion;
  *
  */
 public class EscenaComparacion extends StackPane {
+	/**
+	 * Logger.
+	 */
+	private static final Logger LOGGER = Logger.getLogger(PrincipalFX.class.getName());
 
 	/**
 	 * Constructor de la escena.
@@ -113,8 +119,10 @@ public class EscenaComparacion extends StackPane {
 				"Error de datos.");
 
 		if (tf1.getText().equals("") || tf2.getText().equals("")) {
+			LOGGER.log(Level.WARNING, alerta.getContentText());
 			alerta.showAndWait();
 		} else if (tf1.getText().equals(tf2.getText())) {
+			LOGGER.log(Level.WARNING, alerta2.getContentText());
 			alerta2.showAndWait();
 		} else {
 			try {
@@ -144,8 +152,8 @@ public class EscenaComparacion extends StackPane {
 				contenido2.close();
 				lee2.close();
 			} catch (IOException e) {
+				LOGGER.log(Level.SEVERE, e.getMessage());
 				alerta3.showAndWait();
-				e.printStackTrace();
 			}
 		}
 	}
