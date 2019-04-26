@@ -30,7 +30,7 @@ public class EscenaResultadoComparacion extends StackPane {
 	/**
 	 * Label con la nota a mostrar.
 	 */
-	private static Label nota = CreadorElementos.createLabel("", 24, "#000000", 0, 50);
+	private static Label nota = CreadorElementos.createLabel("", 24, "#000000", 0, -50);
 
 	/**
 	 * Botón para obtener la nota poco estricta.
@@ -71,7 +71,8 @@ public class EscenaResultadoComparacion extends StackPane {
 			}
 		});
 
-		panelContenido.getChildren().add(wv);
+		panelContenido.getChildren().addAll(wv, nota);
+		StackPane.setAlignment(nota, Pos.BOTTOM_CENTER);
 		this.getChildren().addAll(panelContenido, nota, notaB, notaSB, nodoS, atrasB);
 		EscenaResultadoComparacion.setAlignment(panelContenido, Pos.TOP_LEFT);
 	}
@@ -102,25 +103,9 @@ public class EscenaResultadoComparacion extends StackPane {
 	 * @param valor valor de la nota.
 	 */
 	public static void setNota(double valor) {
-		String calificacion = "";
-
-		if (valor < 4.0) {
-			calificacion = "Suspenso";
-		} else if (valor >= 4.0 && valor < 5.0) {
-			calificacion = "Aprobado";
-		} else if (valor >= 5.0 && valor < 6.0) {
-			calificacion = "Bien";
-		} else if (valor >= 6.0 && valor < 7.0) {
-			calificacion = "Notable";
-		} else if (valor >= 7.0 && valor < 8.0) {
-			calificacion = "Sobresaliente";
-		} else {
-			calificacion = "Matrícula de honor";
-		}
-
 		String valorS = Double.toString(valor);
 		if (!("".contentEquals(valorS))) {
-			nota.setText("Calificación del desarrollo del proyecto: " + calificacion + "(" + valor + ")");
+			nota.setText("Calificación del desarrollo del proyecto: " + valor + "/8.0");
 		}
 	}
 

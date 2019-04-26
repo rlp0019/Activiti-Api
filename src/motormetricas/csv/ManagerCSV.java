@@ -193,9 +193,9 @@ public class ManagerCSV {
 		tabla += "</tr>";
 
 		tabla += "<html>" + "<head><style>" + "table {font-weight: bold; margin: 0 auto; text-align: center}"
-				+ "table td {background-color: #C0C0C0;}" + "table .rojo {background-color: #ff4646;}"
-				+ "table .verde {background-color: #62ff79;}" + "table .amarillo {background-color: #f8f23e}"
-				+ "</style></head>" + "<body bgcolor='#e6f2ff'>";
+				+ "table td {background-color: #C0C0C0; font-family: Sans-Serif;}"
+				+ "table .rojo {background-color: #ff4646;}" + "table .verde {background-color: #62ff79;}"
+				+ "table .amarillo {background-color: #f8f23e}" + "</style></head>" + "<body bgcolor='#e6f2ff'>";
 
 		tabla += creaDatosTabla();
 

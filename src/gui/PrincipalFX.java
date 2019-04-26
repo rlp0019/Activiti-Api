@@ -353,4 +353,12 @@ public class PrincipalFX extends Application {
 			e.printStackTrace();
 		}
 	}
+
+	public double getAlto() {
+		return ventana.getMaxHeight();
+	}
+
+	public double getAncho() {
+		return ventana.getMaxWidth();
+	}
 }
