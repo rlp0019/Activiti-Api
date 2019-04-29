@@ -103,8 +103,8 @@ public class PrincipalFX extends Application {
 		ventana = pStage;
 		ventana.setTitle("Activiti-Api");
 		ventana.getIcons().add(new Image(getClass().getClassLoader().getResource("imagenes/Ubu.png").toExternalForm()));
-		ventana.setWidth(750);
-		ventana.setHeight(530);
+		ventana.setWidth(1000);
+		ventana.setHeight(700);
 		ventana.setResizable(false);
 
 		iniciaEscenas();
