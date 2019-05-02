@@ -1,13 +1,11 @@
 package gui;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JButton;
 
 import gui.herramientas.CreadorElementos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -20,9 +18,9 @@ import javafx.scene.layout.StackPane;
  */
 public class EscenaInicio extends StackPane {
 	/**
-	 * Logger.
+	 * Botón no visible para la ayuda.
 	 */
-	private static final Logger LOGGER = Logger.getLogger(EscenaInicio.class.getName());
+	private static JButton ayudaB = new JButton();
 
 	/**
 	 * Constructor de la escena.
@@ -32,27 +30,28 @@ public class EscenaInicio extends StackPane {
 	public EscenaInicio(PrincipalFX aplicacion) {
 		this.setBackground(CreadorElementos.createBackground());
 
-		Label activiti = CreadorElementos.createLabel("Bienvenido a Activiti-Api.", 32, "#383838", 0, 0);
+		MenuBar menu = CreadorElementos.createMenu(aplicacion);
+		aplicacion.cargarAyuda(ayudaB);
+
+		Label activiti = CreadorElementos.createLabel("Bienvenido a Activiti-Api.", 32, "#383838", 0, 30);
 
 		Label info = CreadorElementos.createLabel("TFG desarrollado en la Universidad de Burgos.", 20, "#000000", 0,
-				50);
+				75);
 
-		FileInputStream inputstream = null;
-		try {
-			inputstream = new FileInputStream("rsc/imagenes/FachadaUbu.jpg");
-		} catch (FileNotFoundException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage());
-		}
-
-		Image imagen = new Image(inputstream);
+		Image imagen = new Image(getClass().getClassLoader().getResource("imagenes/FachadaUbu.jpg").toExternalForm());
 		ImageView imagenV = new ImageView(imagen);
 
 		imagenV.setScaleX(0.75);
 		imagenV.setScaleY(0.75);
 
-		this.getChildren().addAll(activiti, info, imagenV);
+		this.getChildren().addAll(activiti, info, imagenV, menu);
 		EscenaInicio.setAlignment(activiti, Pos.TOP_CENTER);
 		EscenaInicio.setAlignment(info, Pos.TOP_CENTER);
 		EscenaInicio.setAlignment(imagenV, Pos.CENTER);
+		EscenaInicio.setAlignment(menu, Pos.TOP_LEFT);
+	}
+
+	public static void click() {
+		ayudaB.doClick();
 	}
 }

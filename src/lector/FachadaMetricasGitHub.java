@@ -62,25 +62,93 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 	private ResultadoMetrica metricas;
 
 	/**
-	 * Metricas asignadas.
+	 * Métrica CommitPorAutor.
 	 */
 	private Metrica commitXAutor;
+
+	/**
+	 * Métrica CommitPorDia.
+	 */
 	private Metrica commitXDia;
+
+	/**
+	 * Métrica CommitPorMes.
+	 */
 	private Metrica commitXMes;
+
+	/**
+	 * Métrica ContadorAutor.
+	 */
 	private Metrica contadorAutor;
+
+	/**
+	 * Métrica ContadorCambiosPico.
+	 */
 	private Metrica contadorCambiosPico;
+
+	/**
+	 * Métrica ContadorTareas.
+	 */
 	private Metrica contadorTareas;
+
+	/**
+	 * Métrica DiasPrimerUltimoCommit.
+	 */
 	private Metrica diasPrimerUltimoCommit;
+
+	/**
+	 * Métrica IssuePorAutor.
+	 */
 	private Metrica issueXAutor;
+
+	/**
+	 * Métrica MediaDiasCambios.
+	 */
 	private Metrica mediaDiasCambios;
+
+	/**
+	 * Métrica MediaDiasCierre.
+	 */
 	private Metrica mediaDiasCierre;
+
+	/**
+	 * Métrica NumeroCambiosSinMensaje.
+	 */
 	private Metrica numCambiosSinMensaje;
+
+	/**
+	 * Métrica NumeroFavoritos.
+	 */
 	private Metrica numFavoritos;
+
+	/**
+	 * Métrica NumeroIssues.
+	 */
 	private Metrica numIssues;
+
+	/**
+	 * Métrica NumeroIssuesCerradas.
+	 */
 	private Metrica numIssuesCerradas;
+
+	/**
+	 * Métrica PorcentajeIssuesCerradas.
+	 */
 	private Metrica porcentajeIssuesCerradas;
+
+	/**
+	 * Métrica RatioActividadCambio.
+	 */
 	private Metrica ratioActividadCambio;
+
+	/**
+	 * Métrica RelacionMesPico.
+	 */
 	private Metrica relacionMesPico;
+
+	/**
+	 * Métrica UltimaModificación.
+	 */
 	private Metrica ultimaModificacion;
 
 	/**
@@ -557,6 +625,15 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 		return resultados;
 	}
 
+	/**
+	 * Crea un gráfico de barras.
+	 * 
+	 * @param i      id de la medida.
+	 * @param x      nombre eje x.
+	 * @param y      nombre eje y.
+	 * @param titulo título del gráfico.
+	 * @return gráfico de barras.
+	 */
 	private BarChart<String, Number> creaGraficoBarras(int i, String x, String y, String titulo) {
 		Map<String, Entero> valores = ((Conjunto) metricas.getMedida(i).getValue()).getValor();
 		ObservableList<String> valoresXAxis = FXCollections

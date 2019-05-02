@@ -1,14 +1,15 @@
 package gui.herramientas;
 
-import javax.swing.JButton;
-
+import gui.EscenaInicio;
 import gui.PrincipalFX;
-import javafx.embed.swing.SwingNode;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
@@ -145,19 +146,39 @@ public class CreadorElementos {
 	}
 
 	/**
-	 * Crea un botón que muestra la ayuda de la aplicación
+	 * Crea el menú superior de la aplicación.
 	 * 
-	 * @param aplicacion aplicacion principal.
-	 * @return el SwingNode que contiene el botón.
+	 * @param aplicacion aplicación principal.
+	 * @return barra del menú.
 	 */
-	public static SwingNode createBotonAyuda(PrincipalFX aplicacion) {
-		JButton ayudaB = new JButton("Ayuda");
-		aplicacion.cargarAyuda(ayudaB);
-		SwingNode nodoS = new SwingNode();
-		nodoS.setContent(ayudaB);
-		nodoS.setTranslateX(300);
-		nodoS.setTranslateY(-237);
+	public static MenuBar createMenu(PrincipalFX aplicacion) {
+		MenuBar menu = new MenuBar();
 
-		return nodoS;
+		Menu operaciones = new Menu("Operaciones");
+
+		Menu analizar = new Menu("Analizar");
+		MenuItem github = new MenuItem("GitHub");
+		github.setOnAction(e -> aplicacion.cambiaEscena(1));
+		analizar.getItems().add(github);
+
+		MenuItem importar = new MenuItem("Importar");
+		importar.setOnAction(e -> aplicacion.loadArchivo());
+
+		MenuItem comparar = new MenuItem("Comparar");
+		comparar.setOnAction(e -> aplicacion.cambiaEscena(5));
+		operaciones.getItems().addAll(analizar, importar, comparar);
+
+		Menu ayuda = new Menu("Ayuda");
+		MenuItem ver = new MenuItem("Mostrar ayuda");
+		ayuda.getItems().add(ver);
+		ver.setOnAction(e -> EscenaInicio.click());
+
+		Menu about = new Menu("About");
+		MenuItem verA = new MenuItem("Mostrar about us");
+		about.getItems().add(verA);
+		about.setOnAction(e -> aplicacion.cambiaEscena(8));
+		menu.getMenus().addAll(operaciones, ayuda, about);
+
+		return menu;
 	}
 }

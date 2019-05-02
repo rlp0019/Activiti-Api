@@ -131,29 +131,29 @@ public class PrincipalFX extends Application {
 		EscenaInicio eInicio = new EscenaInicio(this);
 		escenas[0] = new Scene(eInicio);
 
-		EscenaSelPlataforma eSelPlat = new EscenaSelPlataforma(this);
-		escenas[1] = new Scene(eSelPlat);
-
 		EscenaSelConex eSelCon = new EscenaSelConex(this);
-		escenas[2] = new Scene(eSelCon);
+		escenas[1] = new Scene(eSelCon);
 
 		EscenaConex eConex = new EscenaConex(this);
-		escenas[3] = new Scene(eConex);
+		escenas[2] = new Scene(eConex);
 
 		EscenaUsuarioRep eUsuario = new EscenaUsuarioRep(this);
-		escenas[4] = new Scene(eUsuario);
+		escenas[3] = new Scene(eUsuario);
 
 		EscenaResultados eResultados = new EscenaResultados(this);
-		escenas[5] = new Scene(eResultados);
+		escenas[4] = new Scene(eResultados);
 
 		EscenaComparacion eComparacion = new EscenaComparacion(this);
-		escenas[6] = new Scene(eComparacion);
+		escenas[5] = new Scene(eComparacion);
 
 		EscenaResultadoComparacion eResComp = new EscenaResultadoComparacion(this);
-		escenas[7] = new Scene(eResComp);
+		escenas[6] = new Scene(eResComp);
 
 		EscenaGraficos eGraficos = new EscenaGraficos(this);
-		escenas[8] = new Scene(eGraficos);
+		escenas[7] = new Scene(eGraficos);
+
+		EscenaAbout eAbout = new EscenaAbout(this);
+		escenas[8] = new Scene(eAbout);
 	}
 
 	/**
@@ -261,7 +261,7 @@ public class PrincipalFX extends Application {
 				lee.close();
 
 				EscenaResultados.setResultadoMetricas(this.getMetricasRepositorio());
-				this.cambiaEscena(5);
+				this.cambiaEscena(4);
 			}
 		} catch (IOException | NullPointerException e) {
 			Alert alertaArchivo = CreadorElementos.createAlertaError("Error de apertura del archivo.",

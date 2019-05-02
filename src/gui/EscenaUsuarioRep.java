@@ -4,7 +4,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import gui.herramientas.CreadorElementos;
-import javafx.embed.swing.SwingNode;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -69,7 +68,7 @@ public class EscenaUsuarioRep extends StackPane {
 				aplicacion.calculaMetricasRepositorio(nombreUsuario, desplegableRepo.getValue());
 				EscenaResultados.setResultadoMetricas(aplicacion.getMetricasRepositorio());
 				desplegableRepo.getItems().clear();
-				aplicacion.cambiaEscena(5);
+				aplicacion.cambiaEscena(4);
 			}
 		});
 		repoB.setDisable(true);
@@ -92,8 +91,6 @@ public class EscenaUsuarioRep extends StackPane {
 			}
 		});
 
-		SwingNode nodoS = CreadorElementos.createBotonAyuda(aplicacion);
-
 		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", -315, 227, 100);
 		atrasB.setOnAction(e -> {
 			tfUsuario.clear();
@@ -101,7 +98,6 @@ public class EscenaUsuarioRep extends StackPane {
 			aplicacion.cambiaEscena(2);
 		});
 
-		this.getChildren().addAll(usuarioRep, usuario, repositorio, tfUsuario, buscarB, desplegableRepo, repoB, nodoS,
-				atrasB);
+		this.getChildren().addAll(usuarioRep, usuario, repositorio, tfUsuario, buscarB, desplegableRepo, repoB, atrasB);
 	}
 }

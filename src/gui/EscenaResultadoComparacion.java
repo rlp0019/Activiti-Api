@@ -1,7 +1,6 @@
 package gui;
 
 import gui.herramientas.CreadorElementos;
-import javafx.embed.swing.SwingNode;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -60,8 +59,6 @@ public class EscenaResultadoComparacion extends StackPane {
 
 		notaSB.setOnAction(e -> EscenaResultadoComparacion.setNota(aplicacion.getNota(true)));
 
-		SwingNode nodoS = CreadorElementos.createBotonAyuda(aplicacion);
-
 		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", -315, 227, 100);
 		atrasB.setOnAction(e -> {
 			if (!csv) {
@@ -73,7 +70,7 @@ public class EscenaResultadoComparacion extends StackPane {
 
 		panelContenido.getChildren().addAll(wv, nota);
 		StackPane.setAlignment(nota, Pos.BOTTOM_CENTER);
-		this.getChildren().addAll(panelContenido, nota, notaB, notaSB, nodoS, atrasB);
+		this.getChildren().addAll(panelContenido, nota, notaB, notaSB, atrasB);
 		EscenaResultadoComparacion.setAlignment(panelContenido, Pos.TOP_LEFT);
 	}
 

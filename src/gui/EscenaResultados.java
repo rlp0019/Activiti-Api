@@ -1,7 +1,6 @@
 package gui;
 
 import gui.herramientas.CreadorElementos;
-import javafx.embed.swing.SwingNode;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -45,7 +44,7 @@ public class EscenaResultados extends StackPane {
 				227, 100);
 		graficosB.setOnAction(e -> {
 			EscenaGraficos.loadGrafico(aplicacion, 1);
-			aplicacion.cambiaEscena(8);
+			aplicacion.cambiaEscena(7);
 		});
 
 		Button comparacionB = CreadorElementos.createButton("Evaluar", 16,
@@ -55,7 +54,7 @@ public class EscenaResultados extends StackPane {
 			EscenaResultadoComparacion.setTabla(aplicacion.creaTablaCSV());
 			EscenaResultadoComparacion.enableNota(true);
 			EscenaResultadoComparacion.setNota(aplicacion.getNota(false));
-			aplicacion.cambiaEscena(7);
+			aplicacion.cambiaEscena(6);
 		});
 
 		Button guardarCSVB = CreadorElementos.createButton("Guardar en BD", 16,
@@ -65,13 +64,11 @@ public class EscenaResultados extends StackPane {
 			aplicacion.guardarEnCSV();
 		});
 
-		SwingNode nodoS = CreadorElementos.createBotonAyuda(aplicacion);
-
 		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", -315, 227, 100);
 		atrasB.setOnAction(e -> aplicacion.cambiaEscena(0));
 
 		panelContenido.setContent(contenido);
-		this.getChildren().addAll(panelContenido, guardarB, graficosB, comparacionB, guardarCSVB, nodoS, atrasB);
+		this.getChildren().addAll(panelContenido, guardarB, graficosB, comparacionB, guardarCSVB, atrasB);
 		EscenaResultados.setAlignment(panelContenido, Pos.TOP_CENTER);
 	}
 

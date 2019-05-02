@@ -4,7 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import gui.herramientas.CreadorElementos;
-import javafx.embed.swing.SwingNode;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -56,20 +56,19 @@ public class EscenaConex extends StackPane {
 				if (aplicacion.createModoUsuario(tfUsuario.getText(), pfContra.getText())) {
 					tfUsuario.clear();
 					pfContra.clear();
-					aplicacion.cambiaEscena(4);
+					aplicacion.cambiaEscena(3);
 				}
 			}
 		});
 
-		SwingNode nodoS = CreadorElementos.createBotonAyuda(aplicacion);
-
-		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", -315, 227, 100);
+		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", 5, -5, 100);
 		atrasB.setOnAction(e -> {
 			tfUsuario.clear();
 			pfContra.clear();
-			aplicacion.cambiaEscena(2);
+			aplicacion.cambiaEscena(1);
 		});
 
-		this.getChildren().addAll(introduce, usuario, contra, tfUsuario, pfContra, ident, nodoS, atrasB);
+		this.getChildren().addAll(introduce, usuario, contra, tfUsuario, pfContra, ident, atrasB);
+		EscenaConex.setAlignment(atrasB, Pos.BOTTOM_LEFT);
 	}
 }

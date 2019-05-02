@@ -1,7 +1,7 @@
 package gui;
 
 import gui.herramientas.CreadorElementos;
-import javafx.embed.swing.SwingNode;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -38,7 +38,7 @@ public class EscenaSelConex extends StackPane {
 				"Conectarse para poder tener un mayor número de peticiones (5000 por hora). Se necesita una cuenta en la plataforma.",
 				0, -50, 250);
 		usuarioB.setOnAction(e -> {
-			aplicacion.cambiaEscena(3);
+			aplicacion.cambiaEscena(2);
 		});
 
 		Button desconectadoB = CreadorElementos.createButton("Modo desconectado", 22,
@@ -48,15 +48,14 @@ public class EscenaSelConex extends StackPane {
 
 			if (alerta.getResult() == ButtonType.YES) {
 				aplicacion.createModoDesconectado();
-				aplicacion.cambiaEscena(4);
+				aplicacion.cambiaEscena(3);
 			}
 		});
 
-		SwingNode nodoS = CreadorElementos.createBotonAyuda(aplicacion);
+		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", 5, -5, 100);
+		atrasB.setOnAction(e -> aplicacion.cambiaEscena(0));
 
-		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", -315, 227, 100);
-		atrasB.setOnAction(e -> aplicacion.cambiaEscena(1));
-
-		this.getChildren().addAll(selecciona, usuarioB, desconectadoB, nodoS, atrasB);
+		this.getChildren().addAll(selecciona, usuarioB, desconectadoB, atrasB);
+		EscenaSelConex.setAlignment(atrasB, Pos.BOTTOM_LEFT);
 	}
 }
