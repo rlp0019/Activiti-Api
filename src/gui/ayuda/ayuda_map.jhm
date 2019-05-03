@@ -25,10 +25,8 @@
 	<mapID target="RatioActividadCambio" url="html/ratioActividadCambio.html"/>
 	<mapID target="RelacionMesPico" url="html/relacionMesPico.html"/>
 	<mapID target="UltimaModificacion" url="html/ultimaModificacion.html"/>
-	<mapID target="TipoConexion" url="html/tipoconexion.html"/>
-	<mapID target="Graficos" url="html/graficos.html"/>
-	<mapID target="Plataforma" url="html/plataforma.html"/>
 	<mapID target="ComparacionBD" url="html/comparacionbd.html"/>
+	<mapID target="About" url="html/about.html"/>
 	
 	<!-- Iconos -->
 	<mapID target="AyudaIco"		 url="imagenes/help.png"/>

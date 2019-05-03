@@ -103,9 +103,8 @@ public class PrincipalFX extends Application {
 		ventana = pStage;
 		ventana.setTitle("Activiti-Api");
 		ventana.getIcons().add(new Image(getClass().getClassLoader().getResource("imagenes/Ubu.png").toExternalForm()));
-		ventana.setWidth(1000);
-		ventana.setHeight(700);
-		ventana.setResizable(false);
+		ventana.setMinWidth(1000);
+		ventana.setMinHeight(700);
 
 		iniciaEscenas();
 
@@ -119,14 +118,20 @@ public class PrincipalFX extends Application {
 	 * @param id escena a la que cambiar.
 	 */
 	public void cambiaEscena(int id) {
+		double w = ventana.getWidth();
+		double h = ventana.getHeight();
+
 		ventana.setScene(escenas[id]);
+
+		ventana.setWidth(w);
+		ventana.setHeight(h);
 	}
 
 	/**
 	 * Inicialización de las escenas.
 	 */
 	private void iniciaEscenas() {
-		escenas = new Scene[9];
+		escenas = new Scene[7];
 
 		EscenaInicio eInicio = new EscenaInicio(this);
 		escenas[0] = new Scene(eInicio);
@@ -134,26 +139,20 @@ public class PrincipalFX extends Application {
 		EscenaSelConex eSelCon = new EscenaSelConex(this);
 		escenas[1] = new Scene(eSelCon);
 
-		EscenaConex eConex = new EscenaConex(this);
-		escenas[2] = new Scene(eConex);
-
 		EscenaUsuarioRep eUsuario = new EscenaUsuarioRep(this);
-		escenas[3] = new Scene(eUsuario);
+		escenas[2] = new Scene(eUsuario);
 
 		EscenaResultados eResultados = new EscenaResultados(this);
-		escenas[4] = new Scene(eResultados);
+		escenas[3] = new Scene(eResultados);
 
 		EscenaComparacion eComparacion = new EscenaComparacion(this);
-		escenas[5] = new Scene(eComparacion);
+		escenas[4] = new Scene(eComparacion);
 
 		EscenaResultadoComparacion eResComp = new EscenaResultadoComparacion(this);
-		escenas[6] = new Scene(eResComp);
-
-		EscenaGraficos eGraficos = new EscenaGraficos(this);
-		escenas[7] = new Scene(eGraficos);
+		escenas[5] = new Scene(eResComp);
 
 		EscenaAbout eAbout = new EscenaAbout(this);
-		escenas[8] = new Scene(eAbout);
+		escenas[6] = new Scene(eAbout);
 	}
 
 	/**
@@ -260,8 +259,9 @@ public class PrincipalFX extends Application {
 				contenido.close();
 				lee.close();
 
-				EscenaResultados.setResultadoMetricas(this.getMetricasRepositorio());
-				this.cambiaEscena(4);
+				EscenaResultados.setResultadoMetricas(this.getMetricasRepositorio(), true);
+				EscenaResultados.loadGraficos(this);
+				this.cambiaEscena(3);
 			}
 		} catch (IOException | NullPointerException e) {
 			Alert alertaArchivo = CreadorElementos.createAlertaError("Error de apertura del archivo.",
@@ -350,6 +350,11 @@ public class PrincipalFX extends Application {
 		return resultado;
 	}
 
+	/**
+	 * Carga la ayuda en una nueva ventana.
+	 * 
+	 * @param boton botón que muestra la ayuda.
+	 */
 	public void cargarAyuda(JButton boton) {
 		Alert alertaArchivo = CreadorElementos.createAlertaError("Error de apertura de la ayuda.",
 				"La ayuda no se ha podido abrir correctamente.", "Error de apertura");

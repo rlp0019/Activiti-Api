@@ -28,6 +28,7 @@ public class EscenaInicio extends StackPane {
 	 * @param aplicacion aplicación principal.
 	 */
 	public EscenaInicio(PrincipalFX aplicacion) {
+		this.setMinSize(1000, 700);
 		this.setBackground(CreadorElementos.createBackground());
 
 		MenuBar menu = CreadorElementos.createMenu(aplicacion);
@@ -51,6 +52,9 @@ public class EscenaInicio extends StackPane {
 		EscenaInicio.setAlignment(menu, Pos.TOP_LEFT);
 	}
 
+	/**
+	 * Realiza click en el JButton.
+	 */
 	public static void click() {
 		ayudaB.doClick();
 	}

@@ -29,19 +29,19 @@ public class EscenaResultadoComparacion extends StackPane {
 	/**
 	 * Label con la nota a mostrar.
 	 */
-	private static Label nota = CreadorElementos.createLabel("", 24, "#000000", 0, -50);
+	private static Label nota = CreadorElementos.createLabel("", 24, "#000000", 0, 200);
 
 	/**
 	 * Botón para obtener la nota poco estricta.
 	 */
-	private static Button notaB = CreadorElementos.createButton("Obtener nota", 16, "Muestra la nota poco estricta.", 0,
-			227, 100);
+	private static Button notaB = CreadorElementos.createButton("Obtener nota", 16, "Muestra la nota poco estricta.",
+			-200, -5, 100);
 
 	/**
 	 * Botón para obtener la nota estricta.
 	 */
 	private static Button notaSB = CreadorElementos.createButton("Obtener nota estricta", 16,
-			"Muestra la nota estricta.", 278, 227, 100);
+			"Muestra la nota estricta.", 200, -5, 100);
 
 	/**
 	 * Constructor de la escena.
@@ -49,29 +49,38 @@ public class EscenaResultadoComparacion extends StackPane {
 	 * @param aplicacion aplicación principal.
 	 */
 	public EscenaResultadoComparacion(PrincipalFX aplicacion) {
+		this.setMinSize(1000, 700);
 		this.setBackground(CreadorElementos.createBackground());
 
 		StackPane panelContenido = new StackPane();
 		panelContenido.setBackground(CreadorElementos.createBackground());
-		panelContenido.setTranslateY(25);
+		panelContenido.setTranslateY(50);
 
 		notaB.setOnAction(e -> EscenaResultadoComparacion.setNota(aplicacion.getNota(false)));
 
 		notaSB.setOnAction(e -> EscenaResultadoComparacion.setNota(aplicacion.getNota(true)));
 
-		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", -315, 227, 100);
+		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", 5, -5, 100);
 		atrasB.setOnAction(e -> {
 			if (!csv) {
-				aplicacion.cambiaEscena(0);
+				aplicacion.cambiaEscena(4);
 			} else {
-				aplicacion.cambiaEscena(5);
+				aplicacion.cambiaEscena(3);
 			}
 		});
 
+		Button inicioB = CreadorElementos.createButton("Al inicio", 16, "Volver a la pantalla inicial.", -5, -5, 100);
+		inicioB.setOnAction(e -> aplicacion.cambiaEscena(0));
+
 		panelContenido.getChildren().addAll(wv, nota);
-		StackPane.setAlignment(nota, Pos.BOTTOM_CENTER);
-		this.getChildren().addAll(panelContenido, nota, notaB, notaSB, atrasB);
-		EscenaResultadoComparacion.setAlignment(panelContenido, Pos.TOP_LEFT);
+		StackPane.setAlignment(nota, Pos.CENTER);
+		this.getChildren().addAll(panelContenido, nota, notaB, notaSB, atrasB, inicioB);
+		EscenaResultadoComparacion.setAlignment(panelContenido, Pos.CENTER);
+		EscenaResultadoComparacion.setAlignment(nota, Pos.CENTER);
+		EscenaResultadoComparacion.setAlignment(notaB, Pos.BOTTOM_CENTER);
+		EscenaResultadoComparacion.setAlignment(notaSB, Pos.BOTTOM_CENTER);
+		EscenaResultadoComparacion.setAlignment(atrasB, Pos.BOTTOM_LEFT);
+		EscenaResultadoComparacion.setAlignment(inicioB, Pos.BOTTOM_RIGHT);
 	}
 
 	/**

@@ -10,19 +10,20 @@ import javafx.scene.layout.StackPane;
 
 public class EscenaAbout extends StackPane {
 	public EscenaAbout(PrincipalFX aplicacion) {
+		this.setMinSize(1000, 700);
 		this.setBackground(CreadorElementos.createBackground());
 
 		Label about = CreadorElementos.createLabel("Sobre mi.", 32, "#383838", 0, 10);
 
 		Label info = CreadorElementos.createLabel("Estudiante de Ingeniería Informática en la universidad de Burgos, \n"
 				+ "con especial inclinación hacia el desarrollo de software y videojuegos. \n"
-				+ "\nInteresado en el lenguaje Java.", 20, "#000000", 0, 0);
+				+ "\nInteresado en el lenguaje Java.", 20, "#000000", 0, 50);
 
 		Image imagen = new Image(getClass().getClassLoader().getResource("imagenes/Roberto.jpg").toExternalForm());
 		ImageView imagenV = new ImageView(imagen);
 		imagenV.setScaleX(1.5);
 		imagenV.setScaleY(1.5);
-		imagenV.setTranslateY(130);
+		imagenV.setTranslateY(-150);
 
 		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", 5, -5, 100);
 		atrasB.setOnAction(e -> aplicacion.cambiaEscena(0));
@@ -31,6 +32,6 @@ public class EscenaAbout extends StackPane {
 		EscenaAbout.setAlignment(atrasB, Pos.BOTTOM_LEFT);
 		EscenaAbout.setAlignment(about, Pos.TOP_CENTER);
 		EscenaAbout.setAlignment(info, Pos.CENTER);
-		EscenaAbout.setAlignment(imagenV, Pos.TOP_CENTER);
+		EscenaAbout.setAlignment(imagenV, Pos.CENTER);
 	}
 }

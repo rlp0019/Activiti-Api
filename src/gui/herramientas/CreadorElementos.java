@@ -11,6 +11,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Background;
@@ -165,7 +166,7 @@ public class CreadorElementos {
 		importar.setOnAction(e -> aplicacion.loadArchivo());
 
 		MenuItem comparar = new MenuItem("Comparar");
-		comparar.setOnAction(e -> aplicacion.cambiaEscena(5));
+		comparar.setOnAction(e -> aplicacion.cambiaEscena(4));
 		operaciones.getItems().addAll(analizar, importar, comparar);
 
 		Menu ayuda = new Menu("Ayuda");
@@ -176,9 +177,18 @@ public class CreadorElementos {
 		Menu about = new Menu("About");
 		MenuItem verA = new MenuItem("Mostrar about us");
 		about.getItems().add(verA);
-		about.setOnAction(e -> aplicacion.cambiaEscena(8));
+		about.setOnAction(e -> aplicacion.cambiaEscena(6));
 		menu.getMenus().addAll(operaciones, ayuda, about);
 
 		return menu;
+	}
+
+	public static Tab createTab(String titulo, String tooltip) {
+		Tab tab = new Tab(titulo);
+		Tooltip t1 = new Tooltip(tooltip);
+		t1.setFont(new Font("SansSerif", 12));
+		tab.setTooltip(t1);
+
+		return tab;
 	}
 }

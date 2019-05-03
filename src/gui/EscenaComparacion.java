@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javax.swing.filechooser.FileSystemView;
 
 import gui.herramientas.CreadorElementos;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -39,9 +40,10 @@ public class EscenaComparacion extends StackPane {
 	 * @param aplicacion aplicación principal.
 	 */
 	public EscenaComparacion(PrincipalFX aplicacion) {
+		this.setMinSize(1000, 700);
 		this.setBackground(CreadorElementos.createBackground());
 
-		Label selecciona = CreadorElementos.createLabel("Selecciona los informes a comparar:", 32, "#0076a3", 0, -175);
+		Label selecciona = CreadorElementos.createLabel("Selecciona los informes a comparar:", 32, "#0076a3", 0, 30);
 
 		Label selecciona1 = CreadorElementos.createLabel("Selecciona el primer informe a comparar:", 20, "#505050", 0,
 				-125);
@@ -65,13 +67,20 @@ public class EscenaComparacion extends StackPane {
 		Button s2B = CreadorElementos.createButton("Buscar", 16, "Buscar segundo archivo a comparar.", 200, 65, 100);
 		s2B.setOnAction(e -> seleccionarFichero(aplicacion, archivo2));
 
-		Button comparar = CreadorElementos.createButton("Comparar", 16, "Realizar la comparación.", 0, 125, 100);
+		Button comparar = CreadorElementos.createButton("Siguiente", 16, "Realizar la comparación.", -5, -5, 100);
 		comparar.setOnAction(e -> leerFicheros(aplicacion, archivo1, archivo2));
 
-		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", -315, 227, 100);
+		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", 5, -5, 100);
 		atrasB.setOnAction(e -> aplicacion.cambiaEscena(0));
 
 		this.getChildren().addAll(selecciona, selecciona1, selecciona2, archivo1, archivo2, s1B, s2B, comparar, atrasB);
+		EscenaComparacion.setAlignment(selecciona, Pos.TOP_CENTER);
+		EscenaComparacion.setAlignment(selecciona1, Pos.CENTER);
+		EscenaComparacion.setAlignment(selecciona2, Pos.CENTER);
+		EscenaComparacion.setAlignment(archivo1, Pos.CENTER);
+		EscenaComparacion.setAlignment(archivo2, Pos.CENTER);
+		EscenaComparacion.setAlignment(atrasB, Pos.BOTTOM_LEFT);
+		EscenaComparacion.setAlignment(comparar, Pos.BOTTOM_RIGHT);
 	}
 
 	/**
@@ -141,7 +150,10 @@ public class EscenaComparacion extends StackPane {
 					EscenaResultadoComparacion.setTabla(compararInformes(conexion1, conexion2));
 					EscenaResultadoComparacion.enableNota(false);
 
-					aplicacion.cambiaEscena(6);
+					tf1.clear();
+					tf2.clear();
+
+					aplicacion.cambiaEscena(5);
 				}
 				contenido1.close();
 				lee1.close();
