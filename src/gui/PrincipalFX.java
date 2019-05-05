@@ -372,4 +372,27 @@ public class PrincipalFX extends Application {
 			alertaArchivo.showAndWait();
 		}
 	}
+
+	/**
+	 * Devuelve si el lector se ha iniciado o no.
+	 * 
+	 * @return true si no se ha iniciado o false de lo contrario.
+	 */
+	public boolean isLectorNull() {
+		boolean resultado = false;
+
+		if (lector == null) {
+			resultado = true;
+		}
+
+		return resultado;
+	}
+
+	/**
+	 * Elimina la conexión del lector y cambia la pantalla de inicio.
+	 */
+	public void disconnect() {
+		lector = null;
+		this.cambiaEscena(0);
+	}
 }

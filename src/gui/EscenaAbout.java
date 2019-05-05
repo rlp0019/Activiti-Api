@@ -9,6 +9,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
 public class EscenaAbout extends StackPane {
+
+	/**
+	 * Constructor de la escena.
+	 * 
+	 * @param aplicacion aplicación principal.
+	 */
 	public EscenaAbout(PrincipalFX aplicacion) {
 		this.setMinSize(1000, 700);
 		this.setBackground(CreadorElementos.createBackground());

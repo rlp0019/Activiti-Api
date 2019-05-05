@@ -99,7 +99,12 @@ public class EscenaUsuarioRep extends StackPane {
 			tfUsuario.clear();
 			desplegableRepo.getItems().clear();
 			repoB.setDisable(true);
-			aplicacion.cambiaEscena(1);
+
+			if (aplicacion.isLectorNull()) {
+				aplicacion.cambiaEscena(1);
+			} else {
+				aplicacion.cambiaEscena(0);
+			}
 		});
 
 		this.getChildren().addAll(usuarioRep, usuario, repositorio, tfUsuario, buscarB, desplegableRepo, repoB, atrasB);

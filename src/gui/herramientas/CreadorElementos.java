@@ -159,7 +159,13 @@ public class CreadorElementos {
 
 		Menu analizar = new Menu("Analizar");
 		MenuItem github = new MenuItem("GitHub");
-		github.setOnAction(e -> aplicacion.cambiaEscena(1));
+		github.setOnAction(e -> {
+			if (aplicacion.isLectorNull()) {
+				aplicacion.cambiaEscena(1);
+			} else {
+				aplicacion.cambiaEscena(2);
+			}
+		});
 		analizar.getItems().add(github);
 
 		MenuItem importar = new MenuItem("Importar");
@@ -177,12 +183,25 @@ public class CreadorElementos {
 		Menu about = new Menu("About");
 		MenuItem verA = new MenuItem("Mostrar about us");
 		about.getItems().add(verA);
-		about.setOnAction(e -> aplicacion.cambiaEscena(6));
-		menu.getMenus().addAll(operaciones, ayuda, about);
+		verA.setOnAction(e -> aplicacion.cambiaEscena(6));
+
+		Menu conexion = new Menu("Conexion");
+		MenuItem desconectar = new MenuItem("Eliminar modo de conexión");
+		conexion.getItems().add(desconectar);
+		desconectar.setOnAction(e -> aplicacion.disconnect());
+
+		menu.getMenus().addAll(operaciones, ayuda, about, conexion);
 
 		return menu;
 	}
 
+	/**
+	 * Crea una tab para el menú y la devuelve.
+	 * 
+	 * @param titulo  texto de la tab.
+	 * @param tooltip tooltip de la tab.
+	 * @return la tab.
+	 */
 	public static Tab createTab(String titulo, String tooltip) {
 		Tab tab = new Tab(titulo);
 		Tooltip t1 = new Tooltip(tooltip);
