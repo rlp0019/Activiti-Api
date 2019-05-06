@@ -65,8 +65,8 @@ public class PrincipalTest {
 
 		try {
 			FachadaConexion lector = fabricaLector.crearFachadaConexion(usuario, password);
-			String[] repositorios = lector.getNombresRepositorio("pruebarlp");
-			assertEquals("Comprobación de que únicamente existe un repositorio.", repositorios.length, 1);
+			List<String> repositorios = lector.getNombresRepositorio("pruebarlp");
+			assertEquals("Comprobación de que únicamente existe un repositorio.", repositorios.size(), 1);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -99,6 +99,9 @@ public class PrincipalTest {
 		try {
 			lector = fabricaLector.crearFachadaConexion(usuario, password);
 			lector.getNombresRepositorio("dba0010");
+
+			assertEquals("Comprobación del número de forks.", 2, lector.getNombresForks("dba0010").size());
+
 			lector.obtenerMetricas("dba0010", "Activiti-Api");
 			Object[] resultadoMetricas = lector.getResultados();
 			String cadena = "Metricas:" + "\n  NumeroIssues: 24" + "\n  ContadorTareas: 0,53"

@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -161,8 +162,8 @@ public class PrincipalFX extends Application {
 	 * @param usuario usuario que contiene los repositorios.
 	 * @return array de String con los nombres de los repositorios.
 	 */
-	public String[] buscaRepositorios(String usuario) {
-		String[] repositorios = null;
+	public List<String> buscaRepositorios(String usuario) {
+		List<String> repositorios = null;
 		try {
 			repositorios = lector.getNombresRepositorio(usuario);
 		} catch (IOException e) {
@@ -172,6 +173,20 @@ public class PrincipalFX extends Application {
 			alertaUsuario.showAndWait();
 		}
 		return repositorios;
+	}
+
+	public List<String> buscaForks(String usuario) {
+		List<String> forks = null;
+		try {
+			forks = lector.getNombresForks(usuario);
+		} catch (IOException e) {
+			Alert alertaUsuario = CreadorElementos.createAlertaError("Datos erróneos.",
+					"El usuario introducido no es correcto.", "Error de usuario");
+			LOGGER.log(Level.SEVERE, e.getMessage());
+			alertaUsuario.showAndWait();
+		}
+
+		return forks;
 	}
 
 	/**

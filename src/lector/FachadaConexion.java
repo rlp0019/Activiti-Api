@@ -2,6 +2,7 @@ package lector;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Interface de las fachadas conexion.
@@ -47,7 +48,16 @@ public interface FachadaConexion {
 	 * @return String[] array que contien todos los respositorios de ese usuario.
 	 * @throws IOException excepción de entrada o salida.
 	 */
-	public String[] getNombresRepositorio(String usuario) throws IOException;
+	public List<String> getNombresRepositorio(String usuario) throws IOException;
+
+	/**
+	 * Devuelve el nombre de los forks del usuario indicado.
+	 * 
+	 * @param usuario String usuario del que obtner los repositorios.
+	 * @return nombres de los forks.
+	 * @throws IOException excepción de entrada o salida.
+	 */
+	public List<String> getNombresForks(String usuario) throws IOException;
 
 	/**
 	 * Devulve las peticiones restantes para el cliente existente.

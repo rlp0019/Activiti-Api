@@ -1,5 +1,6 @@
 package gui;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,9 +41,15 @@ public class EscenaUsuarioRep extends StackPane {
 
 		ComboBox<String> desplegableRepo = new ComboBox<String>();
 		desplegableRepo.setTranslateX(-50);
-		desplegableRepo.setTranslateY(100);
-		desplegableRepo.setMinWidth(250);
+		desplegableRepo.setTranslateY(135);
+		desplegableRepo.setMinWidth(200);
 		desplegableRepo.setMinHeight(40);
+
+		ComboBox<String> desplegableForks = new ComboBox<String>();
+		desplegableForks.setTranslateX(-50);
+		desplegableForks.setTranslateY(225);
+		desplegableForks.setMinWidth(200);
+		desplegableForks.setMinHeight(40);
 
 		Alert alert = CreadorElementos.createAlertaError("Campo vacío.", "El campo usuario no puede estar vacío.",
 				"Error de datos.");
@@ -55,22 +62,31 @@ public class EscenaUsuarioRep extends StackPane {
 		Label usuario = CreadorElementos.createLabel("Introduce el nombre del usuario a buscar:", 20, "#505050", 0,
 				-100);
 
-		Label repositorio = CreadorElementos.createLabel("Selecciona un repositorio tras introducir el usuario:", 20,
-				"#505050", 0, 40);
+		Label repositorio = CreadorElementos.createLabel(
+				"Selecciona un repositorio o alguno de sus forks tras introducir el usuario:", 20, "#505050", 0, 40);
+
+		Label repos = CreadorElementos.createLabel("Repositorios:", 16, "#505050", -50, 90);
+
+		Label fork = CreadorElementos.createLabel("Forks:", 16, "#505050", -50, 180);
 
 		TextField tfUsuario = CreadorElementos.createTextField("Nombre del usuario.", 20,
 				"Introduce el nombre del usuario a buscar.", -50, -30, 250);
 
 		Button repoB = CreadorElementos.createButton("Siguiente", 20, "Selecciona el repositorio.", -5, -5, 100);
 		repoB.setOnAction(e -> {
-			if (desplegableRepo.getSelectionModel().isEmpty()) {
+			if (desplegableRepo.getSelectionModel().isEmpty() && desplegableForks.getSelectionModel().isEmpty()) {
 				LOGGER.log(Level.SEVERE, alert2.getContentText());
 				alert2.showAndWait();
 			} else {
-				aplicacion.calculaMetricasRepositorio(nombreUsuario, desplegableRepo.getValue());
+				if (!desplegableRepo.getSelectionModel().isEmpty()) {
+					aplicacion.calculaMetricasRepositorio(nombreUsuario, desplegableRepo.getValue());
+				} else {
+					aplicacion.calculaMetricasRepositorio(nombreUsuario, desplegableForks.getValue());
+				}
 				EscenaResultados.setResultadoMetricas(aplicacion.getMetricasRepositorio(), false);
 				EscenaResultados.loadGraficos(aplicacion);
 				desplegableRepo.getItems().clear();
+				desplegableForks.getItems().clear();
 				aplicacion.cambiaEscena(3);
 			}
 		});
@@ -83,13 +99,19 @@ public class EscenaUsuarioRep extends StackPane {
 				LOGGER.log(Level.SEVERE, alert.getContentText());
 				alert.showAndWait();
 			} else {
-				String[] repositorios = aplicacion.buscaRepositorios(tfUsuario.getText());
+				List<String> repositorios = aplicacion.buscaRepositorios(tfUsuario.getText());
 				if (repositorios != null) {
 					nombreUsuario = tfUsuario.getText();
 					tfUsuario.clear();
 					desplegableRepo.getItems().clear();
 					desplegableRepo.getItems().addAll(repositorios);
 					repoB.setDisable(false);
+				}
+
+				List<String> forks = aplicacion.buscaForks(nombreUsuario);
+				if (forks != null) {
+					desplegableForks.getItems().clear();
+					desplegableForks.getItems().addAll(forks);
 				}
 			}
 		});
@@ -98,6 +120,7 @@ public class EscenaUsuarioRep extends StackPane {
 		atrasB.setOnAction(e -> {
 			tfUsuario.clear();
 			desplegableRepo.getItems().clear();
+			desplegableForks.getItems().clear();
 			repoB.setDisable(true);
 
 			if (aplicacion.isLectorNull()) {
@@ -107,7 +130,8 @@ public class EscenaUsuarioRep extends StackPane {
 			}
 		});
 
-		this.getChildren().addAll(usuarioRep, usuario, repositorio, tfUsuario, buscarB, desplegableRepo, repoB, atrasB);
+		this.getChildren().addAll(usuarioRep, usuario, repos, fork, repositorio, tfUsuario, buscarB, desplegableRepo,
+				desplegableForks, repoB, atrasB);
 		EscenaUsuarioRep.setAlignment(usuarioRep, Pos.TOP_CENTER);
 		EscenaUsuarioRep.setAlignment(atrasB, Pos.BOTTOM_LEFT);
 		EscenaUsuarioRep.setAlignment(repoB, Pos.BOTTOM_RIGHT);

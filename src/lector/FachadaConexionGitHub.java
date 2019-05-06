@@ -2,6 +2,7 @@ package lector;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +55,7 @@ public class FachadaConexionGitHub implements FachadaConexion {
 	/**
 	 * Nombres de los repositorios pertenecientes a un usuario.
 	 */
-	private String[] nombresRepositorio;
+	private List<String> nombresRepositorio;
 
 	/**
 	 * Repositorio de trabajo.
@@ -65,6 +66,11 @@ public class FachadaConexionGitHub implements FachadaConexion {
 	 * Lista de los repositorios pertenecientes a un usuario.
 	 */
 	private List<Repository> repositorios;
+
+	/**
+	 * Lista de los repositorios fork pertenecientes a un usuario.
+	 */
+	private List<String> forks;
 
 	/**
 	 * Servicio para trabajar con los repositorios de GitHub.
@@ -171,10 +177,23 @@ public class FachadaConexionGitHub implements FachadaConexion {
 	 * @throws IOException excepción de entrada o salida
 	 */
 	@Override
-	public String[] getNombresRepositorio(String usuario) throws IOException {
+	public List<String> getNombresRepositorio(String usuario) throws IOException {
 		this.obtenerRepositorios(usuario);
 
 		return this.nombresRepositorio;
+	}
+
+	/**
+	 * Devuelve una lista con los nombres de los forks.
+	 * 
+	 * @return lista con los nombres de los forks.
+	 * @throws IOException              excepción de entrada o salida.
+	 * @throws IllegalArgumentException excepción de parámetro ilegal.
+	 */
+	@Override
+	public List<String> getNombresForks(String usuario) throws IOException {
+		this.obtenerRepositorios(usuario);
+		return forks;
 	}
 
 	/**
@@ -288,11 +307,14 @@ public class FachadaConexionGitHub implements FachadaConexion {
 
 		this.repositorios = this.servicioRepositorios.getRepositories(usuario);
 
-		this.nombresRepositorio = new String[this.repositorios.size()];
-		int contador = 0;
+		this.nombresRepositorio = new ArrayList<String>();
+		this.forks = new ArrayList<String>();
 		for (Repository x : this.repositorios) {
-			this.nombresRepositorio[contador] = x.getName();
-			contador++;
+			if (!x.isFork()) {
+				this.nombresRepositorio.add(x.getName());
+			} else {
+				this.forks.add(x.getName());
+			}
 		}
 	}
 }
