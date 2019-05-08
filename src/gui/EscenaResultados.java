@@ -28,7 +28,7 @@ public class EscenaResultados extends StackPane {
 	/**
 	 * Array de HBox de Tab con los gráficos.
 	 */
-	private static HBox[] pGraf = new HBox[5];
+	private final static HBox[] pGraf = new HBox[5];
 
 	/**
 	 * Botón para volver a la página anterior.
@@ -45,43 +45,12 @@ public class EscenaResultados extends StackPane {
 		this.setMinSize(1000, 700);
 		this.setBackground(CreadorElementos.createBackground());
 
-		for (int i = 0; i < EscenaResultados.pGraf.length; i++) {
-			EscenaResultados.pGraf[i] = new HBox();
-		}
-
 		ScrollPane panelContenido = new ScrollPane();
 		panelContenido.setMaxSize(970, 590);
 		panelContenido.setHbarPolicy(ScrollBarPolicy.NEVER);
 		panelContenido.getStylesheets().add(getClass().getResource("/css/scrollpanel.css").toExternalForm());
 
-		TabPane grupo = new TabPane();
-
-		Tab resultado = CreadorElementos.createTab("Métricas", "Mostrar panel con los resultados de las métricas.");
-		resultado.setContent(panelContenido);
-
-		Tab graf1 = CreadorElementos.createTab("Gráfico Issues", "Mostrar gráfico con los issues.");
-		graf1.setContent(EscenaResultados.pGraf[0]);
-		EscenaResultados.pGraf[0].setAlignment(Pos.TOP_CENTER);
-
-		Tab graf2 = CreadorElementos.createTab("Gráfico Commits / Mes",
-				"Mostrar gráfico con los commits por cada mes.");
-		graf2.setContent(EscenaResultados.pGraf[1]);
-		EscenaResultados.pGraf[1].setAlignment(Pos.TOP_CENTER);
-
-		Tab graf3 = CreadorElementos.createTab("Gráfico Commits / Día",
-				"Mostrar gráfico con los commits por cada día.");
-		graf3.setContent(EscenaResultados.pGraf[2]);
-		EscenaResultados.pGraf[2].setAlignment(Pos.TOP_CENTER);
-
-		Tab graf4 = CreadorElementos.createTab("Gráfico Cambios / Autor", "Mostrar gráfico con los cambios por autor.");
-		graf4.setContent(EscenaResultados.pGraf[3]);
-		EscenaResultados.pGraf[3].setAlignment(Pos.TOP_CENTER);
-
-		Tab graf5 = CreadorElementos.createTab("Gráfico Issues / Autor", "Mostrar gráfico con los issues por autor.");
-		graf5.setContent(EscenaResultados.pGraf[4]);
-		EscenaResultados.pGraf[4].setAlignment(Pos.TOP_CENTER);
-
-		grupo.getTabs().addAll(resultado, graf1, graf2, graf3, graf4, graf5);
+		TabPane grupo = iniciaTabPane(panelContenido);
 
 		Button guardarB = CreadorElementos.createButton("Guardar informe", 16, "Guardar el informe de resultados.",
 				-200, -5, 100);
@@ -89,10 +58,11 @@ public class EscenaResultados extends StackPane {
 			aplicacion.saveArchivo();
 		});
 
-		Button comparacionB = CreadorElementos.createButton("Evaluar", 16,
-				"Cambiar a la pantalla de comparación con la base de datos en formato .csv.", 0, -5, 100);
+		Button comparacionB = CreadorElementos.createButton("Evaluar con BD", 16,
+				"Abrir la BD en formato .csv para realizar la evaluación.", 0, -5, 100);
 		comparacionB.setOnAction(e -> {
 			EscenaResultadoComparacion.setCSV(true);
+			aplicacion.startManager();
 			EscenaResultadoComparacion.setTabla(aplicacion.creaTablaCSV());
 			EscenaResultadoComparacion.enableNota(true);
 			EscenaResultadoComparacion.setNota(aplicacion.getNota(false));
@@ -100,9 +70,9 @@ public class EscenaResultados extends StackPane {
 		});
 
 		Button guardarCSVB = CreadorElementos.createButton("Guardar en BD", 16,
-				"Guardar el resultado de las métricas en la base de datos.", 200, -5, 100);
+				"Guardar el resultado de las métricas en la base de datos elegida.", 200, -5, 100);
 		guardarCSVB.setOnAction(e -> {
-			aplicacion.creaTablaCSV();
+			aplicacion.startManager();
 			aplicacion.guardarEnCSV();
 		});
 
@@ -145,5 +115,48 @@ public class EscenaResultados extends StackPane {
 			EscenaResultados.pGraf[i].getChildren().add(g);
 			EscenaResultados.pGraf[i].setMaxHeight(575);
 		}
+	}
+
+	/**
+	 * Crea un TabPane con todas las tab necesarias para los resultados y gráficos.
+	 * 
+	 * @param panelContenido Panel con el contenido de las métricas.
+	 * @return TabPane completo.
+	 */
+	private TabPane iniciaTabPane(ScrollPane panelContenido) {
+		TabPane tb = new TabPane();
+
+		for (int i = 0; i < EscenaResultados.pGraf.length; i++) {
+			EscenaResultados.pGraf[i] = new HBox();
+		}
+
+		Tab resultado = CreadorElementos.createTab("Métricas", "Mostrar panel con los resultados de las métricas.");
+		resultado.setContent(panelContenido);
+
+		Tab graf1 = CreadorElementos.createTab("Gráfico Issues", "Mostrar gráfico con los issues.");
+		graf1.setContent(EscenaResultados.pGraf[0]);
+		EscenaResultados.pGraf[0].setAlignment(Pos.TOP_CENTER);
+
+		Tab graf2 = CreadorElementos.createTab("Gráfico Commits / Mes",
+				"Mostrar gráfico con los commits por cada mes.");
+		graf2.setContent(EscenaResultados.pGraf[1]);
+		EscenaResultados.pGraf[1].setAlignment(Pos.TOP_CENTER);
+
+		Tab graf3 = CreadorElementos.createTab("Gráfico Commits / Día",
+				"Mostrar gráfico con los commits por cada día.");
+		graf3.setContent(EscenaResultados.pGraf[2]);
+		EscenaResultados.pGraf[2].setAlignment(Pos.TOP_CENTER);
+
+		Tab graf4 = CreadorElementos.createTab("Gráfico Cambios / Autor", "Mostrar gráfico con los cambios por autor.");
+		graf4.setContent(EscenaResultados.pGraf[3]);
+		EscenaResultados.pGraf[3].setAlignment(Pos.TOP_CENTER);
+
+		Tab graf5 = CreadorElementos.createTab("Gráfico Issues / Autor", "Mostrar gráfico con los issues por autor.");
+		graf5.setContent(EscenaResultados.pGraf[4]);
+		EscenaResultados.pGraf[4].setAlignment(Pos.TOP_CENTER);
+
+		tb.getTabs().addAll(resultado, graf1, graf2, graf3, graf4, graf5);
+
+		return tb;
 	}
 }

@@ -148,7 +148,7 @@ public class ManagerCSV {
 				+ Double.toString(separador.getMediaDiasCierre()) + ","
 				+ Double.toString(separador.getMediaDiasEntreCommit()) + "," + Double.toString(separador.getTotalDias())
 				+ "," + Double.toString(separador.getCambioPico()) + ","
-				+ Double.toString(separador.getActividadCambio()) + ",";
+				+ Double.toString(separador.getActividadCambio());
 		return lector.addMetricasProyecto(nombre, metricas);
 	}
 

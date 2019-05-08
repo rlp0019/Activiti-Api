@@ -8,7 +8,8 @@
   <property name="tests.dir" value="test/"/>
   <property name="build.dir" value="build/main"/>
   <property name="build.tests.dir" value="build/test"/>
-  <property name="dist.dir" value="dist"/>
+  <property name="dist.dir" value="dist/Activiti-Api"/>
+  <property name="dist.data.dir" value ="${dist.dir}/data"/>
   <property name="dclase.dir" value="rsc/diagramasclase"/>
   <property name="dsecuencia.dir" value="rsc/diagramassecuencia"/>
   <property name="imagenes.dir" value="rsc/imagenes"/>
@@ -53,6 +54,7 @@
   	
   	<!-- Crea la carpeta de la distribución -->
   	<mkdir dir="${dist.dir}"/>
+  	<mkdir dir="${dist.data.dir}"/>
   	
   	<!-- Crea la carpeta de las class de librerias -->
   	<mkdir dir="${libclasses.dir}"/>
@@ -136,17 +138,18 @@
 	  <zipfileset dir="${dsecuencia.dir}" prefix="diagramassecuencia"/>
 	  <zipfileset dir="${imagenes.dir}" prefix="imagenes"/>
 	  <zipfileset dir="${css.dir}" prefix="css"/>
-	  <zipfileset dir="${datoscsv.dir}" prefix="datoscsv"/>
 	  <zipfileset dir="${informes.dir}" prefix="informes"/>
 	  <zipfileset dir="${ayuda.dir}" prefix="gui/ayuda"/>
 	  <zipfileset dir="${libclasses.dir}"/>
 	</jar>
+  	
+  	<copy file="${datoscsv.dir}/DataSet_EvolutionSoftwareMetrics_FYP.csv" todir="${dist.data.dir}" />
   </target>
 	
   <!-- Elimina las carpertas y archivos creados. -->
   <target name="limpiar" description="Elimina las carpetas creadas">
     <delete dir="build"/>
-	<delete dir="${dist.dir}"/>
+	<delete dir="dist"/>
   	<delete dir="${libclasses.dir}"/>
   	<delete dir="report"/>
   	<delete file="jacoco.exec"/>

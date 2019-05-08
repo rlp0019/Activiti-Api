@@ -69,6 +69,11 @@ public class PrincipalFX extends Application {
 	private Alert alertaEGuardar;
 
 	/**
+	 * Alerta de apertura de archivo.
+	 */
+	private Alert alertaArchivo;
+
+	/**
 	 * Lector de métricas.
 	 */
 	private FachadaConexion lector;
@@ -100,6 +105,9 @@ public class PrincipalFX extends Application {
 
 		alertaEGuardar = CreadorElementos.createAlertaError("Error de guardado del informe.",
 				"Ha ocurrido un error al guardar el informe.", "Error de guardado");
+
+		alertaArchivo = CreadorElementos.createAlertaError("Error de apertura del archivo.",
+				"El archivo seleccionado no se ha podido abrir correctamente.", "Error de apertura");
 
 		ventana = pStage;
 		ventana.setTitle("Activiti-Api");
@@ -251,16 +259,7 @@ public class PrincipalFX extends Application {
 	 */
 	public void loadArchivo() {
 		try {
-			FileChooser selector = new FileChooser();
-			ExtensionFilter filtro = new ExtensionFilter("*.txt", "txt");
-			selector.setSelectedExtensionFilter(filtro);
-
-			File inicial = FileSystemView.getFileSystemView().getDefaultDirectory();
-			if (inicial.exists()) {
-				selector.setInitialDirectory(inicial);
-			}
-
-			File archivo = selector.showOpenDialog(ventana);
+			File archivo = openArchivo("*.txt", "txt", true);
 
 			if (archivo != null && archivo.exists() && archivo.isFile()) {
 				FileReader lee = new FileReader(archivo);
@@ -279,8 +278,6 @@ public class PrincipalFX extends Application {
 				this.cambiaEscena(3);
 			}
 		} catch (IOException | NullPointerException e) {
-			Alert alertaArchivo = CreadorElementos.createAlertaError("Error de apertura del archivo.",
-					"El archivo seleccionado no se ha podido abrir correctamente.", "Error de apertura");
 			LOGGER.log(Level.SEVERE, e.getMessage());
 			alertaArchivo.showAndWait();
 		}
@@ -291,10 +288,7 @@ public class PrincipalFX extends Application {
 	 */
 	public void saveArchivo() {
 		try {
-			FileChooser selector = new FileChooser();
-			ExtensionFilter filtro = new ExtensionFilter("*.txt", "txt");
-			selector.setSelectedExtensionFilter(filtro);
-			File archivo = selector.showSaveDialog(ventana);
+			File archivo = openArchivo("*.txt", "txt", false);
 
 			if (archivo != null) {
 				FileWriter save = new FileWriter(archivo);
@@ -307,7 +301,6 @@ public class PrincipalFX extends Application {
 				}
 				alertaGuardado.showAndWait();
 			}
-			/* } */
 		} catch (IOException e) {
 			LOGGER.log(Level.SEVERE, e.getMessage());
 			alertaEGuardar.showAndWait();
@@ -323,15 +316,20 @@ public class PrincipalFX extends Application {
 		return ventana;
 	}
 
+	public void startManager() {
+		File archivo = openArchivo("*.csv", "csv", true);
+
+		if (archivo != null) {
+			manager = new ManagerCSV(Paths.get(archivo.getAbsolutePath()), lector.getResultados()[0]);
+		}
+	}
+
 	/**
 	 * Devuelve el manager de .csv.
 	 * 
 	 * @return manager de .csv.
 	 */
 	public String creaTablaCSV() {
-		manager = new ManagerCSV(Paths.get("rsc/datoscsv/DataSet_EvolutionSoftwareMetrics_FYP.csv"),
-				lector.getResultados()[0]);
-
 		return manager.creaTabla(lector.getNombreRepositorio());
 	}
 
@@ -409,5 +407,31 @@ public class PrincipalFX extends Application {
 	public void disconnect() {
 		lector = null;
 		this.cambiaEscena(0);
+	}
+
+	private File openArchivo(String extension, String descripcion, boolean cargar) {
+		File archivo = null;
+
+		try {
+			FileChooser selector = new FileChooser();
+			ExtensionFilter filtro = new ExtensionFilter(extension, descripcion);
+			selector.setSelectedExtensionFilter(filtro);
+
+			if (cargar) {
+				File inicial = FileSystemView.getFileSystemView().getDefaultDirectory();
+				if (inicial.exists()) {
+					selector.setInitialDirectory(inicial);
+				}
+
+				archivo = selector.showOpenDialog(ventana);
+			} else {
+				archivo = selector.showSaveDialog(ventana);
+			}
+		} catch (NullPointerException e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
+			alertaArchivo.showAndWait();
+		}
+
+		return archivo;
 	}
 }
