@@ -110,7 +110,7 @@ public class PrincipalFX extends Application {
 				"El archivo seleccionado no se ha podido abrir correctamente.", "Error de apertura");
 
 		ventana = pStage;
-		ventana.setTitle("Activiti-Api");
+		ventana.setTitle("Evalua y compara la actividad del repositorio en GitHub");
 		ventana.getIcons().add(new Image(getClass().getClassLoader().getResource("imagenes/Ubu.png").toExternalForm()));
 		ventana.setMinWidth(1000);
 		ventana.setMinHeight(700);

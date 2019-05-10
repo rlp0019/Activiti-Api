@@ -74,7 +74,7 @@ public class EscenaSelConex extends StackPane {
 
 		Alert alerta = new Alert(AlertType.WARNING,
 				"Usando este modo pueden surgir problemas por el número de peticiones. ¿Quiéres continuar de todas formas?",
-				ButtonType.YES, ButtonType.NO);
+				ButtonType.NO, ButtonType.YES);
 		alerta.setHeaderText("Confirmación de conexión.");
 		alerta.setTitle("Advertencia");
 

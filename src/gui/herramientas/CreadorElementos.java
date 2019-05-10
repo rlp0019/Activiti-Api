@@ -190,7 +190,7 @@ public class CreadorElementos {
 		conexion.getItems().add(desconectar);
 		desconectar.setOnAction(e -> aplicacion.disconnect());
 
-		menu.getMenus().addAll(operaciones, ayuda, about, conexion);
+		menu.getMenus().addAll(conexion, operaciones, ayuda, about);
 
 		return menu;
 	}
