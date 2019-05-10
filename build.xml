@@ -144,6 +144,8 @@
 	</jar>
   	
   	<copy file="${datoscsv.dir}/DataSet_EvolutionSoftwareMetrics_FYP.csv" todir="${dist.data.dir}" />
+  	
+  	<zip destfile="${dist.dir}/Activiti-${DSTAMP}.zip" basedir="${dist.dir}" />
   </target>
 	
   <!-- Elimina las carpertas y archivos creados. -->

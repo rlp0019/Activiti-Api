@@ -70,7 +70,7 @@ public class EscenaSelConex extends StackPane {
 		this.setMinSize(1000, 700);
 		this.setBackground(CreadorElementos.createBackground());
 
-		Label selecciona = CreadorElementos.createLabel("Selecciona el tipo de conexión:", 32, "#0076a3", 0, 30);
+		Label selecciona = CreadorElementos.createLabel("Selecciona el tipo de conexión", 32, "#0076a3", 0, 30);
 
 		Alert alerta = new Alert(AlertType.WARNING,
 				"Usando este modo pueden surgir problemas por el número de peticiones. ¿Quiéres continuar de todas formas?",
@@ -101,17 +101,17 @@ public class EscenaSelConex extends StackPane {
 		radioDesconectado.setSelected(true);
 		radioDesconectado.setOnAction(e -> this.positionCenter());
 
-		usuario = CreadorElementos.createLabel("Introduce el nombre de usuario:", 20, "#505050", 0, -110);
+		usuario = CreadorElementos.createLabel("Introduce el nombre de usuario", 20, "#505050", 0, -110);
 		usuario.setVisible(false);
 
-		contra = CreadorElementos.createLabel("Introduce la contraseña:", 20, "#505050", 0, -10);
+		contra = CreadorElementos.createLabel("Introduce la contraseña", 20, "#505050", 0, -10);
 		contra.setVisible(false);
 
-		tfUsuario = CreadorElementos.createTextField("Nombre de usuario.", 20, "Introduce el nombre de usuario.", 0,
-				-60, 250);
+		tfUsuario = CreadorElementos.createTextField("Nombre de usuario", 20, "Introduce el nombre de usuario.", 0, -60,
+				250);
 		tfUsuario.setVisible(false);
 
-		pfContra = CreadorElementos.createPasswordField("Contraseña.", 20, "Introduce la contraseña.", 0, 40, 250);
+		pfContra = CreadorElementos.createPasswordField("Contraseña", 20, "Introduce la contraseña.", 0, 40, 250);
 		pfContra.setVisible(false);
 
 		Button siguienteB = CreadorElementos.createButton("Siguiente", 16, "Ir a la pantalla siguiente.", -5, -5, 100);

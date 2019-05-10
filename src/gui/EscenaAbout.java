@@ -19,7 +19,7 @@ public class EscenaAbout extends StackPane {
 		this.setMinSize(1000, 700);
 		this.setBackground(CreadorElementos.createBackground());
 
-		Label about = CreadorElementos.createLabel("Sobre mi.", 32, "#383838", 0, 10);
+		Label about = CreadorElementos.createLabel("Sobre mi", 32, "#383838", 0, 10);
 
 		Label info = CreadorElementos.createLabel("Estudiante de Ingeniería Informática en la universidad de Burgos, \n"
 				+ "con especial inclinación hacia el desarrollo de software y videojuegos. \n"

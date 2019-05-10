@@ -59,17 +59,17 @@ public class EscenaUsuarioRep extends StackPane {
 
 		Label usuarioRep = CreadorElementos.createLabel("Seleccionar repositorio:", 32, "#0076a3", 0, 30);
 
-		Label usuario = CreadorElementos.createLabel("Introduce el nombre del usuario a buscar:", 20, "#505050", 0,
+		Label usuario = CreadorElementos.createLabel("Introduce el nombre del usuario a buscar", 20, "#505050", 0,
 				-100);
 
 		Label repositorio = CreadorElementos.createLabel(
-				"Selecciona un repositorio o alguno de sus forks tras introducir el usuario:", 20, "#505050", 0, 40);
+				"Selecciona un repositorio o alguno de sus forks tras introducir el usuario", 20, "#505050", 0, 40);
 
-		Label repos = CreadorElementos.createLabel("Repositorios:", 16, "#505050", -50, 90);
+		Label repos = CreadorElementos.createLabel("Repositorios", 16, "#505050", -50, 90);
 
-		Label fork = CreadorElementos.createLabel("Forks:", 16, "#505050", -50, 180);
+		Label fork = CreadorElementos.createLabel("Forks", 16, "#505050", -50, 180);
 
-		TextField tfUsuario = CreadorElementos.createTextField("Nombre del usuario.", 20,
+		TextField tfUsuario = CreadorElementos.createTextField("Nombre del usuario", 20,
 				"Introduce el nombre del usuario a buscar.", -50, -30, 250);
 
 		Button repoB = CreadorElementos.createButton("Siguiente", 20, "Selecciona el repositorio.", -5, -5, 100);

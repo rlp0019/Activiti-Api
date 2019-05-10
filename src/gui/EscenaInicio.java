@@ -34,10 +34,9 @@ public class EscenaInicio extends StackPane {
 		MenuBar menu = CreadorElementos.createMenu(aplicacion);
 		aplicacion.cargarAyuda(ayudaB);
 
-		Label activiti = CreadorElementos.createLabel("Bienvenido a Activiti-Api.", 32, "#383838", 0, 30);
+		Label activiti = CreadorElementos.createLabel("Bienvenido a Activiti-Api", 32, "#383838", 0, 30);
 
-		Label info = CreadorElementos.createLabel("TFG desarrollado en la Universidad de Burgos.", 20, "#000000", 0,
-				75);
+		Label info = CreadorElementos.createLabel("TFG desarrollado en la Universidad de Burgos", 20, "#000000", 0, 75);
 
 		Image imagen = new Image(getClass().getClassLoader().getResource("imagenes/FachadaUbu.jpg").toExternalForm());
 		ImageView imagenV = new ImageView(imagen);

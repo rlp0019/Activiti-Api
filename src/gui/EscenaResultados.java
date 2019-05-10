@@ -28,7 +28,7 @@ public class EscenaResultados extends StackPane {
 	/**
 	 * Array de HBox de Tab con los gráficos.
 	 */
-	private final static HBox[] pGraf = new HBox[5];
+	private final static HBox[] pGraf = new HBox[] { new HBox(), new HBox(), new HBox(), new HBox(), new HBox() };
 
 	/**
 	 * Botón para volver a la página anterior.
@@ -125,10 +125,6 @@ public class EscenaResultados extends StackPane {
 	 */
 	private TabPane iniciaTabPane(ScrollPane panelContenido) {
 		TabPane tb = new TabPane();
-
-		for (int i = 0; i < EscenaResultados.pGraf.length; i++) {
-			EscenaResultados.pGraf[i] = new HBox();
-		}
 
 		Tab resultado = CreadorElementos.createTab("Métricas", "Mostrar panel con los resultados de las métricas.");
 		resultado.setContent(panelContenido);

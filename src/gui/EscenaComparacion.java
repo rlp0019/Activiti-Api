@@ -43,20 +43,20 @@ public class EscenaComparacion extends StackPane {
 		this.setMinSize(1000, 700);
 		this.setBackground(CreadorElementos.createBackground());
 
-		Label selecciona = CreadorElementos.createLabel("Selecciona los informes a comparar:", 32, "#0076a3", 0, 30);
+		Label selecciona = CreadorElementos.createLabel("Selecciona los informes a comparar", 32, "#0076a3", 0, 30);
 
-		Label selecciona1 = CreadorElementos.createLabel("Selecciona el primer informe a comparar:", 20, "#505050", 0,
+		Label selecciona1 = CreadorElementos.createLabel("Selecciona el primer informe a comparar", 20, "#505050", 0,
 				-125);
 
-		Label selecciona2 = CreadorElementos.createLabel("Selecciona el segundo informe a comparar:", 20, "#505050", 0,
+		Label selecciona2 = CreadorElementos.createLabel("Selecciona el segundo informe a comparar", 20, "#505050", 0,
 				10);
 
-		TextField archivo1 = CreadorElementos.createTextField("Path del primer archivo.", 16,
+		TextField archivo1 = CreadorElementos.createTextField("Path del primer archivo", 16,
 				"Aparecerá el nombre del primer archivo a comparar.", -50, -70, 350);
 		archivo1.setDisable(true);
 		archivo1.setStyle("-fx-opacity: 1;");
 
-		TextField archivo2 = CreadorElementos.createTextField("Path del segundo archivo.", 16,
+		TextField archivo2 = CreadorElementos.createTextField("Path del segundo archivo", 16,
 				"Aparecerá el nombre del segundo archivo a comparar.", -50, 65, 350);
 		archivo2.setDisable(true);
 		archivo2.setStyle("-fx-opacity: 1;");
