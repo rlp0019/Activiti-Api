@@ -174,8 +174,8 @@ public class EscenaComparacion extends StackPane {
 	 */
 	private String compararInformes(FachadaConexion conexion1, FachadaConexion conexion2) {
 		String texto = "<html><head><style> table {font-weight: bold; margin: 0 auto; text-align: center}"
-				+ "table td {background-color: #C0C0C0; font-family: Sans-Serif;} table .rojo {background-color: #ff4646;}"
-				+ "table .verde {background-color: #62ff79;} </style></head> <body bgcolor='#e6f2ff'>";
+				+ "table td {background-color: #C0C0C0; font-family: Sans-Serif;} table .rojo {background-color: #ffa0a0;}"
+				+ "table .verde {background-color: #b2e5b2;} </style></head> <body bgcolor='#e6f2ff'>";
 		texto += "<table>";
 		texto += "<tr>";
 		texto += "<th>Métrica</th>";
