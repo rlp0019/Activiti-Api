@@ -30,6 +30,7 @@ import lector.FabricaConexion;
 import lector.FabricaConexionGitHub;
 import lector.FachadaConexion;
 import motormetricas.csv.ManagerCSV;
+import motormetricas.csv.SeparadorMetricas;
 
 /**
  * Clase principal que ejecuta la interfaz gráfica.
@@ -118,6 +119,11 @@ public class PrincipalFX extends Application {
 		iniciaEscenas();
 
 		ventana.setScene(escenas[0]);
+
+		ventana.heightProperty().addListener((obs, valorAntiguo, nuevoValor) -> {
+			EscenaResultados.setAlturaMetricas(nuevoValor.doubleValue());
+		});
+
 		ventana.show();
 	}
 
@@ -216,12 +222,65 @@ public class PrincipalFX extends Application {
 	}
 
 	/**
-	 * Devuelve las métricas de un repositorio.
+	 * Devuelve las métricas de un repositorio en html.
 	 * 
 	 * @return array de objetos que contiene las métricas y gráficos.
 	 */
 	public Object[] getMetricasRepositorio() {
-		return lector.getResultados();
+		Object[] metricas = lector.getResultados();
+		metricas[0] = getMetricasRepositorioHtml(metricas);
+
+		return metricas;
+	}
+
+	/**
+	 * Convierte las métricas de un repositorio en formato String a html.
+	 * 
+	 * @return array de objetos que contiene las métricas y gráficos.
+	 */
+	private String getMetricasRepositorioHtml(Object[] metricas) {
+		SeparadorMetricas sm = new SeparadorMetricas(metricas[0]);
+
+		String metricasHtml = "<html>";
+		metricasHtml += "<body bgcolor=\"#e6f2ff\">";
+		metricasHtml += "<h1>Métricas</h1>";
+		String espacio = "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;";
+		metricasHtml += this.fillParrafo("NumeroIssues:<br>" + espacio + sm.getTotalIssues(), false);
+		metricasHtml += this.fillParrafo("ContadorTareas:<br>" + espacio + sm.getContadorTareas(), true);
+		metricasHtml += this.fillParrafo("NumeroIssuesCerradas:<br>" + espacio + sm.getPorcentajeCerrados(), false);
+		metricasHtml += this.fillParrafo("MediaDiasCierre:<br>" + espacio + sm.getMediaDiasCierre(), true);
+		metricasHtml += this.fillParrafo("NumeroCambiosSinMensaje:<br>" + espacio + sm.getNumeroCambiosSinMensaje(),
+				false);
+		metricasHtml += this.fillParrafo("MediaDiasCambio:<br>" + espacio + sm.getMediaDiasEntreCommit(), true);
+		metricasHtml += this.fillParrafo("DiasPrimerUltimoCommit:<br>" + espacio + sm.getTotalDias(), false);
+		metricasHtml += this.fillParrafo("UltimaModificacion:<br>" + espacio + sm.getUltimaModificacion(), true);
+		metricasHtml += this.fillParrafo("CommitPorMes:<br>" + espacio + sm.getCommitPorMes(), false);
+		metricasHtml += this.fillParrafo("RelacionMesPico:<br>" + espacio + sm.getRelacionMesPico(), true);
+		metricasHtml += this.fillParrafo("ContadorCambiosPico:<br>" + espacio + sm.getCambioPico(), false);
+		metricasHtml += this.fillParrafo("RatioActividadCambio:<br>" + espacio + sm.getActividadCambio(), true);
+		metricasHtml += this.fillParrafo("CommitPorDia:<br>" + espacio + sm.getCommitPorDia(), false);
+		metricasHtml += this.fillParrafo("CambioPorAutor:<br>" + espacio + sm.getCambioPorAutor(), true);
+		metricasHtml += this.fillParrafo("ContadorAutor:<br>" + espacio + sm.getContadorAutor(), false);
+		metricasHtml += this.fillParrafo("IssuesPorAutor:<br>" + espacio + sm.getIssuesPorAutor(), true);
+		metricasHtml += this.fillParrafo("NumeroFavoritos:<br>" + espacio + sm.getNumeroFavoritos(), false);
+
+		metricasHtml += "</body></html>";
+
+		return metricasHtml;
+	}
+
+	private String fillParrafo(String cadena, boolean bg) {
+		String resultado = "";
+
+		if (bg) {
+			resultado += "<p style=\"background-color: #e9e9e9\">";
+		} else {
+			resultado += "<p style=\"background-color: #a3d3eb\">";
+		}
+
+		resultado += cadena + "</p>";
+
+		return resultado;
 	}
 
 	/**
