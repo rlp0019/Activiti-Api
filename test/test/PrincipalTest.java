@@ -242,7 +242,7 @@ public class PrincipalTest {
 			SeparadorMetricas separador = new SeparadorMetricas(lector.getResultados()[0]);
 
 			assertEquals("Comparación del total de issues.", separador.getTotalIssues(), 24.0, 0);
-			assertEquals("Comparación del total de issues entre el total de commits.", separador.getIssuesPorCommit(),
+			assertEquals("Comparación del total de issues entre el total de commits.", separador.getContadorCambios(),
 					0.53, 0);
 			assertEquals("Comparación del número de issues cerrados dividido entre el total de issues por 100.",
 					separador.getPorcentajeCerrados(), 100.0, 0);

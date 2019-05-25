@@ -89,6 +89,7 @@ public class EscenaResultadoComparacion extends StackPane {
 	 * @param tabla tabla con los resultado de la comparación.
 	 */
 	public static void setTabla(String tabla) {
+		// TODO wv.getStylesheets().add(e);
 		wv.getEngine().loadContent(tabla);
 	}
 

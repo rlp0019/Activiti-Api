@@ -17,7 +17,7 @@ public class SeparadorMetricas {
 	/**
 	 * Número de issues por cada commit.
 	 */
-	private double issuesPorCommit;
+	private double contadorCambios;
 
 	/**
 	 * Porcentaje de issues cerrados.
@@ -53,7 +53,7 @@ public class SeparadorMetricas {
 	/**
 	 * Contador de tareas normalizado.
 	 */
-	private double contadorTareas;
+	private double issuesCerradas;
 
 	/**
 	 * Cambios sin mensaje.
@@ -110,8 +110,8 @@ public class SeparadorMetricas {
 		String[] partes = resultado.split("\\s+");
 
 		totalIssues = stringToDouble(partes[2]);
-		issuesPorCommit = stringToDouble(partes[4]);
-		contadorTareas = stringToDouble(partes[6]);
+		contadorCambios = stringToDouble(partes[4]);
+		issuesCerradas = stringToDouble(partes[6]);
 		porcentajeCerrados = stringToDouble(partes[8]);
 		mediaDiasCierre = stringToDouble(partes[10]);
 		numeroCambiosSinMensaje = stringToDouble(partes[12]);
@@ -238,8 +238,8 @@ public class SeparadorMetricas {
 	 * 
 	 * @return número de tareas normalizado.
 	 */
-	public double getContadorTareas() {
-		return contadorTareas;
+	public double getIssuesCerradas() {
+		return issuesCerradas;
 	}
 
 	/**
@@ -256,8 +256,8 @@ public class SeparadorMetricas {
 	 * 
 	 * @return número de issues por cada commit.
 	 */
-	public double getIssuesPorCommit() {
-		return issuesPorCommit;
+	public double getContadorCambios() {
+		return contadorCambios;
 	}
 
 	/**

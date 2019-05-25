@@ -246,23 +246,24 @@ public class PrincipalFX extends Application {
 		metricasHtml += "<h1>Métricas</h1>";
 		String espacio = "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;";
 		metricasHtml += this.fillParrafo("NumeroIssues:<br>" + espacio + sm.getTotalIssues(), false);
-		metricasHtml += this.fillParrafo("ContadorTareas:<br>" + espacio + sm.getContadorTareas(), true);
-		metricasHtml += this.fillParrafo("NumeroIssuesCerradas:<br>" + espacio + sm.getPorcentajeCerrados(), false);
-		metricasHtml += this.fillParrafo("MediaDiasCierre:<br>" + espacio + sm.getMediaDiasCierre(), true);
+		metricasHtml += this.fillParrafo("ContadorTareas:<br>" + espacio + sm.getContadorCambios(), true);
+		metricasHtml += this.fillParrafo("NumeroIssuesCerradas:<br>" + espacio + sm.getIssuesCerradas(), false);
+		metricasHtml += this.fillParrafo("PorcentajeIssuesCerradas:<br>" + espacio + sm.getPorcentajeCerrados(), true);
+		metricasHtml += this.fillParrafo("MediaDiasCierre:<br>" + espacio + sm.getMediaDiasCierre(), false);
 		metricasHtml += this.fillParrafo("NumeroCambiosSinMensaje:<br>" + espacio + sm.getNumeroCambiosSinMensaje(),
-				false);
-		metricasHtml += this.fillParrafo("MediaDiasCambio:<br>" + espacio + sm.getMediaDiasEntreCommit(), true);
-		metricasHtml += this.fillParrafo("DiasPrimerUltimoCommit:<br>" + espacio + sm.getTotalDias(), false);
-		metricasHtml += this.fillParrafo("UltimaModificacion:<br>" + espacio + sm.getUltimaModificacion(), true);
-		metricasHtml += this.fillParrafo("CommitPorMes:<br>" + espacio + sm.getCommitPorMes(), false);
-		metricasHtml += this.fillParrafo("RelacionMesPico:<br>" + espacio + sm.getRelacionMesPico(), true);
-		metricasHtml += this.fillParrafo("ContadorCambiosPico:<br>" + espacio + sm.getCambioPico(), false);
-		metricasHtml += this.fillParrafo("RatioActividadCambio:<br>" + espacio + sm.getActividadCambio(), true);
-		metricasHtml += this.fillParrafo("CommitPorDia:<br>" + espacio + sm.getCommitPorDia(), false);
-		metricasHtml += this.fillParrafo("CambioPorAutor:<br>" + espacio + sm.getCambioPorAutor(), true);
-		metricasHtml += this.fillParrafo("ContadorAutor:<br>" + espacio + sm.getContadorAutor(), false);
-		metricasHtml += this.fillParrafo("IssuesPorAutor:<br>" + espacio + sm.getIssuesPorAutor(), true);
-		metricasHtml += this.fillParrafo("NumeroFavoritos:<br>" + espacio + sm.getNumeroFavoritos(), false);
+				true);
+		metricasHtml += this.fillParrafo("MediaDiasCambio:<br>" + espacio + sm.getMediaDiasEntreCommit(), false);
+		metricasHtml += this.fillParrafo("DiasPrimerUltimoCommit:<br>" + espacio + sm.getTotalDias(), true);
+		metricasHtml += this.fillParrafo("UltimaModificacion:<br>" + espacio + sm.getUltimaModificacion(), false);
+		metricasHtml += this.fillParrafo("CommitPorMes:<br>" + espacio + sm.getCommitPorMes(), true);
+		metricasHtml += this.fillParrafo("RelacionMesPico:<br>" + espacio + sm.getRelacionMesPico(), false);
+		metricasHtml += this.fillParrafo("ContadorCambiosPico:<br>" + espacio + sm.getCambioPico(), true);
+		metricasHtml += this.fillParrafo("RatioActividadCambio:<br>" + espacio + sm.getActividadCambio(), false);
+		metricasHtml += this.fillParrafo("CommitPorDia:<br>" + espacio + sm.getCommitPorDia(), true);
+		metricasHtml += this.fillParrafo("CambioPorAutor:<br>" + espacio + sm.getCambioPorAutor(), false);
+		metricasHtml += this.fillParrafo("ContadorAutor:<br>" + espacio + sm.getContadorAutor(), true);
+		metricasHtml += this.fillParrafo("IssuesPorAutor:<br>" + espacio + sm.getIssuesPorAutor(), false);
+		metricasHtml += this.fillParrafo("NumeroFavoritos:<br>" + espacio + sm.getNumeroFavoritos(), true);
 
 		metricasHtml += "</body></html>";
 

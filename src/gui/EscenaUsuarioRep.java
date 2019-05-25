@@ -11,6 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
 /**
@@ -57,7 +59,7 @@ public class EscenaUsuarioRep extends StackPane {
 		Alert alert2 = CreadorElementos.createAlertaError("Campo vacío.",
 				"La selección de repositorio no puede estar vacía.", "Error de datos.");
 
-		Label usuarioRep = CreadorElementos.createLabel("Seleccionar repositorio:", 32, "#0076a3", 0, 30);
+		Label usuarioRep = CreadorElementos.createLabel("Seleccionar repositorio", 32, "#0076a3", 0, 30);
 
 		Label usuario = CreadorElementos.createLabel("Introduce el nombre del usuario a buscar", 20, "#505050", 0,
 				-100);
@@ -92,6 +94,20 @@ public class EscenaUsuarioRep extends StackPane {
 		});
 		repoB.setDisable(true);
 
+		Image imagen = new Image(getClass().getClassLoader().getResource("imagenes/Clear.png").toExternalForm());
+		ImageView imagenV = new ImageView(imagen);
+		imagenV.setFitWidth(32);
+		imagenV.setFitHeight(32);
+
+		ImageView imagenV2 = new ImageView(imagen);
+		imagenV2.setFitWidth(32);
+		imagenV2.setFitHeight(32);
+
+		Button borraRepo = CreadorElementos.createButton("", 1, "Elimina la selección de repositorio.", 100, 135, -1);
+		borraRepo.setOnAction(e -> desplegableRepo.getSelectionModel().clearSelection());
+		borraRepo.setGraphic(imagenV);
+		borraRepo.setMaxSize(32, 32);
+
 		Button buscarB = CreadorElementos.createButton("Buscar", 20, "Busca los repositorios del usuario introducido.",
 				175, -30, 100);
 		buscarB.setOnAction(e -> {
@@ -116,6 +132,11 @@ public class EscenaUsuarioRep extends StackPane {
 			}
 		});
 
+		Button borraForks = CreadorElementos.createButton("", 1, "Elimina la selección de repositorio.", 100, 225, -1);
+		borraForks.setOnAction(e -> desplegableForks.getSelectionModel().clearSelection());
+		borraForks.setGraphic(imagenV2);
+		borraForks.setMaxSize(32, 32);
+
 		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", 5, -5, 100);
 		atrasB.setOnAction(e -> {
 			tfUsuario.clear();
@@ -131,7 +152,7 @@ public class EscenaUsuarioRep extends StackPane {
 		});
 
 		this.getChildren().addAll(usuarioRep, usuario, repos, fork, repositorio, tfUsuario, buscarB, desplegableRepo,
-				desplegableForks, repoB, atrasB);
+				desplegableForks, repoB, borraRepo, borraForks, atrasB);
 		EscenaUsuarioRep.setAlignment(usuarioRep, Pos.TOP_CENTER);
 		EscenaUsuarioRep.setAlignment(atrasB, Pos.BOTTOM_LEFT);
 		EscenaUsuarioRep.setAlignment(repoB, Pos.BOTTOM_RIGHT);

@@ -59,7 +59,7 @@ public class ManagerCSV {
 	 * @return -1 si es menor que Q1 o mayor que Q3, 1 si está entre ambos.
 	 */
 	public int comparaIssuesPorCommit() {
-		double valor = separador.getIssuesPorCommit();
+		double valor = separador.getContadorCambios();
 
 		return calc.comparaValor(valor, 1, 1);
 	}
@@ -143,7 +143,7 @@ public class ManagerCSV {
 	 */
 	public boolean addMetricasProyecto(String nombre) {
 		String metricas = nombre + "," + Double.toString(separador.getTotalIssues()) + ","
-				+ Double.toString(separador.getIssuesPorCommit()) + ","
+				+ Double.toString(separador.getContadorCambios()) + ","
 				+ Double.toString(separador.getPorcentajeCerrados()) + ","
 				+ Double.toString(separador.getMediaDiasCierre()) + ","
 				+ Double.toString(separador.getMediaDiasEntreCommit()) + "," + Double.toString(separador.getTotalDias())
@@ -219,7 +219,7 @@ public class ManagerCSV {
 
 		int issuesC = comparaIssuesPorCommit();
 		datos += addCelda("ContadorTareas", calc.getQ1IssuesPorCommit(), calc.getQ3IssuesPorCommit(), issuesC,
-				separador.getIssuesPorCommit(), 2);
+				separador.getContadorCambios(), 2);
 
 		int issuesCerr = comparaPorcentajeCerrados();
 		datos += addCelda("PorcentajeIssuesCerradas", calc.getQ1PorcentajeIssuesCerrados(),
