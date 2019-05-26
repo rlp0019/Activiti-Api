@@ -288,6 +288,7 @@ public class PrincipalFX extends Application {
 	 */
 	public void createModoDesconectado() {
 		lector = fabConexion.crearFachadaConexion();
+		EscenaUsuarioRep.loadNombreConex("Modo desconectado");
 	}
 
 	/**
@@ -302,6 +303,7 @@ public class PrincipalFX extends Application {
 
 		try {
 			lector = fabConexion.crearFachadaConexion(usuario, contrasena);
+			EscenaUsuarioRep.loadNombreConex("Conectado como " + usuario);
 			resultado = true;
 		} catch (IOException e) {
 			Alert alertaConexion = CreadorElementos.createAlertaError("Datos erróneos.",

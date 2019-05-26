@@ -28,6 +28,11 @@ public class EscenaUsuarioRep extends StackPane {
 	private static final Logger LOGGER = Logger.getLogger(EscenaUsuarioRep.class.getName());
 
 	/**
+	 * Label con el nombre de la conexión actual.
+	 */
+	private static Label conex = CreadorElementos.createLabel("", 16, "#0076a3", -5, 5);
+
+	/**
 	 * Usuario que contiene los repositorios.
 	 */
 	private String nombreUsuario;
@@ -152,9 +157,14 @@ public class EscenaUsuarioRep extends StackPane {
 		});
 
 		this.getChildren().addAll(usuarioRep, usuario, repos, fork, repositorio, tfUsuario, buscarB, desplegableRepo,
-				desplegableForks, repoB, borraRepo, borraForks, atrasB);
+				desplegableForks, repoB, borraRepo, borraForks, conex, atrasB);
 		EscenaUsuarioRep.setAlignment(usuarioRep, Pos.TOP_CENTER);
 		EscenaUsuarioRep.setAlignment(atrasB, Pos.BOTTOM_LEFT);
 		EscenaUsuarioRep.setAlignment(repoB, Pos.BOTTOM_RIGHT);
+		EscenaUsuarioRep.setAlignment(conex, Pos.TOP_RIGHT);
+	}
+
+	public static void loadNombreConex(String valor) {
+		conex.setText(valor);
 	}
 }
