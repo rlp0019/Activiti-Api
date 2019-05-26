@@ -29,7 +29,7 @@ public class EscenaResultadoComparacion extends StackPane {
 	/**
 	 * Label con la nota a mostrar.
 	 */
-	private static Label nota = CreadorElementos.createLabel("", 24, "#000000", 0, 200);
+	private static Label nota = CreadorElementos.createLabel("", 24, "#0076a3", 0, 200);
 
 	/**
 	 * Botón para obtener la nota poco estricta.
@@ -52,9 +52,11 @@ public class EscenaResultadoComparacion extends StackPane {
 		this.setMinSize(1000, 700);
 		this.setBackground(CreadorElementos.createBackground());
 
+		Label titulo = CreadorElementos.createLabel("Comparación", 32, "#0076a3", 0, 10);
+
 		StackPane panelContenido = new StackPane();
 		panelContenido.setBackground(CreadorElementos.createBackground());
-		panelContenido.setTranslateY(50);
+		panelContenido.setTranslateY(70);
 
 		notaB.setOnAction(e -> EscenaResultadoComparacion.setNota(aplicacion.getNota(false)));
 
@@ -74,13 +76,14 @@ public class EscenaResultadoComparacion extends StackPane {
 
 		panelContenido.getChildren().addAll(wv, nota);
 		StackPane.setAlignment(nota, Pos.CENTER);
-		this.getChildren().addAll(panelContenido, nota, notaB, notaSB, atrasB, inicioB);
+		this.getChildren().addAll(titulo, panelContenido, nota, notaB, notaSB, atrasB, inicioB);
 		EscenaResultadoComparacion.setAlignment(panelContenido, Pos.CENTER);
 		EscenaResultadoComparacion.setAlignment(nota, Pos.CENTER);
 		EscenaResultadoComparacion.setAlignment(notaB, Pos.BOTTOM_CENTER);
 		EscenaResultadoComparacion.setAlignment(notaSB, Pos.BOTTOM_CENTER);
 		EscenaResultadoComparacion.setAlignment(atrasB, Pos.BOTTOM_LEFT);
 		EscenaResultadoComparacion.setAlignment(inicioB, Pos.BOTTOM_RIGHT);
+		EscenaResultadoComparacion.setAlignment(titulo, Pos.TOP_CENTER);
 	}
 
 	/**
@@ -89,7 +92,6 @@ public class EscenaResultadoComparacion extends StackPane {
 	 * @param tabla tabla con los resultado de la comparación.
 	 */
 	public static void setTabla(String tabla) {
-		// TODO wv.getStylesheets().add(e);
 		wv.getEngine().loadContent(tabla);
 	}
 

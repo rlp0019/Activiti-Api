@@ -35,9 +35,9 @@ public class EscenaInicio extends StackPane {
 		aplicacion.cargarAyuda(ayudaB);
 
 		Label activiti = CreadorElementos.createLabel("Evalua y compara la actividad del repositorio en GitHub", 32,
-				"#383838", 0, 30);
+				"#0076a3", 0, 30);
 
-		Label info = CreadorElementos.createLabel("TFG desarrollado en la Universidad de Burgos", 20, "#000000", 0, 75);
+		Label info = CreadorElementos.createLabel("TFG desarrollado en la Universidad de Burgos", 20, "#0076a3", 0, 75);
 
 		Image imagen = new Image(getClass().getClassLoader().getResource("imagenes/FachadaUbu.jpg").toExternalForm());
 		ImageView imagenV = new ImageView(imagen);

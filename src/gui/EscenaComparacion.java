@@ -17,7 +17,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 import lector.FabricaConexion;
 import lector.FabricaConexionGitHub;
 import lector.FachadaConexion;
@@ -91,8 +90,8 @@ public class EscenaComparacion extends StackPane {
 	 */
 	private void seleccionarFichero(PrincipalFX aplicacion, TextField txtDestino) {
 		FileChooser selector = new FileChooser();
-		ExtensionFilter filtro = new ExtensionFilter("*.txt", "txt");
-		selector.setSelectedExtensionFilter(filtro);
+		FileChooser.ExtensionFilter filtro = new FileChooser.ExtensionFilter("Text File", "*.TXT", "*.txt");
+		selector.getExtensionFilters().add(filtro);
 
 		File inicial = FileSystemView.getFileSystemView().getDefaultDirectory();
 		if (inicial.exists()) {
@@ -154,12 +153,14 @@ public class EscenaComparacion extends StackPane {
 					tf2.clear();
 
 					aplicacion.cambiaEscena(5);
+				} else {
+					alerta3.showAndWait();
 				}
 				contenido1.close();
 				lee1.close();
 				contenido2.close();
 				lee2.close();
-			} catch (IOException e) {
+			} catch (IOException | NullPointerException e) {
 				LOGGER.log(Level.SEVERE, e.getMessage());
 				alerta3.showAndWait();
 			}
@@ -173,14 +174,16 @@ public class EscenaComparacion extends StackPane {
 	 * @return String con los resultados de la comparacion en formato HTML.
 	 */
 	private String compararInformes(FachadaConexion conexion1, FachadaConexion conexion2) {
-		String texto = "<html><head><style> table {font-weight: bold; margin: 0 auto; text-align: center}"
-				+ "table td {background-color: #C0C0C0; font-family: Sans-Serif;} table .rojo {background-color: #ffa0a0;}"
+		String texto = "<html><head><style> table {border: 2px solid black; font-family: Sans-Serif; font-size: 16px; margin: 0 auto; text-align: center}"
+				+ "table .titulo {background-color: #a3d3eb;  padding: 10px;}"
+				+ "table td {background-color: #e9e9e9; padding: 10px;}" + "table .rojo {background-color: #ffa0a0;}"
 				+ "table .verde {background-color: #b2e5b2;} </style></head> <body bgcolor='#e6f2ff'>";
 		texto += "<table>";
 		texto += "<tr>";
-		texto += "<th>Métrica</th>";
-		texto += "<th>" + conexion1.getNombreRepositorio() + "</th>";
-		texto += "<th>" + conexion2.getNombreRepositorio() + "</th>";
+		String header = "<th style=\"background-color: #60b3dc; padding: 10px;\">";
+		texto += header + "Métrica</th>";
+		texto += header + conexion1.getNombreRepositorio() + "</th>";
+		texto += header + conexion2.getNombreRepositorio() + "</th>";
 		texto += "</tr>";
 
 		texto += conexion1.comparar(conexion2);

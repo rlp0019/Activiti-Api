@@ -445,7 +445,8 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 		}
 
 		resultadoComparacion += "<tr>";
-		resultadoComparacion += "<td>" + metricas.getMedida(i).getMetrica().getDescripcion().getNombre() + "</td>";
+		resultadoComparacion += "<td class=\"titulo\">"
+				+ metricas.getMedida(i).getMetrica().getDescripcion().getNombre() + "</td>";
 
 		switch (valor) {
 		case 0:

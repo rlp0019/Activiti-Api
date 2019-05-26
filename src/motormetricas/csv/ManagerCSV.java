@@ -185,17 +185,20 @@ public class ManagerCSV {
 	public String creaTabla(String nombre) {
 		String tabla = "<table>";
 		tabla += "<tr>";
-		tabla += "<th>Métrica</th>";
-		tabla += "<th>Q1</th>";
-		tabla += "<th>" + nombre + "</th>";
-		tabla += "<th>Q3</th>";
-		tabla += "<th>Mejor valor</th>";
+		String header = "<th style=\"background-color: #60b3dc; padding: 10px;\">";
+		tabla += header + "Métrica</th>";
+		tabla += header + "Q1</th>";
+		tabla += header + nombre + "</th>";
+		tabla += header + "Q3</th>";
+		tabla += header + "Recomendado</th>";
 		tabla += "</tr>";
 
-		tabla += "<html>" + "<head><style>" + "table {font-weight: bold; margin: 0 auto; text-align: center}"
-				+ "table td {background-color: #C0C0C0; font-family: Sans-Serif;}"
-				+ "table .rojo {background-color: #ffa0a0;}" + "table .verde {background-color: #b2e5b2;}"
-				+ "table .amarillo {background-color: #fffdbb}" + "</style></head>" + "<body bgcolor='#e6f2ff'>";
+		tabla += "<html>" + "<head><style>"
+				+ "table {border: 2px solid black; font-family: Sans-Serif; font-size: 16px; margin: 0 auto; text-align: center}"
+				+ "table .titulo {background-color: #a3d3eb;  padding: 10px;}"
+				+ "table td {background-color: #e9e9e9; padding: 10px;}" + "table .rojo {background-color: #ffa0a0;}"
+				+ "table .verde {background-color: #b2e5b2;}" + "table .amarillo {background-color: #fffdbb;}"
+				+ "</style></head>" + "<body bgcolor='#e6f2ff'>";
 
 		tabla += creaDatosTabla();
 
@@ -322,7 +325,7 @@ public class ManagerCSV {
 		String datos = "";
 
 		datos += "<tr>";
-		datos += "<td>" + metrica + "</td>";
+		datos += "<td class=\"titulo\">" + metrica + "</td>";
 		datos += "<td>" + q1 + "</td>";
 		datos += addClase(valorComp, valorMet);
 		datos += "<td>" + q3 + "</td>";
