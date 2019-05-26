@@ -24,7 +24,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import lector.FabricaConexion;
 import lector.FabricaConexionGitHub;
@@ -242,8 +241,8 @@ public class PrincipalFX extends Application {
 		SeparadorMetricas sm = new SeparadorMetricas(metricas[0]);
 
 		String metricasHtml = "<html>";
-		metricasHtml += "<body bgcolor=\"#e6f2ff\">";
-		metricasHtml += "<h1>Métricas</h1>";
+		metricasHtml += "<body bgcolor=\"#e6f2ff\"; font-family: Sans-Serif;>";
+		metricasHtml += "<h1 style=\"color: #0076a3\">Métricas</h1>";
 		String espacio = "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;";
 		metricasHtml += this.fillParrafo("NumeroIssues:<br>" + espacio + sm.getTotalIssues(), false);
 		metricasHtml += this.fillParrafo("ContadorTareas:<br>" + espacio + sm.getContadorCambios(), true);
@@ -319,7 +318,7 @@ public class PrincipalFX extends Application {
 	 */
 	public void loadArchivo() {
 		try {
-			File archivo = openArchivo("*.txt", "txt", true);
+			File archivo = openArchivo("Text Files", "*.TXT", "*.txt", true);
 
 			if (archivo != null && archivo.exists() && archivo.isFile()) {
 				FileReader lee = new FileReader(archivo);
@@ -348,7 +347,7 @@ public class PrincipalFX extends Application {
 	 */
 	public void saveArchivo() {
 		try {
-			File archivo = openArchivo("*.txt", "txt", false);
+			File archivo = openArchivo("Text Files", "*.TXT", "*.txt", false);
 
 			if (archivo != null) {
 				FileWriter save = new FileWriter(archivo);
@@ -377,7 +376,7 @@ public class PrincipalFX extends Application {
 	}
 
 	public void startManager() {
-		File archivo = openArchivo("*.csv", "csv", true);
+		File archivo = openArchivo("CSV Files", "*.CSV", "*.csv", true);
 
 		if (archivo != null) {
 			manager = new ManagerCSV(Paths.get(archivo.getAbsolutePath()), lector.getResultados()[0]);
@@ -469,13 +468,22 @@ public class PrincipalFX extends Application {
 		this.cambiaEscena(0);
 	}
 
-	private File openArchivo(String extension, String descripcion, boolean cargar) {
+	/**
+	 * Inicia un FileChooser con el filtro pasado.
+	 * 
+	 * @param descr  descripción de la extensión.
+	 * @param extM   extensión en mayúsculas.
+	 * @param ext    extensión en minúsculas.
+	 * @param cargar opción para guardar o cargar.
+	 * @return archivo.
+	 */
+	private File openArchivo(String descr, String extM, String ext, boolean cargar) {
 		File archivo = null;
 
 		try {
 			FileChooser selector = new FileChooser();
-			ExtensionFilter filtro = new ExtensionFilter(extension, descripcion);
-			selector.setSelectedExtensionFilter(filtro);
+			FileChooser.ExtensionFilter filtro = new FileChooser.ExtensionFilter(descr, extM, ext);
+			selector.getExtensionFilters().add(filtro);
 
 			if (cargar) {
 				File inicial = FileSystemView.getFileSystemView().getDefaultDirectory();
