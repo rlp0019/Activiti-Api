@@ -387,6 +387,16 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 		String resultadoComparacion = "";
 
 		for (int i = 0; i < metricas.size(); i++) {
+			if (i == 0) {
+				resultadoComparacion += "<td class=\"titulo\" colspan=\"3\">Proceso de orientación</td>";
+			} else if (i == 6) {
+				resultadoComparacion += "<td class=\"titulo\" colspan=\"3\">Restricciones temporales</td>";
+			} else if (i == 13) {
+				resultadoComparacion += "<td class=\"titulo\" colspan=\"3\">Equipo de desarrollo</td>";
+			} else if (i == 16) {
+				resultadoComparacion += "<td class=\"titulo\" colspan=\"3\">Relevancia</td>";
+			}
+
 			switch (metricas.getMedida(i).getMetrica().getDescripcion().getNombre()) {
 			case "NumeroCambiosSinMensaje":
 				resultadoComparacion += comparaValores(comparacion, i, true, 0);

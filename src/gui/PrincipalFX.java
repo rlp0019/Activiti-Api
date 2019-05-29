@@ -121,6 +121,7 @@ public class PrincipalFX extends Application {
 
 		ventana.heightProperty().addListener((obs, valorAntiguo, nuevoValor) -> {
 			EscenaResultados.setAlturaMetricas(nuevoValor.doubleValue());
+			EscenaResultadoComparacion.setAlturaWebView(nuevoValor.doubleValue());
 		});
 
 		ventana.show();

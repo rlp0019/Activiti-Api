@@ -216,6 +216,8 @@ public class ManagerCSV {
 	private String creaDatosTabla() {
 		String datos = "";
 
+		datos += "<td class=\"titulo\" colspan=\"5\">Proceso de orientación</td>";
+
 		int issuesT = comparaTotalIssues();
 		datos += addCelda("NumeroIssues", calc.getQ1TotalIssues(), calc.getQ3TotalIssues(), issuesT,
 				separador.getTotalIssues(), 0);
@@ -231,6 +233,8 @@ public class ManagerCSV {
 		int mediaCerr = comparaMediaDiasCierre();
 		datos += addCelda("MediaDiasCierre", calc.getQ1DiasPorIssue(), calc.getQ3DiasPorIssue(), mediaCerr,
 				separador.getMediaDiasCierre(), 1);
+
+		datos += "<td class=\"titulo\" colspan=\"5\">Restricciones temporales</td>";
 
 		int mediaEntre = comparaMediaDiasEntreCommit();
 		datos += addCelda("MediaDiasCambio", calc.getQ1DiasEntreCommit(), calc.getQ3DiasEntreCommit(), mediaEntre,

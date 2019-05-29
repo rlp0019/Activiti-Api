@@ -29,7 +29,7 @@ public class EscenaResultadoComparacion extends StackPane {
 	/**
 	 * Label con la nota a mostrar.
 	 */
-	private static Label nota = CreadorElementos.createLabel("", 24, "#0076a3", 0, 200);
+	private static Label nota = CreadorElementos.createLabel("", 24, "#0076a3", 0, 230);
 
 	/**
 	 * Botón para obtener la nota poco estricta.
@@ -84,6 +84,7 @@ public class EscenaResultadoComparacion extends StackPane {
 		EscenaResultadoComparacion.setAlignment(atrasB, Pos.BOTTOM_LEFT);
 		EscenaResultadoComparacion.setAlignment(inicioB, Pos.BOTTOM_RIGHT);
 		EscenaResultadoComparacion.setAlignment(titulo, Pos.TOP_CENTER);
+		EscenaResultadoComparacion.setAlignment(wv, Pos.TOP_CENTER);
 	}
 
 	/**
@@ -127,5 +128,14 @@ public class EscenaResultadoComparacion extends StackPane {
 		nota.setVisible(activar);
 		notaB.setVisible(activar);
 		notaSB.setVisible(activar);
+	}
+
+	/**
+	 * Cambia la altura del visualizador web con la tabla.
+	 * 
+	 * @param altura altura de la ventana.
+	 */
+	public static void setAlturaWebView(double altura) {
+		wv.setMaxHeight(altura - 153);
 	}
 }
