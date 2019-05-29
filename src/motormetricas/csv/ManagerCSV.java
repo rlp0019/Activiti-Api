@@ -73,7 +73,7 @@ public class ManagerCSV {
 	public int comparaPorcentajeCerrados() {
 		double valor = separador.getPorcentajeCerrados();
 
-		return calc.comparaValor(valor, 2, 2);
+		return calc.comparaValor(valor, 0, 2);
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class ManagerCSV {
 	public int comparaMediaDiasCierre() {
 		double valor = separador.getMediaDiasCierre();
 
-		return calc.comparaValor(valor, 0, 3);
+		return calc.comparaValor(valor, 1, 3);
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class ManagerCSV {
 	public int comparaMediaDiasEntreCommit() {
 		double valor = separador.getMediaDiasEntreCommit();
 
-		return calc.comparaValor(valor, 0, 4);
+		return calc.comparaValor(valor, 1, 4);
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class ManagerCSV {
 	public int comparaTotalDias() {
 		double valor = separador.getTotalDias();
 
-		return calc.comparaValor(valor, 2, 5);
+		return calc.comparaValor(valor, 1, 5);
 	}
 
 	/**
@@ -222,19 +222,19 @@ public class ManagerCSV {
 
 		int issuesC = comparaIssuesPorCommit();
 		datos += addCelda("ContadorTareas", calc.getQ1IssuesPorCommit(), calc.getQ3IssuesPorCommit(), issuesC,
-				separador.getContadorCambios(), 2);
+				separador.getContadorCambios(), 1);
 
 		int issuesCerr = comparaPorcentajeCerrados();
 		datos += addCelda("PorcentajeIssuesCerradas", calc.getQ1PorcentajeIssuesCerrados(),
-				calc.getQ3PorcentajeIssuesCerrados(), issuesCerr, separador.getPorcentajeCerrados(), 1);
+				calc.getQ3PorcentajeIssuesCerrados(), issuesCerr, separador.getPorcentajeCerrados(), 0);
 
 		int mediaCerr = comparaMediaDiasCierre();
 		datos += addCelda("MediaDiasCierre", calc.getQ1DiasPorIssue(), calc.getQ3DiasPorIssue(), mediaCerr,
-				separador.getMediaDiasCierre(), 0);
+				separador.getMediaDiasCierre(), 1);
 
 		int mediaEntre = comparaMediaDiasEntreCommit();
 		datos += addCelda("MediaDiasCambio", calc.getQ1DiasEntreCommit(), calc.getQ3DiasEntreCommit(), mediaEntre,
-				separador.getMediaDiasEntreCommit(), 0);
+				separador.getMediaDiasEntreCommit(), 1);
 
 		int diasT = comparaTotalDias();
 		datos += addCelda("DiasPrimerUltimoCommit", calc.getQ1TotalDias(), calc.getQ3TotalDias(), diasT,
@@ -242,11 +242,11 @@ public class ManagerCSV {
 
 		int cambioP = comparaCambioPico();
 		datos += addCelda("ContadorCambiosPico", calc.getQ1CambioPico(), calc.getQ3CambioPico(), cambioP,
-				separador.getCambioPico(), 2);
+				separador.getCambioPico(), 1);
 
 		int actividadC = comparaActividadCambio();
 		datos += addCelda("RatioActividadCambio", calc.getQ1ActividadPorMes(), calc.getQ3ActividadPorMes(), actividadC,
-				separador.getActividadCambio(), 2);
+				separador.getActividadCambio(), 1);
 
 		return datos;
 	}
@@ -332,10 +332,8 @@ public class ManagerCSV {
 
 		datos += "<td>";
 		if (mejor == 0) {
-			datos += "Menor o igual que Q1";
+			datos += "Mayor que Q1";
 		} else if (mejor == 1) {
-			datos += "Mayor o igual que Q3";
-		} else {
 			datos += "Entre Q1 y Q3";
 		}
 		datos += "</td>";

@@ -281,7 +281,7 @@ public class PrincipalTest {
 
 			manager = new ManagerCSV(path, lector.getResultados()[0]);
 
-			assertEquals("Resultado comparación del total de issues.", manager.comparaTotalIssues(), 0);
+			assertEquals("Resultado comparación del total de issues.", manager.comparaTotalIssues(), 1);
 			assertEquals("Resultado comparación del total de issues entre el total de commits.",
 					manager.comparaIssuesPorCommit(), 1);
 			assertEquals(
@@ -292,7 +292,7 @@ public class PrincipalTest {
 			assertEquals("Resultado comparación de la media de días entre commits.",
 					manager.comparaMediaDiasEntreCommit(), -1);
 			assertEquals("Resultado comparación de los días entre el primer y último commit.",
-					manager.comparaTotalDias(), 1);
+					manager.comparaTotalDias(), -1);
 			assertEquals(
 					"Resultado comparación del número de commits del mes que más ha habido dividido entre el número total de commits.",
 					manager.comparaCambioPico(), 1);

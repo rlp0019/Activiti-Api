@@ -375,33 +375,28 @@ public class CalculadoraPercentil {
 		double min = valueOfQ(true, metrica);
 		double max = valueOfQ(false, metrica);
 
-		if (valor <= min) {
-			switch (opcionComparacion) {
-			case 0:
-				resultado = 1;
-				break;
-			default:
+		switch (opcionComparacion) {
+		case 0:
+			if (valor < min) {
 				resultado = -1;
-				break;
-			}
-		} else if (valor > min && valor < max) {
-			switch (opcionComparacion) {
-			case 1:
-				resultado = 1;
-				break;
-			default:
+			} else if (valor == min) {
 				resultado = 0;
-				break;
-			}
-		} else if (valor >= max) {
-			switch (opcionComparacion) {
-			case 2:
+			} else {
 				resultado = 1;
-				break;
-			default:
-				resultado = -1;
-				break;
 			}
+			break;
+		case 1:
+			if (valor < min || valor > max) {
+				resultado = -1;
+			} else if (valor == min || valor == max) {
+				resultado = 0;
+			} else {
+				resultado = 1;
+			}
+			break;
+		default:
+			resultado = -1;
+			break;
 		}
 
 		return resultado;

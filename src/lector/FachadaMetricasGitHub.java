@@ -388,23 +388,23 @@ public class FachadaMetricasGitHub implements FachadaMetricas {
 
 		for (int i = 0; i < metricas.size(); i++) {
 			switch (metricas.getMedida(i).getMetrica().getDescripcion().getNombre()) {
-			case "NumeroIssues":
 			case "NumeroCambiosSinMensaje":
 				resultadoComparacion += comparaValores(comparacion, i, true, 0);
 				break;
 			case "NumeroIssuesCerradas":
 			case "NumeroFavoritos":
+			case "NumeroIssues":
 				resultadoComparacion += comparaValores(comparacion, i, false, 0);
 				break;
 			case "ContadorTareas":
 			case "PorcentajeIssuesCerradas":
 			case "DiasPrimerUltimoCommit":
-			case "ContadorCambiosPico":
 			case "RatioActividadCambio":
 				resultadoComparacion += comparaValores(comparacion, i, false, 1);
 				break;
 			case "MediaDiasCierre":
 			case "MediaDiasCambio":
+			case "ContadorCambiosPico":
 			case "ContadorAutor":
 				resultadoComparacion += comparaValores(comparacion, i, true, 1);
 				break;
