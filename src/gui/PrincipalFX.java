@@ -5,9 +5,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -46,7 +50,7 @@ public class PrincipalFX extends Application {
 	/**
 	 * Stage de la aplicación.
 	 */
-	private Stage ventana;
+	private static Stage ventana = null;
 
 	/**
 	 * Array de Scene de la aplicación.
@@ -61,17 +65,47 @@ public class PrincipalFX extends Application {
 	/**
 	 * Alerta de guardado correcto.
 	 */
-	private Alert alertaGuardado;
+	private static Alert alertaGuardado = new Alert(AlertType.CONFIRMATION, "", ButtonType.OK);
 
 	/**
 	 * Alerta de error de guardado.
 	 */
-	private Alert alertaEGuardar;
+	private static Alert alertaEGuardar = CreadorElementos.createAlertaError("", "", "");
 
 	/**
 	 * Alerta de apertura de archivo.
 	 */
-	private Alert alertaArchivo;
+	private static Alert alertaArchivo = CreadorElementos.createAlertaError("", "", "");
+
+	/**
+	 * Alerta de usuario erróneo.
+	 */
+	private static Alert alertaUsuario = CreadorElementos.createAlertaError("", "", "");
+
+	/**
+	 * Alerta de combinación usuario y repositorio errónea.
+	 */
+	private static Alert alertaRepositorio = CreadorElementos.createAlertaError("", "", "");
+
+	/**
+	 * Alerta de error al abrir la ayuda.
+	 */
+	private static Alert alertaAyuda = CreadorElementos.createAlertaError("", "", "");
+
+	/**
+	 * Alerta de error en la conexión.
+	 */
+	private static Alert alertaConexion = CreadorElementos.createAlertaError("", "", "");
+
+	/**
+	 * String con el texto del modo desconectado.
+	 */
+	private static String desc = "";
+
+	/**
+	 * String con el texto del modo conectado.
+	 */
+	private static String conec = "";
 
 	/**
 	 * Lector de métricas.
@@ -89,6 +123,7 @@ public class PrincipalFX extends Application {
 	 * @param args nada.
 	 */
 	public static void main(String[] args) {
+		Locale.setDefault(new Locale("es", "ES"));
 		Application.launch(args);
 	}
 
@@ -99,23 +134,13 @@ public class PrincipalFX extends Application {
 	public void start(Stage pStage) throws Exception {
 		fabConexion = FabricaConexionGitHub.getInstance();
 
-		alertaGuardado = new Alert(AlertType.CONFIRMATION, "Guardado correctamente.", ButtonType.OK);
-		alertaGuardado.setHeaderText("Confirmación de guardado correcto.");
-		alertaGuardado.setTitle("Guardado satisfactorio");
-
-		alertaEGuardar = CreadorElementos.createAlertaError("Error de guardado del informe.",
-				"Ha ocurrido un error al guardar el informe.", "Error de guardado");
-
-		alertaArchivo = CreadorElementos.createAlertaError("Error de apertura del archivo.",
-				"El archivo seleccionado no se ha podido abrir correctamente.", "Error de apertura");
-
 		ventana = pStage;
-		ventana.setTitle("Evalua y compara la actividad del repositorio en GitHub");
 		ventana.getIcons().add(new Image(getClass().getClassLoader().getResource("imagenes/Ubu.png").toExternalForm()));
 		ventana.setMinWidth(1000);
 		ventana.setMinHeight(700);
 
 		iniciaEscenas();
+		reloadIdioma(this, 0);
 
 		ventana.setScene(escenas[0]);
 
@@ -181,8 +206,6 @@ public class PrincipalFX extends Application {
 		try {
 			repositorios = lector.getNombresRepositorio(usuario);
 		} catch (IOException e) {
-			Alert alertaUsuario = CreadorElementos.createAlertaError("Datos erróneos.",
-					"El usuario introducido no es correcto.", "Error de usuario");
 			LOGGER.log(Level.SEVERE, e.getMessage());
 			alertaUsuario.showAndWait();
 		}
@@ -194,8 +217,6 @@ public class PrincipalFX extends Application {
 		try {
 			forks = lector.getNombresForks(usuario);
 		} catch (IOException e) {
-			Alert alertaUsuario = CreadorElementos.createAlertaError("Datos erróneos.",
-					"El usuario introducido no es correcto.", "Error de usuario");
 			LOGGER.log(Level.SEVERE, e.getMessage());
 			alertaUsuario.showAndWait();
 		}
@@ -213,9 +234,6 @@ public class PrincipalFX extends Application {
 		try {
 			lector.obtenerMetricas(usuario, repositorio);
 		} catch (IOException e) {
-			Alert alertaRepositorio = CreadorElementos.createAlertaError("Datos erróneos.",
-					"La combinación de usuario-repositorio introducida no es correcta.",
-					"Error de cálculo de métricas");
 			LOGGER.log(Level.SEVERE, e.getMessage());
 			alertaRepositorio.showAndWait();
 		}
@@ -289,7 +307,7 @@ public class PrincipalFX extends Application {
 	 */
 	public void createModoDesconectado() {
 		lector = fabConexion.crearFachadaConexion();
-		EscenaUsuarioRep.loadNombreConex("Modo desconectado");
+		EscenaUsuarioRep.loadNombreConex(desc);
 	}
 
 	/**
@@ -304,11 +322,9 @@ public class PrincipalFX extends Application {
 
 		try {
 			lector = fabConexion.crearFachadaConexion(usuario, contrasena);
-			EscenaUsuarioRep.loadNombreConex("Conectado como " + usuario);
+			EscenaUsuarioRep.loadNombreConex(conec + usuario);
 			resultado = true;
 		} catch (IOException e) {
-			Alert alertaConexion = CreadorElementos.createAlertaError("Datos erróneos.",
-					"Los datos de la conexión no son correctos.", "Error de conexión");
 			LOGGER.log(Level.SEVERE, e.getMessage());
 			alertaConexion.showAndWait();
 		}
@@ -431,20 +447,17 @@ public class PrincipalFX extends Application {
 	 * @param boton botón que muestra la ayuda.
 	 */
 	public void cargarAyuda(JButton boton) {
-		Alert alertaArchivo = CreadorElementos.createAlertaError("Error de apertura de la ayuda.",
-				"La ayuda no se ha podido abrir correctamente.", "Error de apertura");
-
 		try {
 			URL hsURL = getClass().getResource("/gui/ayuda/ayuda.hs");
 			if (hsURL == null) {
-				alertaArchivo.showAndWait();
+				alertaAyuda.showAndWait();
 			}
 			HelpSet helpset = new HelpSet(null, hsURL);
 			HelpBroker helpbroker = helpset.createHelpBroker();
 			helpbroker.enableHelpOnButton(boton, "Principal", helpset);
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, e.getMessage());
-			alertaArchivo.showAndWait();
+			alertaAyuda.showAndWait();
 		}
 	}
 
@@ -504,5 +517,115 @@ public class PrincipalFX extends Application {
 		}
 
 		return archivo;
+	}
+
+	/**
+	 * Método para cargar un archivo y devolver el contenido.
+	 * 
+	 * @param path path del archivo.
+	 * @return contenido del archivo.
+	 */
+	public ArrayList<String> loadArchivoIdioma(InputStream archivo) {
+		ArrayList<String> contenido = new ArrayList<String>();
+
+		BufferedReader br = null;
+		InputStreamReader isr = null;
+		try {
+			isr = new InputStreamReader(archivo);
+			br = new BufferedReader(isr);
+
+			String fila;
+			while ((fila = br.readLine()) != null) {
+				contenido.add(fila);
+			}
+
+			br.close();
+			isr.close();
+		} catch (IOException e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					LOGGER.log(Level.SEVERE, e.getMessage());
+				}
+			}
+			if (isr != null) {
+				try {
+					isr.close();
+				} catch (IOException e) {
+					LOGGER.log(Level.SEVERE, e.getMessage());
+				}
+			}
+		}
+
+		return contenido;
+	}
+
+	/**
+	 * Vuelve a cargar el archivo con el idioma y establece de nuevo los textos de
+	 * la aplicacion y escenas.
+	 * 
+	 * @param id id del idioma.
+	 */
+	public static void reloadIdioma(PrincipalFX aplicacion, int id) {
+		String urlArchivo = null;
+
+		if (id == 0) {
+			urlArchivo = "/config/principal_es.config";
+			Locale.setDefault(new Locale("es", "ES"));
+		} else {
+			urlArchivo = "/config/principal_en.config";
+			Locale.setDefault(Locale.ENGLISH);
+		}
+
+		InputStream is = EscenaAbout.class.getResourceAsStream(urlArchivo);
+
+		ArrayList<String> valores = aplicacion.loadArchivoIdioma(is);
+
+		for (int i = 0; i < valores.size(); i++) {
+			valores.set(i, valores.get(i).replace("%%n", "\n"));
+		}
+
+		alertaGuardado = new Alert(AlertType.CONFIRMATION, "", ButtonType.OK);
+		alertaEGuardar = CreadorElementos.createAlertaError("", "", "");
+		alertaArchivo = CreadorElementos.createAlertaError("", "", "");
+		alertaUsuario = CreadorElementos.createAlertaError("", "", "");
+		alertaRepositorio = CreadorElementos.createAlertaError("", "", "");
+		alertaAyuda = CreadorElementos.createAlertaError("", "", "");
+		alertaConexion = CreadorElementos.createAlertaError("", "", "");
+		alertaGuardado.setContentText(valores.get(0));
+		alertaGuardado.setHeaderText(valores.get(1));
+		alertaGuardado.setTitle(valores.get(2));
+		alertaEGuardar.setHeaderText(valores.get(3));
+		alertaEGuardar.setContentText(valores.get(4));
+		alertaEGuardar.setTitle(valores.get(5));
+		alertaArchivo.setHeaderText(valores.get(6));
+		alertaArchivo.setContentText(valores.get(7));
+		alertaArchivo.setTitle(valores.get(8));
+		alertaUsuario.setHeaderText(valores.get(9));
+		alertaUsuario.setContentText(valores.get(10));
+		alertaUsuario.setTitle(valores.get(11));
+		alertaRepositorio.setHeaderText(valores.get(9));
+		alertaRepositorio.setContentText(valores.get(12));
+		alertaRepositorio.setTitle(valores.get(13));
+		alertaAyuda.setHeaderText(valores.get(14));
+		alertaAyuda.setContentText(valores.get(15));
+		alertaAyuda.setTitle(valores.get(8));
+		alertaConexion.setHeaderText(valores.get(9));
+		alertaConexion.setContentText(valores.get(16));
+		alertaConexion.setTitle(valores.get(17));
+		ventana.setTitle(valores.get(18));
+		desc = valores.get(19);
+		conec = valores.get(20);
+
+		EscenaAbout.reloadIdioma(aplicacion, id);
+		EscenaComparacion.reloadIdioma(aplicacion, id);
+		EscenaInicio.reloadIdioma(aplicacion, id);
+		EscenaResultadoComparacion.reloadIdioma(aplicacion, id);
+		EscenaResultados.reloadIdioma(aplicacion, id);
+		EscenaSelConex.reloadIdioma(aplicacion, id);
+		EscenaUsuarioRep.reloadIdioma(aplicacion, id);
 	}
 }

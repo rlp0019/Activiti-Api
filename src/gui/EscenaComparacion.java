@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,6 +36,66 @@ public class EscenaComparacion extends StackPane {
 	private static final Logger LOGGER = Logger.getLogger(PrincipalFX.class.getName());
 
 	/**
+	 * Label con el título.
+	 */
+	private static Label selecciona = CreadorElementos.createLabel("", 32, "#0076a3", 0, 30);
+
+	/**
+	 * Label con el título de la primera búsqueda.
+	 */
+	private static Label selecciona1 = CreadorElementos.createLabel("", 20, "#505050", 0, -125);
+
+	/**
+	 * Label con el título de la segunda búsqueda.
+	 */
+	private static Label selecciona2 = CreadorElementos.createLabel("", 20, "#505050", 0, 10);
+
+	/**
+	 * Textfield con el path del primer archivo.
+	 */
+	private static TextField archivo1 = CreadorElementos.createTextField("", 16, "", -50, -70, 350);
+
+	/**
+	 * Textfield con el path del segundo archivo.
+	 */
+	private static TextField archivo2 = CreadorElementos.createTextField("", 16, "", -50, 65, 350);
+
+	/**
+	 * Primer botón de búsqueda.
+	 */
+	private static Button s1B = CreadorElementos.createButton("", 16, "", 200, -70, 100);
+
+	/**
+	 * Segundo botón de búsqueda.
+	 */
+	private static Button s2B = CreadorElementos.createButton("", 16, "", 200, 65, 100);
+
+	/**
+	 * Botón para comparar.
+	 */
+	private static Button comparar = CreadorElementos.createButton("", 16, "", -5, -5, 100);
+
+	/**
+	 * Botón para volver a la escena anterior.
+	 */
+	private static Button atrasB = CreadorElementos.createButton("", 16, "", 5, -5, 100);
+
+	/**
+	 * Alerta de necesarios 2 informes.
+	 */
+	private static Alert alerta = CreadorElementos.createAlertaError("", "", "");
+
+	/**
+	 * Alerta de informes iguales.
+	 */
+	private static Alert alerta2 = CreadorElementos.createAlertaError("", "", "");
+
+	/**
+	 * Alerta de error de apertura.
+	 */
+	private static Alert alerta3 = CreadorElementos.createAlertaError("", "", "");
+
+	/**
 	 * Constructor de la escena.
 	 * 
 	 * @param aplicacion aplicación principal.
@@ -42,35 +104,21 @@ public class EscenaComparacion extends StackPane {
 		this.setMinSize(1000, 700);
 		this.setBackground(CreadorElementos.createBackground());
 
-		Label selecciona = CreadorElementos.createLabel("Selecciona los informes a comparar", 32, "#0076a3", 0, 30);
-
-		Label selecciona1 = CreadorElementos.createLabel("Selecciona el primer informe a comparar", 20, "#505050", 0,
-				-125);
-
-		Label selecciona2 = CreadorElementos.createLabel("Selecciona el segundo informe a comparar", 20, "#505050", 0,
-				10);
-
-		TextField archivo1 = CreadorElementos.createTextField("Path del primer archivo", 16,
-				"Aparecerá el nombre del primer archivo a comparar.", -50, -70, 350);
 		archivo1.setDisable(true);
 		archivo1.setStyle("-fx-opacity: 1;");
 
-		TextField archivo2 = CreadorElementos.createTextField("Path del segundo archivo", 16,
-				"Aparecerá el nombre del segundo archivo a comparar.", -50, 65, 350);
 		archivo2.setDisable(true);
 		archivo2.setStyle("-fx-opacity: 1;");
 
-		Button s1B = CreadorElementos.createButton("Buscar", 16, "Buscar primer archivo a comparar.", 200, -70, 100);
 		s1B.setOnAction(e -> seleccionarFichero(aplicacion, archivo1));
 
-		Button s2B = CreadorElementos.createButton("Buscar", 16, "Buscar segundo archivo a comparar.", 200, 65, 100);
 		s2B.setOnAction(e -> seleccionarFichero(aplicacion, archivo2));
 
-		Button comparar = CreadorElementos.createButton("Siguiente", 16, "Realizar la comparación.", -5, -5, 100);
 		comparar.setOnAction(e -> leerFicheros(aplicacion, archivo1, archivo2));
 
-		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", 5, -5, 100);
 		atrasB.setOnAction(e -> aplicacion.cambiaEscena(0));
+
+		reloadIdioma(aplicacion, 0);
 
 		this.getChildren().addAll(selecciona, selecciona1, selecciona2, archivo1, archivo2, s1B, s2B, comparar, atrasB);
 		EscenaComparacion.setAlignment(selecciona, Pos.TOP_CENTER);
@@ -113,15 +161,6 @@ public class EscenaComparacion extends StackPane {
 	 * @param tf2        campo de texto con el segundo informe.
 	 */
 	private void leerFicheros(PrincipalFX aplicacion, TextField tf1, TextField tf2) {
-		Alert alerta = CreadorElementos.createAlertaError("Son necesarios dos informes.",
-				"Deben seleccionarse dos informes distintos para proceder a la comparación.", "Error de datos.");
-
-		Alert alerta2 = CreadorElementos.createAlertaError("Informes iguales.",
-				"Estás intentando comparar el mismo informe.", "Error de datos.");
-
-		Alert alerta3 = CreadorElementos.createAlertaError("Error de apertura.", "Error al abrir los informes.",
-				"Error de datos.");
-
 		if (tf1.getText().equals("") || tf2.getText().equals("")) {
 			LOGGER.log(Level.WARNING, alerta.getContentText());
 			alerta.showAndWait();
@@ -191,5 +230,57 @@ public class EscenaComparacion extends StackPane {
 		texto += "</table></body></html>";
 
 		return texto;
+	}
+
+	/**
+	 * Vuelve a cargar el archivo con el idioma y establece de nuevo los textos de
+	 * la escena.
+	 * 
+	 * @param id id del idioma.
+	 */
+	public static void reloadIdioma(PrincipalFX aplicacion, int id) {
+		String urlArchivo = null;
+
+		if (id == 0) {
+			urlArchivo = "/config/comparacion_es.config";
+		} else {
+			urlArchivo = "/config/comparacion_en.config";
+		}
+
+		InputStream is = EscenaAbout.class.getResourceAsStream(urlArchivo);
+
+		ArrayList<String> valores = aplicacion.loadArchivoIdioma(is);
+
+		for (int i = 0; i < valores.size(); i++) {
+			valores.set(i, valores.get(i).replace("%%n", "\n"));
+		}
+
+		alerta = CreadorElementos.createAlertaError("", "", "");
+		alerta2 = CreadorElementos.createAlertaError("", "", "");
+		alerta3 = CreadorElementos.createAlertaError("", "", "");
+		selecciona.setText(valores.get(0));
+		selecciona1.setText(valores.get(1));
+		selecciona2.setText(valores.get(2));
+		archivo1.setPromptText(valores.get(3));
+		archivo1.setTooltip(CreadorElementos.createTooltip(valores.get(4)));
+		archivo2.setPromptText(valores.get(5));
+		archivo2.setTooltip(CreadorElementos.createTooltip(valores.get(6)));
+		s1B.setText(valores.get(7));
+		s1B.setTooltip(CreadorElementos.createTooltip(valores.get(8)));
+		s2B.setText(valores.get(7));
+		s2B.setTooltip(CreadorElementos.createTooltip(valores.get(9)));
+		comparar.setText(valores.get(10));
+		comparar.setTooltip(CreadorElementos.createTooltip(valores.get(11)));
+		atrasB.setText(valores.get(12));
+		atrasB.setTooltip(CreadorElementos.createTooltip(valores.get(13)));
+		alerta.setHeaderText(valores.get(14));
+		alerta.setContentText(valores.get(15));
+		alerta.setTitle(valores.get(16));
+		alerta2.setHeaderText(valores.get(17));
+		alerta2.setContentText(valores.get(18));
+		alerta2.setTitle(valores.get(16));
+		alerta3.setHeaderText(valores.get(19));
+		alerta3.setContentText(valores.get(20));
+		alerta3.setTitle(valores.get(16));
 	}
 }

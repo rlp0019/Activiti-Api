@@ -1,5 +1,8 @@
 package gui;
 
+import java.io.InputStream;
+import java.util.ArrayList;
+
 import gui.herramientas.CreadorElementos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -13,6 +16,36 @@ import javafx.scene.text.Font;
 public class EscenaAbout extends StackPane {
 
 	/**
+	 * Label con el titulo.
+	 */
+	private static Label about = CreadorElementos.createLabel("", 32, "#0076a3", 0, 10);
+
+	/**
+	 * Label con la información de la universidad.
+	 */
+	private static Label infoUni = CreadorElementos.createLabel("", 20, "#000000", -35, -55);
+
+	/**
+	 * Label con la información sobre los autores.
+	 */
+	private static Label infoAutor = CreadorElementos.createLabel("", 20, "#000000", 0, 65);
+
+	/**
+	 * Hyperlink con el repositorio del proyecto.
+	 */
+	private static Hyperlink repos = new Hyperlink("");
+
+	/**
+	 * Hyperlink con el repositorio de Activiti-Api.
+	 */
+	private static Hyperlink reposActiviti = new Hyperlink("");
+
+	/**
+	 * Botón para volver a la pantalla anterior.
+	 */
+	private static Button atrasB = CreadorElementos.createButton("", 16, "", 5, -5, 100);
+
+	/**
 	 * Constructor de la escena.
 	 * 
 	 * @param aplicacion aplicación principal.
@@ -21,22 +54,11 @@ public class EscenaAbout extends StackPane {
 		this.setMinSize(1000, 700);
 		this.setBackground(CreadorElementos.createBackground());
 
-		Label about = CreadorElementos.createLabel("Sobre la universidad", 32, "#0076a3", 0, 10);
-
-		Label infoUni = CreadorElementos.createLabel(
-				"Universidad de Burgos\nEscuela Politécnica Superior\nGrado en Ingeniería Informática", 20, "#000000",
-				-35, -55);
-		Label infoAutor = CreadorElementos.createLabel(
-				"Creado por: Roberto Luquero\nTutor: Carlos López\nBasado en: Activiti-Api de David Alonso", 20,
-				"#000000", 0, 65);
-
-		Hyperlink repos = new Hyperlink("https://github.com/rlp0019/Activiti-Api");
 		repos.setTranslateX(-2);
 		repos.setTranslateY(145);
 		repos.setFont(new Font("SansSerif", 20));
 		repos.setOnAction(e -> aplicacion.getHostServices().showDocument(repos.getText()));
 
-		Hyperlink reposActiviti = new Hyperlink("https://github.com/dba0010/Activiti-Api");
 		reposActiviti.setTranslateX(5);
 		reposActiviti.setTranslateY(175);
 		reposActiviti.setFont(new Font("SansSerif", 20));
@@ -48,13 +70,46 @@ public class EscenaAbout extends StackPane {
 		imagenV.setScaleY(0.10);
 		imagenV.setTranslateY(-200);
 
-		Button atrasB = CreadorElementos.createButton("Cerrar", 16, "Volver a la pantalla anterior.", 5, -5, 100);
 		atrasB.setOnAction(e -> aplicacion.cambiaEscena(0));
+
+		reloadIdioma(aplicacion, 0);
 
 		this.getChildren().addAll(about, infoUni, infoAutor, repos, reposActiviti, imagenV, atrasB);
 		EscenaAbout.setAlignment(atrasB, Pos.BOTTOM_CENTER);
 		EscenaAbout.setAlignment(about, Pos.TOP_CENTER);
 		EscenaAbout.setAlignment(infoUni, Pos.CENTER);
 		EscenaAbout.setAlignment(imagenV, Pos.CENTER);
+	}
+
+	/**
+	 * Vuelve a cargar el archivo con el idioma y establece de nuevo los textos de
+	 * la escena.
+	 * 
+	 * @param id id del idioma.
+	 */
+	public static void reloadIdioma(PrincipalFX aplicacion, int id) {
+		String urlArchivo = null;
+
+		if (id == 0) {
+			urlArchivo = "/config/about_es.config";
+		} else {
+			urlArchivo = "/config/about_en.config";
+		}
+
+		InputStream is = EscenaAbout.class.getResourceAsStream(urlArchivo);
+
+		ArrayList<String> valores = aplicacion.loadArchivoIdioma(is);
+
+		for (int i = 0; i < valores.size(); i++) {
+			valores.set(i, valores.get(i).replace("%%n", "\n"));
+		}
+
+		about.setText(valores.get(0));
+		infoUni.setText(valores.get(1));
+		infoAutor.setText(valores.get(2));
+		repos.setText(valores.get(3));
+		reposActiviti.setText(valores.get(4));
+		atrasB.setText(valores.get(5));
+		atrasB.setTooltip(CreadorElementos.createTooltip(valores.get(6)));
 	}
 }

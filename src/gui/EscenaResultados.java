@@ -1,5 +1,8 @@
 package gui;
 
+import java.io.InputStream;
+import java.util.ArrayList;
+
 import gui.herramientas.CreadorElementos;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -29,10 +32,64 @@ public class EscenaResultados extends StackPane {
 	private final static VBox[] pGraf = new VBox[] { new VBox(), new VBox(), new VBox(), new VBox(), new VBox() };
 
 	/**
+	 * Botón para guardar los resultados en la BD.
+	 */
+	private static Button guardarB = CreadorElementos.createButton("", 16, "", -200, -5, 100);
+
+	/**
 	 * Botón para volver a la página anterior.
 	 */
-	private static Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", 5, -5,
-			100);
+	private static Button atrasB = CreadorElementos.createButton("", 16, "", 5, -5, 100);
+
+	/**
+	 * Botón para comparar con la BD.
+	 */
+	private static Button comparacionB = CreadorElementos.createButton("", 16, "", 0, -5, 100);
+
+	/**
+	 * Botón para guardar en la BD.
+	 */
+	private static Button guardarCSVB = CreadorElementos.createButton("", 16, "", 200, -5, 100);
+
+	/**
+	 * Botón para volver a la página de inicio.
+	 */
+	private static Button inicioB = CreadorElementos.createButton("", 16, "", -5, -5, 100);
+
+	/**
+	 * TabPane que contiene el resultado de las métricas y los gráficos.
+	 */
+	private static TabPane grupo = new TabPane();
+
+	/**
+	 * Tab con el resultado de las métricas.
+	 */
+	private static Tab resultado = CreadorElementos.createTab("", "");
+
+	/**
+	 * Tab con el primer gráfico.
+	 */
+	private static Tab graf1 = CreadorElementos.createTab("", "");
+
+	/**
+	 * Tab con el segundo gráfico.
+	 */
+	private static Tab graf2 = CreadorElementos.createTab("", "");
+
+	/**
+	 * Tab con el tercer gráfico.
+	 */
+	private static Tab graf3 = CreadorElementos.createTab("", "");
+
+	/**
+	 * Tab con el cuarto gráfico.
+	 */
+	private static Tab graf4 = CreadorElementos.createTab("", "");
+
+	/**
+	 * Tab con el quinto gráfico.
+	 */
+	private static Tab graf5 = CreadorElementos.createTab("", "");
 
 	/**
 	 * Constructor de la escena.
@@ -45,16 +102,10 @@ public class EscenaResultados extends StackPane {
 
 		contenido.setMaxHeight(590);
 
-		TabPane grupo = iniciaTabPane();
-
-		Button guardarB = CreadorElementos.createButton("Guardar informe", 16, "Guardar el informe de resultados.",
-				-200, -5, 100);
 		guardarB.setOnAction(e -> {
 			aplicacion.saveArchivo();
 		});
 
-		Button comparacionB = CreadorElementos.createButton("Evaluar con BD", 16,
-				"Abrir la BD en formato .csv para realizar la evaluación.", 0, -5, 100);
 		comparacionB.setOnAction(e -> {
 			EscenaResultadoComparacion.setCSV(true);
 			aplicacion.startManager();
@@ -64,8 +115,6 @@ public class EscenaResultados extends StackPane {
 			aplicacion.cambiaEscena(5);
 		});
 
-		Button guardarCSVB = CreadorElementos.createButton("Guardar en BD", 16,
-				"Guardar el resultado de las métricas en la base de datos elegida.", 200, -5, 100);
 		guardarCSVB.setOnAction(e -> {
 			aplicacion.startManager();
 			aplicacion.guardarEnCSV();
@@ -73,8 +122,10 @@ public class EscenaResultados extends StackPane {
 
 		atrasB.setOnAction(e -> aplicacion.cambiaEscena(2));
 
-		Button inicioB = CreadorElementos.createButton("Al inicio", 16, "Volver a la pantalla inicial.", -5, -5, 100);
 		inicioB.setOnAction(e -> aplicacion.cambiaEscena(0));
+
+		iniciaTabPane();
+		reloadIdioma(aplicacion, 0);
 
 		this.getChildren().addAll(grupo, guardarB, comparacionB, guardarCSVB, atrasB, inicioB);
 		EscenaResultados.setAlignment(comparacionB, Pos.BOTTOM_CENTER);
@@ -126,36 +177,71 @@ public class EscenaResultados extends StackPane {
 	 * @param panelContenido Panel con el contenido de las métricas.
 	 * @return TabPane completo.
 	 */
-	private TabPane iniciaTabPane() {
-		TabPane tb = new TabPane();
-
-		Tab resultado = CreadorElementos.createTab("Métricas", "Mostrar panel con los resultados de las métricas.");
+	private static void iniciaTabPane() {
 		resultado.setContent(contenido);
 
-		Tab graf1 = CreadorElementos.createTab("Gráfico Issues", "Mostrar gráfico con los issues.");
 		graf1.setContent(EscenaResultados.pGraf[0]);
 		EscenaResultados.pGraf[0].setAlignment(Pos.BOTTOM_CENTER);
 
-		Tab graf2 = CreadorElementos.createTab("Gráfico Commits / Mes",
-				"Mostrar gráfico con los commits por cada mes.");
 		graf2.setContent(EscenaResultados.pGraf[1]);
 		EscenaResultados.pGraf[1].setAlignment(Pos.BOTTOM_CENTER);
 
-		Tab graf3 = CreadorElementos.createTab("Gráfico Commits / Día",
-				"Mostrar gráfico con los commits por cada día.");
 		graf3.setContent(EscenaResultados.pGraf[2]);
 		EscenaResultados.pGraf[2].setAlignment(Pos.BOTTOM_CENTER);
 
-		Tab graf4 = CreadorElementos.createTab("Gráfico Cambios / Autor", "Mostrar gráfico con los cambios por autor.");
 		graf4.setContent(EscenaResultados.pGraf[3]);
 		EscenaResultados.pGraf[3].setAlignment(Pos.BOTTOM_CENTER);
 
-		Tab graf5 = CreadorElementos.createTab("Gráfico Issues / Autor", "Mostrar gráfico con los issues por autor.");
 		graf5.setContent(EscenaResultados.pGraf[4]);
 		EscenaResultados.pGraf[4].setAlignment(Pos.BOTTOM_CENTER);
 
-		tb.getTabs().addAll(resultado, graf1, graf2, graf3, graf4, graf5);
+		grupo.getTabs().addAll(resultado, graf1, graf2, graf3, graf4, graf5);
+	}
 
-		return tb;
+	/**
+	 * Vuelve a cargar el archivo con el idioma y establece de nuevo los textos de
+	 * la escena.
+	 * 
+	 * @param id id del idioma.
+	 */
+	public static void reloadIdioma(PrincipalFX aplicacion, int id) {
+		String urlArchivo = null;
+
+		if (id == 0) {
+			urlArchivo = "/config/resultados_es.config";
+		} else {
+			urlArchivo = "/config/resultados_en.config";
+		}
+
+		InputStream is = EscenaAbout.class.getResourceAsStream(urlArchivo);
+
+		ArrayList<String> valores = aplicacion.loadArchivoIdioma(is);
+
+		for (int i = 0; i < valores.size(); i++) {
+			valores.set(i, valores.get(i).replace("%%n", "\n"));
+		}
+
+		guardarB.setText(valores.get(0));
+		guardarB.setTooltip(CreadorElementos.createTooltip(valores.get(1)));
+		atrasB.setText(valores.get(2));
+		atrasB.setTooltip(CreadorElementos.createTooltip(valores.get(3)));
+		comparacionB.setText(valores.get(4));
+		comparacionB.setTooltip(CreadorElementos.createTooltip(valores.get(5)));
+		guardarCSVB.setText(valores.get(6));
+		guardarCSVB.setTooltip(CreadorElementos.createTooltip(valores.get(7)));
+		inicioB.setText(valores.get(8));
+		inicioB.setTooltip(CreadorElementos.createTooltip(valores.get(9)));
+		resultado.setText(valores.get(10));
+		resultado.setTooltip(CreadorElementos.createTooltip(valores.get(11)));
+		graf1.setText(valores.get(12));
+		graf1.setTooltip(CreadorElementos.createTooltip(valores.get(13)));
+		graf2.setText(valores.get(14));
+		graf2.setTooltip(CreadorElementos.createTooltip(valores.get(15)));
+		graf3.setText(valores.get(16));
+		graf3.setTooltip(CreadorElementos.createTooltip(valores.get(17)));
+		graf4.setText(valores.get(18));
+		graf4.setTooltip(CreadorElementos.createTooltip(valores.get(19)));
+		graf5.setText(valores.get(20));
+		graf5.setTooltip(CreadorElementos.createTooltip(valores.get(21)));
 	}
 }

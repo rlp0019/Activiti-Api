@@ -1,5 +1,7 @@
 package gui;
 
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,7 +16,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 
@@ -32,34 +33,56 @@ public class EscenaSelConex extends StackPane {
 	private static final Logger LOGGER = Logger.getLogger(EscenaSelConex.class.getName());
 
 	/**
+	 * Label con el título.
+	 */
+	private static Label selecciona = CreadorElementos.createLabel("", 32, "#0076a3", 0, 30);
+
+	/**
+	 * Alerta información del modo desconectado.
+	 */
+	private static Alert alerta = new Alert(AlertType.WARNING, "", ButtonType.NO, ButtonType.YES);
+
+	private static Alert alerta2 = CreadorElementos.createAlertaError("", "", "");
+
+	/**
 	 * RadioButton de conexión modo usuario.
 	 */
-	private RadioButton radioUsuario;
+	private static RadioButton radioUsuario = new RadioButton("");
 
 	/**
 	 * RadioButton de conexión modo desconectado.
 	 */
-	private RadioButton radioDesconectado;
+	private static RadioButton radioDesconectado = new RadioButton("");
 
 	/**
 	 * Label de introducir usuario.
 	 */
-	private Label usuario;
+	private static Label usuario = CreadorElementos.createLabel("", 20, "#505050", 0, -110);
 
 	/**
 	 * Label de introducir contraseña.
 	 */
-	private Label contra;
+	private static Label contra = CreadorElementos.createLabel("", 20, "#505050", 0, -10);
 
 	/**
 	 * TextField para introducir el nombre de usuario.
 	 */
-	private TextField tfUsuario;
+	private static TextField tfUsuario = CreadorElementos.createTextField("", 20, "", 0, -60, 250);
 
 	/**
 	 * PasswordField para introducir la contraseña asociada al usuario.
 	 */
-	private PasswordField pfContra;
+	private static PasswordField pfContra = CreadorElementos.createPasswordField("", 20, "", 0, 40, 250);
+
+	/**
+	 * Botón para pasar a la siguiente escena.
+	 */
+	private static Button siguienteB = CreadorElementos.createButton("", 16, "", -5, -5, 100);
+
+	/**
+	 * Botón para volver a la escena anterior.
+	 */
+	private static Button atrasB = CreadorElementos.createButton("", 16, "", 5, -5, 100);
 
 	/**
 	 * Constructor de la escena.
@@ -70,51 +93,25 @@ public class EscenaSelConex extends StackPane {
 		this.setMinSize(1000, 700);
 		this.setBackground(CreadorElementos.createBackground());
 
-		Label selecciona = CreadorElementos.createLabel("Selecciona el tipo de conexión", 32, "#0076a3", 0, 30);
-
-		Alert alerta = new Alert(AlertType.WARNING,
-				"Usando este modo pueden surgir problemas por el número de peticiones. ¿Quiéres continuar de todas formas?",
-				ButtonType.NO, ButtonType.YES);
-		alerta.setHeaderText("Confirmación de conexión.");
-		alerta.setTitle("Advertencia");
-
-		Alert alerta2 = CreadorElementos.createAlertaError("Los campos no pueden estar vacíos.", "Campos vacíos.",
-				"Error de datos.");
-
 		ToggleGroup grupo = new ToggleGroup();
 
-		radioUsuario = new RadioButton("Modo usuario");
 		radioUsuario.setFont(new Font("SansSerif", 16));
-		Tooltip bTooltip = new Tooltip(
-				"Conectarse para poder tener un mayor número de peticiones (5000 por hora). Se necesita una cuenta en la plataforma.");
-		bTooltip.setFont(new Font("SansSerif", 12));
-		radioUsuario.setTooltip(bTooltip);
 		radioUsuario.setToggleGroup(grupo);
 		radioUsuario.setOnAction(e -> this.positionLeft());
 
-		radioDesconectado = new RadioButton("Modo desconectado");
 		radioDesconectado.setFont(new Font("SansSerif", 16));
-		Tooltip b2Tooltip = new Tooltip("No conectarse, aunque se tendrá un menor número de peticiones (60 por hora).");
-		bTooltip.setFont(new Font("SansSerif", 12));
-		radioDesconectado.setTooltip(b2Tooltip);
 		radioDesconectado.setToggleGroup(grupo);
 		radioDesconectado.setSelected(true);
 		radioDesconectado.setOnAction(e -> this.positionCenter());
 
-		usuario = CreadorElementos.createLabel("Introduce el nombre de usuario", 20, "#505050", 0, -110);
 		usuario.setVisible(false);
 
-		contra = CreadorElementos.createLabel("Introduce la contraseña", 20, "#505050", 0, -10);
 		contra.setVisible(false);
 
-		tfUsuario = CreadorElementos.createTextField("Nombre de usuario", 20, "Introduce el nombre de usuario.", 0, -60,
-				250);
 		tfUsuario.setVisible(false);
 
-		pfContra = CreadorElementos.createPasswordField("Contraseña", 20, "Introduce la contraseña.", 0, 40, 250);
 		pfContra.setVisible(false);
 
-		Button siguienteB = CreadorElementos.createButton("Siguiente", 16, "Ir a la pantalla siguiente.", -5, -5, 100);
 		siguienteB.setOnAction(e -> {
 			if (grupo.getSelectedToggle().equals(radioDesconectado)) {
 				alerta.showAndWait();
@@ -131,14 +128,16 @@ public class EscenaSelConex extends StackPane {
 						tfUsuario.clear();
 						pfContra.clear();
 						radioDesconectado.setSelected(true);
+						positionCenter();
 						aplicacion.cambiaEscena(2);
 					}
 				}
 			}
 		});
 
-		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", 5, -5, 100);
 		atrasB.setOnAction(e -> aplicacion.cambiaEscena(0));
+
+		reloadIdioma(aplicacion, 0);
 
 		this.positionCenter();
 		this.getChildren().addAll(selecciona, radioUsuario, radioDesconectado, usuario, contra, tfUsuario, pfContra,
@@ -188,5 +187,53 @@ public class EscenaSelConex extends StackPane {
 		contra.setVisible(true);
 		tfUsuario.setVisible(true);
 		pfContra.setVisible(true);
+	}
+
+	/**
+	 * Vuelve a cargar el archivo con el idioma y establece de nuevo los textos de
+	 * la escena.
+	 * 
+	 * @param id id del idioma.
+	 */
+	public static void reloadIdioma(PrincipalFX aplicacion, int id) {
+		String urlArchivo = null;
+
+		if (id == 0) {
+			urlArchivo = "/config/conexion_es.config";
+		} else {
+			urlArchivo = "/config/conexion_en.config";
+		}
+
+		InputStream is = EscenaAbout.class.getResourceAsStream(urlArchivo);
+
+		ArrayList<String> valores = aplicacion.loadArchivoIdioma(is);
+
+		for (int i = 0; i < valores.size(); i++) {
+			valores.set(i, valores.get(i).replace("%%n", "\n"));
+		}
+
+		alerta = new Alert(AlertType.WARNING, "", ButtonType.NO, ButtonType.YES);
+		alerta2 = CreadorElementos.createAlertaError("", "", "");
+		selecciona.setText(valores.get(0));
+		alerta.setContentText(valores.get(1));
+		alerta.setHeaderText(valores.get(2));
+		alerta.setTitle(valores.get(3));
+		alerta2.setContentText(valores.get(4));
+		alerta2.setHeaderText(valores.get(5));
+		alerta2.setTitle(valores.get(6));
+		radioUsuario.setText(valores.get(7));
+		radioUsuario.setTooltip(CreadorElementos.createTooltip(valores.get(8)));
+		radioDesconectado.setText(valores.get(9));
+		radioDesconectado.setTooltip(CreadorElementos.createTooltip(valores.get(10)));
+		usuario.setText(valores.get(11));
+		contra.setText(valores.get(12));
+		tfUsuario.setPromptText(valores.get(13));
+		tfUsuario.setTooltip(CreadorElementos.createTooltip(valores.get(14)));
+		pfContra.setPromptText(valores.get(15));
+		pfContra.setTooltip(CreadorElementos.createTooltip(valores.get(16)));
+		siguienteB.setText(valores.get(17));
+		siguienteB.setTooltip(CreadorElementos.createTooltip(valores.get(18)));
+		atrasB.setText(valores.get(19));
+		atrasB.setTooltip(CreadorElementos.createTooltip(valores.get(20)));
 	}
 }

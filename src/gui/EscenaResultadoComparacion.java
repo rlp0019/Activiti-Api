@@ -1,5 +1,8 @@
 package gui;
 
+import java.io.InputStream;
+import java.util.ArrayList;
+
 import gui.herramientas.CreadorElementos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -27,6 +30,11 @@ public class EscenaResultadoComparacion extends StackPane {
 	private static boolean csv = false;
 
 	/**
+	 * Label con el título.
+	 */
+	private static Label titulo = CreadorElementos.createLabel("", 32, "#0076a3", 0, 10);
+
+	/**
 	 * Label con la nota a mostrar.
 	 */
 	private static Label nota = CreadorElementos.createLabel("", 24, "#0076a3", 0, 230);
@@ -34,14 +42,27 @@ public class EscenaResultadoComparacion extends StackPane {
 	/**
 	 * Botón para obtener la nota poco estricta.
 	 */
-	private static Button notaB = CreadorElementos.createButton("Obtener nota", 16, "Muestra la nota poco estricta.",
-			-200, -5, 100);
+	private static Button notaB = CreadorElementos.createButton("", 16, "", -200, -5, 100);
 
 	/**
 	 * Botón para obtener la nota estricta.
 	 */
-	private static Button notaSB = CreadorElementos.createButton("Obtener nota estricta", 16,
-			"Muestra la nota estricta.", 200, -5, 100);
+	private static Button notaSB = CreadorElementos.createButton("", 16, "", 200, -5, 100);
+
+	/**
+	 * Botón para volver a la escena anterior.
+	 */
+	private static Button atrasB = CreadorElementos.createButton("", 16, "", 5, -5, 100);
+
+	/**
+	 * Botón para volver al inicio.
+	 */
+	private static Button inicioB = CreadorElementos.createButton("", 16, "", -5, -5, 100);
+
+	/**
+	 * Texto que acompaña a la nota.
+	 */
+	private static String notaTexto = "";
 
 	/**
 	 * Constructor de la escena.
@@ -52,8 +73,6 @@ public class EscenaResultadoComparacion extends StackPane {
 		this.setMinSize(1000, 700);
 		this.setBackground(CreadorElementos.createBackground());
 
-		Label titulo = CreadorElementos.createLabel("Comparación", 32, "#0076a3", 0, 10);
-
 		StackPane panelContenido = new StackPane();
 		panelContenido.setBackground(CreadorElementos.createBackground());
 		panelContenido.setTranslateY(70);
@@ -62,7 +81,6 @@ public class EscenaResultadoComparacion extends StackPane {
 
 		notaSB.setOnAction(e -> EscenaResultadoComparacion.setNota(aplicacion.getNota(true)));
 
-		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", 5, -5, 100);
 		atrasB.setOnAction(e -> {
 			if (!csv) {
 				aplicacion.cambiaEscena(4);
@@ -71,8 +89,9 @@ public class EscenaResultadoComparacion extends StackPane {
 			}
 		});
 
-		Button inicioB = CreadorElementos.createButton("Al inicio", 16, "Volver a la pantalla inicial.", -5, -5, 100);
 		inicioB.setOnAction(e -> aplicacion.cambiaEscena(0));
+
+		reloadIdioma(aplicacion, 0);
 
 		panelContenido.getChildren().addAll(wv, nota);
 		StackPane.setAlignment(nota, Pos.CENTER);
@@ -115,7 +134,7 @@ public class EscenaResultadoComparacion extends StackPane {
 	public static void setNota(double valor) {
 		String valorS = Double.toString(valor);
 		if (!("".contentEquals(valorS))) {
-			nota.setText("Calificación del desarrollo del proyecto: " + valor + "/8.0");
+			nota.setText(notaTexto + valor + "/8.0");
 		}
 	}
 
@@ -137,5 +156,40 @@ public class EscenaResultadoComparacion extends StackPane {
 	 */
 	public static void setAlturaWebView(double altura) {
 		wv.setMaxHeight(altura - 153);
+	}
+
+	/**
+	 * Vuelve a cargar el archivo con el idioma y establece de nuevo los textos de
+	 * la escena.
+	 * 
+	 * @param id id del idioma.
+	 */
+	public static void reloadIdioma(PrincipalFX aplicacion, int id) {
+		String urlArchivo = null;
+
+		if (id == 0) {
+			urlArchivo = "/config/resultado_comparacion_es.config";
+		} else {
+			urlArchivo = "/config/resultado_comparacion_en.config";
+		}
+
+		InputStream is = EscenaAbout.class.getResourceAsStream(urlArchivo);
+
+		ArrayList<String> valores = aplicacion.loadArchivoIdioma(is);
+
+		for (int i = 0; i < valores.size(); i++) {
+			valores.set(i, valores.get(i).replace("%%n", "\n"));
+		}
+
+		titulo.setText(valores.get(0));
+		notaTexto = valores.get(1);
+		notaB.setText(valores.get(2));
+		notaB.setTooltip(CreadorElementos.createTooltip(valores.get(3)));
+		notaSB.setText(valores.get(4));
+		notaSB.setTooltip(CreadorElementos.createTooltip(valores.get(5)));
+		atrasB.setText(valores.get(6));
+		atrasB.setTooltip(CreadorElementos.createTooltip(valores.get(7)));
+		inicioB.setText(valores.get(8));
+		inicioB.setTooltip(CreadorElementos.createTooltip(valores.get(8)));
 	}
 }

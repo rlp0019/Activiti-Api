@@ -1,15 +1,10 @@
 package gui.herramientas;
 
-import gui.EscenaInicio;
-import gui.PrincipalFX;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
@@ -147,55 +142,6 @@ public class CreadorElementos {
 	}
 
 	/**
-	 * Crea el menú superior de la aplicación.
-	 * 
-	 * @param aplicacion aplicación principal.
-	 * @return barra del menú.
-	 */
-	public static MenuBar createMenu(PrincipalFX aplicacion) {
-		MenuBar menu = new MenuBar();
-
-		Menu operaciones = new Menu("Operaciones");
-
-		Menu analizar = new Menu("Analizar");
-		MenuItem github = new MenuItem("GitHub");
-		github.setOnAction(e -> {
-			if (aplicacion.isLectorNull()) {
-				aplicacion.cambiaEscena(1);
-			} else {
-				aplicacion.cambiaEscena(2);
-			}
-		});
-		analizar.getItems().add(github);
-
-		MenuItem importar = new MenuItem("Importar");
-		importar.setOnAction(e -> aplicacion.loadArchivo());
-
-		MenuItem comparar = new MenuItem("Comparar");
-		comparar.setOnAction(e -> aplicacion.cambiaEscena(4));
-		operaciones.getItems().addAll(analizar, importar, comparar);
-
-		Menu ayuda = new Menu("Ayuda");
-		MenuItem ver = new MenuItem("Mostrar ayuda");
-		ayuda.getItems().add(ver);
-		ver.setOnAction(e -> EscenaInicio.click());
-
-		Menu about = new Menu("About");
-		MenuItem verA = new MenuItem("Mostrar about us");
-		about.getItems().add(verA);
-		verA.setOnAction(e -> aplicacion.cambiaEscena(6));
-
-		Menu conexion = new Menu("Conexion");
-		MenuItem desconectar = new MenuItem("Eliminar modo de conexión");
-		conexion.getItems().add(desconectar);
-		desconectar.setOnAction(e -> aplicacion.disconnect());
-
-		menu.getMenus().addAll(conexion, operaciones, ayuda, about);
-
-		return menu;
-	}
-
-	/**
 	 * Crea una tab para el menú y la devuelve.
 	 * 
 	 * @param titulo  texto de la tab.
@@ -209,5 +155,18 @@ public class CreadorElementos {
 		tab.setTooltip(t1);
 
 		return tab;
+	}
+
+	/**
+	 * Crea un tooltip.
+	 * 
+	 * @param tooltip texto del tooltip.
+	 * @return tooltip creado.
+	 */
+	public static Tooltip createTooltip(String tooltip) {
+		Tooltip bTooltip = new Tooltip(tooltip);
+		bTooltip.setFont(new Font("SansSerif", 12));
+
+		return bTooltip;
 	}
 }

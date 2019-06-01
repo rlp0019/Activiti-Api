@@ -1,5 +1,7 @@
 package gui;
 
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,6 +40,71 @@ public class EscenaUsuarioRep extends StackPane {
 	private String nombreUsuario;
 
 	/**
+	 * Alerta de campo usuario vacío.
+	 */
+	private static Alert alert = CreadorElementos.createAlertaError("", "", "");
+
+	/**
+	 * Alerta de repositorio vacío.
+	 */
+	private static Alert alert2 = CreadorElementos.createAlertaError("", "", "");
+
+	/**
+	 * Label con el título.
+	 */
+	private static Label usuarioRep = CreadorElementos.createLabel("", 32, "#0076a3", 0, 30);
+
+	/**
+	 * Label con la selección de usuario.
+	 */
+	private static Label usuario = CreadorElementos.createLabel("", 20, "#505050", 0, -100);
+
+	/**
+	 * Label con la selección de repositorio.
+	 */
+	private static Label repositorio = CreadorElementos.createLabel("", 20, "#505050", 0, 40);
+
+	/**
+	 * Labl con el título de repositorios.
+	 */
+	private static Label repos = CreadorElementos.createLabel("", 16, "#505050", -50, 90);
+
+	/**
+	 * Label con el titulo de forks.
+	 */
+	private static Label fork = CreadorElementos.createLabel("", 16, "#505050", -50, 180);
+
+	/**
+	 * Textfield con el nombre de usuario.
+	 */
+	private static TextField tfUsuario = CreadorElementos.createTextField("", 20, "", -50, -30, 250);
+
+	/**
+	 * Botón para buscar el repositorio.
+	 */
+	private static Button repoB = CreadorElementos.createButton("", 20, "", -5, -5, 100);
+
+	/**
+	 * Botón para eliminar la selección del repositorio.
+	 */
+	private static Button borraRepo = CreadorElementos.createButton("", 1, "", 100, 135, -1);
+
+	/**
+	 * Botón para buscar los repositorios del usuario.
+	 */
+	private static Button buscarB = CreadorElementos.createButton("", 20, "", 175, -30, 100);
+
+	/**
+	 * Botón para eliminar la selección del fork.
+	 */
+	private static Button borraForks = CreadorElementos.createButton("", 1, "", 100, 225, -1);
+
+	/**
+	 * Botón para volver a la escena anterior.
+	 */
+	private static Button atrasB = CreadorElementos.createButton("", 16, "", 5, -5, 100);
+
+	/**
 	 * Constructor de la escena.
 	 * 
 	 * @param aplicacion aplicación principal.
@@ -58,28 +125,6 @@ public class EscenaUsuarioRep extends StackPane {
 		desplegableForks.setMinWidth(200);
 		desplegableForks.setMinHeight(40);
 
-		Alert alert = CreadorElementos.createAlertaError("Campo vacío.", "El campo usuario no puede estar vacío.",
-				"Error de datos.");
-
-		Alert alert2 = CreadorElementos.createAlertaError("Campo vacío.",
-				"La selección de repositorio no puede estar vacía.", "Error de datos.");
-
-		Label usuarioRep = CreadorElementos.createLabel("Seleccionar repositorio", 32, "#0076a3", 0, 30);
-
-		Label usuario = CreadorElementos.createLabel("Introduce el nombre del usuario a buscar", 20, "#505050", 0,
-				-100);
-
-		Label repositorio = CreadorElementos.createLabel(
-				"Selecciona un repositorio o alguno de sus forks tras introducir el usuario", 20, "#505050", 0, 40);
-
-		Label repos = CreadorElementos.createLabel("Repositorios", 16, "#505050", -50, 90);
-
-		Label fork = CreadorElementos.createLabel("Forks", 16, "#505050", -50, 180);
-
-		TextField tfUsuario = CreadorElementos.createTextField("Nombre del usuario", 20,
-				"Introduce el nombre del usuario a buscar.", -50, -30, 250);
-
-		Button repoB = CreadorElementos.createButton("Siguiente", 20, "Selecciona el repositorio.", -5, -5, 100);
 		repoB.setOnAction(e -> {
 			if (desplegableRepo.getSelectionModel().isEmpty() && desplegableForks.getSelectionModel().isEmpty()) {
 				LOGGER.log(Level.SEVERE, alert2.getContentText());
@@ -108,13 +153,10 @@ public class EscenaUsuarioRep extends StackPane {
 		imagenV2.setFitWidth(32);
 		imagenV2.setFitHeight(32);
 
-		Button borraRepo = CreadorElementos.createButton("", 1, "Elimina la selección de repositorio.", 100, 135, -1);
 		borraRepo.setOnAction(e -> desplegableRepo.getSelectionModel().clearSelection());
 		borraRepo.setGraphic(imagenV);
 		borraRepo.setMaxSize(32, 32);
 
-		Button buscarB = CreadorElementos.createButton("Buscar", 20, "Busca los repositorios del usuario introducido.",
-				175, -30, 100);
 		buscarB.setOnAction(e -> {
 			if (tfUsuario.getText().isEmpty()) {
 				LOGGER.log(Level.SEVERE, alert.getContentText());
@@ -137,12 +179,10 @@ public class EscenaUsuarioRep extends StackPane {
 			}
 		});
 
-		Button borraForks = CreadorElementos.createButton("", 1, "Elimina la selección de repositorio.", 100, 225, -1);
 		borraForks.setOnAction(e -> desplegableForks.getSelectionModel().clearSelection());
 		borraForks.setGraphic(imagenV2);
 		borraForks.setMaxSize(32, 32);
 
-		Button atrasB = CreadorElementos.createButton("Atrás", 16, "Volver a la pantalla anterior.", 5, -5, 100);
 		atrasB.setOnAction(e -> {
 			tfUsuario.clear();
 			desplegableRepo.getItems().clear();
@@ -156,6 +196,8 @@ public class EscenaUsuarioRep extends StackPane {
 			}
 		});
 
+		reloadIdioma(aplicacion, 0);
+
 		this.getChildren().addAll(usuarioRep, usuario, repos, fork, repositorio, tfUsuario, buscarB, desplegableRepo,
 				desplegableForks, repoB, borraRepo, borraForks, conex, atrasB);
 		EscenaUsuarioRep.setAlignment(usuarioRep, Pos.TOP_CENTER);
@@ -164,7 +206,60 @@ public class EscenaUsuarioRep extends StackPane {
 		EscenaUsuarioRep.setAlignment(conex, Pos.TOP_RIGHT);
 	}
 
+	/**
+	 * Carga el tipo de conexión
+	 * 
+	 * @param valor texto a mostrar.
+	 */
 	public static void loadNombreConex(String valor) {
 		conex.setText(valor);
+	}
+
+	/**
+	 * Vuelve a cargar el archivo con el idioma y establece de nuevo los textos de
+	 * la escena.
+	 * 
+	 * @param id id del idioma.
+	 */
+	public static void reloadIdioma(PrincipalFX aplicacion, int id) {
+		String urlArchivo = null;
+
+		if (id == 0) {
+			urlArchivo = "/config/repositorio_es.config";
+		} else {
+			urlArchivo = "/config/repositorio_en.config";
+		}
+
+		InputStream is = EscenaAbout.class.getResourceAsStream(urlArchivo);
+
+		ArrayList<String> valores = aplicacion.loadArchivoIdioma(is);
+
+		for (int i = 0; i < valores.size(); i++) {
+			valores.set(i, valores.get(i).replace("%%n", "\n"));
+		}
+
+		alert = CreadorElementos.createAlertaError("", "", "");
+		alert2 = CreadorElementos.createAlertaError("", "", "");
+		alert.setHeaderText(valores.get(0));
+		alert.setContentText(valores.get(1));
+		alert.setTitle(valores.get(2));
+		alert2.setHeaderText(valores.get(0));
+		alert2.setContentText(valores.get(3));
+		alert2.setTitle(valores.get(2));
+		usuarioRep.setText(valores.get(4));
+		usuario.setText(valores.get(5));
+		repositorio.setText(valores.get(6));
+		repos.setText(valores.get(7));
+		fork.setText(valores.get(8));
+		tfUsuario.setPromptText(valores.get(9));
+		tfUsuario.setTooltip(CreadorElementos.createTooltip(valores.get(10)));
+		repoB.setText(valores.get(11));
+		repoB.setTooltip(CreadorElementos.createTooltip(valores.get(12)));
+		borraRepo.setTooltip(CreadorElementos.createTooltip(valores.get(13)));
+		buscarB.setText(valores.get(14));
+		buscarB.setTooltip(CreadorElementos.createTooltip(valores.get(15)));
+		borraForks.setTooltip(CreadorElementos.createTooltip(valores.get(16)));
+		atrasB.setText(valores.get(17));
+		atrasB.setTooltip(CreadorElementos.createTooltip(valores.get(18)));
 	}
 }
