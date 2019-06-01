@@ -85,7 +85,8 @@ public class EscenaAbout extends StackPane {
 	 * Vuelve a cargar el archivo con el idioma y establece de nuevo los textos de
 	 * la escena.
 	 * 
-	 * @param id id del idioma.
+	 * @param aplicacion aplicacion principal.
+	 * @param id         id del idioma.
 	 */
 	public static void reloadIdioma(PrincipalFX aplicacion, int id) {
 		String urlArchivo = null;

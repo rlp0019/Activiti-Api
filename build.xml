@@ -160,6 +160,5 @@
   	<delete dir="Activiti-api/build"/>
   	<delete dir="Activiti-api/bin"/>
   	<delete file="codacy-coverage.json"/>
-  	<delete dir="${doc.dir}"/>
   </target>
 </project>

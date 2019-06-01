@@ -524,7 +524,7 @@ public class PrincipalFX extends Application {
 	/**
 	 * Método para cargar un archivo y devolver el contenido.
 	 * 
-	 * @param path path del archivo.
+	 * @param archivo InputStream con el contenido del archivo.
 	 * @return contenido del archivo.
 	 */
 	public ArrayList<String> loadArchivoIdioma(InputStream archivo) {
@@ -569,7 +569,8 @@ public class PrincipalFX extends Application {
 	 * Vuelve a cargar el archivo con el idioma y establece de nuevo los textos de
 	 * la aplicacion y escenas.
 	 * 
-	 * @param id id del idioma.
+	 * @param aplicacion aplicacion principal.
+	 * @param id         id del idioma.
 	 */
 	public static void reloadIdioma(PrincipalFX aplicacion, int id) {
 		String urlArchivo = null;

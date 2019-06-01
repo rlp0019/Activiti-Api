@@ -15,7 +15,7 @@ import org.jfree.util.Rotation;
 import motormetricas.valores.Conjunto;
 
 /**
- * Clase que contiene losmetods para generar los graficos de la aplicación.
+ * Clase que contiene los métodos para generar los graficos de la aplicación.
  * 
  * @author David Blanco Alonso
  */
