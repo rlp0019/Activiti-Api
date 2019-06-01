@@ -430,7 +430,8 @@ public class PrincipalFX extends Application {
 	 *         ya se encuentra en la base de datos.
 	 */
 	public boolean guardarEnCSV() {
-		boolean resultado = manager.addMetricasProyecto(lector.getNombreRepositorio());
+		String repo = lector.getNombreRepositorio();
+		boolean resultado = manager.addMetricasProyecto(repo, lector.getUrl());
 
 		if (resultado) {
 			alertaGuardado.showAndWait();

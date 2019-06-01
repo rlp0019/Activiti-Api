@@ -141,14 +141,14 @@ public class ManagerCSV {
 	 * @param nombre nombre del proyecto.
 	 * @return true si se han añadido o false de lo contrario.
 	 */
-	public boolean addMetricasProyecto(String nombre) {
+	public boolean addMetricasProyecto(String nombre, String url) {
 		String metricas = nombre + "," + Double.toString(separador.getTotalIssues()) + ","
 				+ Double.toString(separador.getContadorCambios()) + ","
 				+ Double.toString(separador.getPorcentajeCerrados()) + ","
 				+ Double.toString(separador.getMediaDiasCierre()) + ","
 				+ Double.toString(separador.getMediaDiasEntreCommit()) + "," + Double.toString(separador.getTotalDias())
 				+ "," + Double.toString(separador.getCambioPico()) + ","
-				+ Double.toString(separador.getActividadCambio());
+				+ Double.toString(separador.getActividadCambio()) + "," + url;
 		return lector.addMetricasProyecto(nombre, metricas);
 	}
 

@@ -218,6 +218,16 @@ public class FachadaConexionGitHub implements FachadaConexion {
 	}
 
 	/**
+	 * Devuelve la url del repositorio.
+	 * 
+	 * @return url del repositorio.
+	 */
+	@Override
+	public String getUrl() {
+		return repositorio.getHtmlUrl();
+	}
+
+	/**
 	 * Realiza la lectura de un informe.
 	 * 
 	 * @param archivo BufferedReader archivo del informe.

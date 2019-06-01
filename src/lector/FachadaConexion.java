@@ -75,6 +75,13 @@ public interface FachadaConexion {
 	public Object[] getResultados();
 
 	/**
+	 * Método que devuelve la url del repositorio.
+	 * 
+	 * @return url del repositorio.
+	 */
+	public String getUrl();
+
+	/**
 	 * Realiza la lectura de un informe.
 	 * 
 	 * @param archivo BufferedReader archivo del informe.
