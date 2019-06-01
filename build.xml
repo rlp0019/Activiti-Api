@@ -21,6 +21,7 @@
   <property name="libclasses.dir" value="libc"/>
   <property name="doc.dir" value="doc"/>
   <property name="informes.dir" value="rsc/informes"/>
+  <property name="config.dir" value="rsc/config"/>
 	
   <path id="compile.path">
   	<pathelement location="${lib.dir}/gson-2.3.1.jar"/>
@@ -138,6 +139,7 @@
 	  <zipfileset dir="${dsecuencia.dir}" prefix="diagramassecuencia"/>
 	  <zipfileset dir="${imagenes.dir}" prefix="imagenes"/>
 	  <zipfileset dir="${css.dir}" prefix="css"/>
+	  <zipfileset dir="${config.dir}" prefix="config"/>
 	  <zipfileset dir="${informes.dir}" prefix="informes"/>
 	  <zipfileset dir="${ayuda.dir}" prefix="gui/ayuda"/>
 	  <zipfileset dir="${libclasses.dir}"/>
