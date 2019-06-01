@@ -1,0 +1,43 @@
+GitHub
+dba0010_Activiti-Api
+NumeroIssues: 24
+ContadorTareas: 0.5333333333333333
+NumeroIssuesCerradas: 24
+PorcentajeIssuesCerradas: 100.0
+MediaDiasCierre: 91.16666666666667
+NumeroCambiosSinMensaje: 0
+MediaDiasCambio: 5.406417438271605
+DiasPrimerUltimoCommit: 243.28878472222223
+UltimaModificacion: Fri Feb 05 00:49:28 CET 2016
+CommitPorMes: 12
+ Enero: 18
+ Febrero: 13
+ Marzo: 0
+ Abril: 0
+ Mayo: 0
+ Junio: 6
+ Julio: 1
+ Agosto: 0
+ Septiembre: 0
+ Octubre: 0
+ Noviembre: 2
+ Diciembre: 5
+RelacionMesPico: Enero
+ContadorCambiosPico: 0.4
+RatioActividadCambio: 5.625
+CommitPorDia: 7
+ Domingo: 2
+ Lunes: 14
+ Martes: 5
+ Miercoles: 7
+ Jueves: 7
+ Viernes: 2
+ Sabado: 8
+CambioPorAutor: 2
+ dba0010: 43
+ Nazalik: 2
+ContadorAutor: 0.044444444444444446
+IssuesPorAutor: 2
+ dba0010: 21
+ clopezno: 3
+NumeroFavoritos: 1

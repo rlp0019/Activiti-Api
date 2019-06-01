@@ -1,6 +1,7 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.BufferedReader;
@@ -9,6 +10,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.After;
@@ -22,6 +24,11 @@ import lector.FachadaConexion;
 import lector.csv.LectorCSV;
 import motormetricas.csv.ManagerCSV;
 import motormetricas.csv.SeparadorMetricas;
+import motormetricas.valores.Cadena;
+import motormetricas.valores.Conjunto;
+import motormetricas.valores.Entero;
+import motormetricas.valores.Fecha;
+import motormetricas.valores.Largo;
 import percentiles.CalculadoraPercentil;
 
 /**
@@ -296,22 +303,202 @@ public class PrincipalTest {
 			assertEquals(
 					"Resultado comparación del número de commits del mes que más ha habido dividido entre el número total de commits.",
 					1, manager.comparaCambioPico());
-			assertEquals("Resultado comparación del total de commits dividido entre el total de meses del proyecto.", 0,
-					manager.comparaActividadCambio());
+			assertEquals("Resultado comparación del total de commits dividido entre el total de meses del proyecto.",
+					-1, manager.comparaActividadCambio());
 
 			int valoresPreAdd = manager.getNumeroProyectosCSV();
 
-			if (manager.hasProyecto(proyecto)) {
-				manager.addMetricasProyecto(proyecto, lector.getUrl());
-				assertEquals("Comprobación de no añadir un proyecto porque ya está en la base de datos.", valoresPreAdd,
-						manager.getNumeroProyectosCSV());
-			} else {
+			if (!manager.hasProyecto(proyecto)) {
 				manager.addMetricasProyecto(proyecto, lector.getUrl());
 				assertEquals("Comprobación de añadir un proyecto.", (valoresPreAdd + 1),
+						manager.getNumeroProyectosCSV());
+
+				int valoresAdd = manager.getNumeroProyectosCSV();
+				manager.addMetricasProyecto(proyecto, lector.getUrl());
+				assertEquals("Comprobación de no añadir un proyecto porque ya está en la base de datos.", valoresAdd,
 						manager.getNumeroProyectosCSV());
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Test
+	public void testManagerCSVComparacion() {
+		Path path = Paths.get("rsc/datoscsv/PruebaCuartiles.csv");
+		ManagerCSV manager;
+		String usuario = "pruebarlp";
+		String password = "12qe34wr";
+		FachadaConexion lector = null;
+
+		try {
+			lector = fabricaLector.crearFachadaConexion(usuario, password);
+			lector.obtenerMetricas("dba0010", "Activiti-Api");
+
+			manager = new ManagerCSV(path, lector.getResultados()[0]);
+
+			assertFalse("Comprobación de que el CSV contiene datos.", null == manager.getCSV());
+
+			String tablaEsperada = "<table>"
+					+ "<tr><th style=\"background-color: #60b3dc; padding: 10px;\">Métrica</th><th style=\"background-color: #60b3dc; padding: 10px;\">Q1</th><th style=\"background-color: #60b3dc; padding: 10px;\">dba0010_Activiti-Api</th><th style=\"background-color: #60b3dc; padding: 10px;\">Q3</th><th style=\"background-color: #60b3dc; padding: 10px;\">Recomendado</th></tr>"
+					+ "<html><head><style>table {border: 2px solid black; font-family: Sans-Serif; font-size: 16px; margin: 0 auto; text-align: center}table .titulo {background-color: #a3d3eb;  padding: 10px;}table td {background-color: #e9e9e9; padding: 10px;}table .rojo {background-color: #ffa0a0;}table .verde {background-color: #b2e5b2;}table .amarillo {background-color: #fffdbb;}</style></head>"
+					+ "<body bgcolor='#e6f2ff'><td class=\"titulo\" colspan=\"5\">Proceso de orientación</td>"
+					+ "<tr><td class=\"titulo\">NumeroIssues</td><td>4.5</td><td class=\"verde\">24.0</td><td>48.5</td><td>Mayor que Q1</td></tr>"
+					+ "<tr><td class=\"titulo\">ContadorTareas</td><td>0.08</td><td class=\"verde\">0.53</td><td>0.59</td><td>Entre Q1 y Q3</td></tr>"
+					+ "<tr><td class=\"titulo\">PorcentajeIssuesCerradas</td><td>85.0</td><td class=\"verde\">100.0</td><td>100.0</td><td>Mayor que Q1</td></tr>"
+					+ "<tr><td class=\"titulo\">MediaDiasCierre</td><td>2.0</td><td class=\"rojo\">91.17</td><td>20.32</td><td>Entre Q1 y Q3</td></tr>"
+					+ "<td class=\"titulo\" colspan=\"5\">Restricciones temporales</td>"
+					+ "<tr><td class=\"titulo\">MediaDiasCambio</td><td>1.07</td><td class=\"rojo\">5.41</td><td>4.68</td><td>Entre Q1 y Q3</td></tr>"
+					+ "<tr><td class=\"titulo\">DiasPrimerUltimoCommit</td><td>79.98</td><td class=\"rojo\">243.29</td><td>199.96</td><td>Entre Q1 y Q3</td></tr>"
+					+ "<tr><td class=\"titulo\">ContadorCambiosPico</td><td>0.38</td><td class=\"verde\">0.4</td><td>0.63</td><td>Entre Q1 y Q3</td></tr>"
+					+ "<tr><td class=\"titulo\">RatioActividadCambio</td><td>6.0</td><td class=\"rojo\">5.62</td><td>27.0</td><td>Entre Q1 y Q3</td></tr>"
+					+ "</body></html>";
+
+			assertEquals("Comprobación de la correcta creación de la tabla.", tablaEsperada,
+					manager.creaTabla(lector.getNombreRepositorio()));
+
+			assertEquals("Comprobación de cálculo de nota poco estricta correcto.", 4.0, manager.calculaNota(false), 0);
+			assertEquals("Comprobación de cálculo de nota estricta correcto.", 4.0, manager.calculaNota(true), 0);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testComparacionRepositorios() {
+		String archivo1 = "rsc/informes/Activiti-Roberto.txt";
+		String archivo2 = "rsc/informes/Activiti-David.txt";
+
+		try {
+			FileReader lee1 = new FileReader(archivo1);
+			FileReader lee2 = new FileReader(archivo2);
+
+			BufferedReader contenido1 = new BufferedReader(lee1);
+			BufferedReader contenido2 = new BufferedReader(lee2);
+
+			String linea1 = "";
+			String linea2 = "";
+
+			if (((linea1 = contenido1.readLine()) != null) && ((linea2 = contenido2.readLine()) != null)
+					&& "GitHub".equals(linea1) && "GitHub".equals(linea2)) {
+				FabricaConexion fabrica2 = FabricaConexionGitHub.getInstance();
+				FachadaConexion conexion1 = fabricaLector.crearFachadaConexion();
+				FachadaConexion conexion2 = fabrica2.crearFachadaConexion();
+				conexion1.leerArchivo(contenido1);
+				conexion2.leerArchivo(contenido2);
+
+				String esperado = "<td class=\"titulo\" colspan=\"3\">Proceso de orientación</td>"
+						+ "<tr><td class=\"titulo\">NumeroIssues</td><td class=\"verde\">69</td><td class=\"rojo\">24</td></tr>"
+						+ "<tr><td class=\"titulo\">ContadorTareas</td><td class=\"verde\">0,57</td><td class=\"rojo\">0,53</td></tr>"
+						+ "<tr><td class=\"titulo\">NumeroIssuesCerradas</td><td class=\"verde\">69</td><td class=\"rojo\">24</td></tr>"
+						+ "<tr><td class=\"titulo\">PorcentajeIssuesCerradas</td><td>100,00</td><td>100,00</td></tr>"
+						+ "<tr><td class=\"titulo\">MediaDiasCierre</td><td class=\"verde\">3,48</td><td class=\"rojo\">91,17</td></tr>"
+						+ "<tr><td class=\"titulo\">NumeroCambiosSinMensaje</td><td>0</td><td>0</td></tr>"
+						+ "<td class=\"titulo\" colspan=\"3\">Restricciones temporales</td>"
+						+ "<tr><td class=\"titulo\">MediaDiasCambio</td><td class=\"rojo\">12,13</td><td class=\"verde\">5,41</td></tr>"
+						+ "<tr><td class=\"titulo\">DiasPrimerUltimoCommit</td><td class=\"verde\">1455,88</td><td class=\"rojo\">243,29</td></tr>"
+						+ "<tr><td class=\"titulo\">UltimaModificacion</td><td class=\"verde\">Sat Jun 01 16:06:26 CEST 2019</td><td class=\"rojo\">Fri Feb 05 00:49:28 CET 2016</td></tr>"
+						+ "<tr><td class=\"titulo\">ContadorCambiosPico</td><td class=\"verde\">0,21</td><td class=\"rojo\">0,40</td></tr>"
+						+ "<tr><td class=\"titulo\">RatioActividadCambio</td><td class=\"rojo\">2,50</td><td class=\"verde\">5,62</td></tr>"
+						+ "<td class=\"titulo\" colspan=\"3\">Equipo de desarrollo</td>"
+						+ "<tr><td class=\"titulo\">ContadorAutor</td><td class=\"rojo\">0,05</td><td class=\"verde\">0,04</td></tr>"
+						+ "<td class=\"titulo\" colspan=\"3\">Relevancia</td>"
+						+ "<tr><td class=\"titulo\">NumeroFavoritos</td><td class=\"rojo\">0</td><td class=\"verde\">1</td></tr>";
+
+				assertEquals("Comprobación de la correcta creación de la tabla de comparación.", esperado,
+						conexion1.comparar(conexion2));
+				assertTrue("Comprobación de comparación inversa distinta",
+						conexion1.comparar(conexion2) != conexion2.comparar(conexion1));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Comprobación de la generación del contenido del archivo de guardado.
+	 */
+	@Test
+	public void testGeneracionArchivoGuardado() {
+		String archivo = "rsc/informes/test.txt";
+		String usuario = "pruebarlp";
+		String password = "12qe34wr";
+
+		FileReader lee = null;
+		BufferedReader contenido = null;
+
+		try {
+			lee = new FileReader(archivo);
+			contenido = new BufferedReader(lee);
+
+			String linea = "";
+
+			if (((linea = contenido.readLine()) != null) && "GitHub".equals(linea)) {
+
+				FachadaConexion lector = fabricaLector.crearFachadaConexion(usuario, password);
+				assertTrue("Comprobación de peticiones restantes.", lector.getPeticionesRestantes() >= 0);
+				lector.leerArchivo(contenido);
+
+				assertFalse("Comprobación de generación de informe.", null == lector.generarArchivo());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (lee != null) {
+				try {
+					lee.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+
+			if (contenido != null) {
+				try {
+					contenido.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	/**
+	 * Comprobación de la creación de valores de métricas.
+	 */
+	@Test
+	public void testValores() {
+		Entero entero = new Entero(1);
+		Entero entero2 = new Entero();
+
+		assertEquals("Comprobación valor entero por parámetro.", 1, entero.getValor());
+		assertEquals("Comprobación valor entero sin parámetro..", 0, entero2.getValor());
+
+		Largo largo = new Largo(1.0);
+		Largo largo2 = new Largo();
+
+		assertEquals("Comprobación valor largo por parámetro.", 1.0, largo.getValor(), 0);
+		assertEquals("Comprobación valor largo sin parámetro.", 0, largo2.getValor(), 0);
+
+		Date date = new Date();
+		Fecha fecha = new Fecha(date);
+		Fecha fecha2 = new Fecha();
+
+		assertEquals("Comprobación fecha por parámetro.", date, fecha.getValor());
+		assertTrue("Comprobación fecha sin parámetro.", null != fecha2.getValor());
+
+		String cadenaEjemplo = "ejemplo";
+		Cadena cadena = new Cadena(cadenaEjemplo);
+		Cadena cadena2 = new Cadena();
+
+		assertEquals("Comprobación cadena por parámetro.", cadenaEjemplo, cadena.getValor());
+		assertEquals("Comprobación cadena sin parámetro.", "", cadena2.getValor());
+
+		String key = "clave";
+		Conjunto conjunto = new Conjunto(key, entero);
+		Conjunto conjunto2 = new Conjunto();
+
+		assertEquals("Comprobación valor conjunto por parámetro.", entero, conjunto.getValor(key));
+		assertTrue("Comprobación conjunto sin parámetro.", conjunto2.getValor().isEmpty());
 	}
 }

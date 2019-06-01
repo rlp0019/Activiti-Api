@@ -338,7 +338,7 @@ public class PrincipalFX extends Application {
 	 */
 	public void loadArchivo() {
 		try {
-			File archivo = openArchivo("Text Files", "*.TXT", "*.txt", true);
+			File archivo = openArchivo("Text Files", "*.txt", "*.TXT", true);
 
 			if (archivo != null && archivo.exists() && archivo.isFile()) {
 				FileReader lee = new FileReader(archivo);
@@ -367,14 +367,14 @@ public class PrincipalFX extends Application {
 	 */
 	public void saveArchivo() {
 		try {
-			File archivo = openArchivo("Text Files", "*.TXT", "*.txt", false);
+			File archivo = openArchivo("Text Files", "*.txt", "*.TXT", false);
 
 			if (archivo != null) {
 				FileWriter save = new FileWriter(archivo);
 				save.write(lector.generarArchivo());
 				save.close();
 
-				if (!(archivo.getAbsolutePath().endsWith(".txt"))) {
+				if (!(archivo.getAbsolutePath().endsWith(".txt") || !(archivo.getAbsolutePath().endsWith(".TXT")))) {
 					File temp = new File(archivo.getAbsolutePath() + ".txt");
 					archivo.renameTo(temp);
 				}
@@ -396,7 +396,7 @@ public class PrincipalFX extends Application {
 	}
 
 	public void startManager() {
-		File archivo = openArchivo("CSV Files", "*.CSV", "*.csv", true);
+		File archivo = openArchivo("CSV Files", "*.csv", "*.CSV", true);
 
 		if (archivo != null) {
 			manager = new ManagerCSV(Paths.get(archivo.getAbsolutePath()), lector.getResultados()[0]);
@@ -490,8 +490,8 @@ public class PrincipalFX extends Application {
 	 * Inicia un FileChooser con el filtro pasado.
 	 * 
 	 * @param descr  descripción de la extensión.
-	 * @param extM   extensión en mayúsculas.
-	 * @param ext    extensión en minúsculas.
+	 * @param extM   extensión en minúsculas.
+	 * @param ext    extensión en mayúsculas.
 	 * @param cargar opción para guardar o cargar.
 	 * @return archivo.
 	 */

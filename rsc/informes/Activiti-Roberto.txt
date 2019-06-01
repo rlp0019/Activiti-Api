@@ -1,0 +1,48 @@
+GitHub
+rlp0019_Activiti-Api
+NumeroIssues: 69
+ContadorTareas: 0.575
+NumeroIssuesCerradas: 69
+PorcentajeIssuesCerradas: 100.0
+MediaDiasCierre: 3.4782608695652173
+NumeroCambiosSinMensaje: 0
+MediaDiasCambio: 12.132365837191356
+DiasPrimerUltimoCommit: 1455.8839004629629
+UltimaModificacion: Sat Jun 01 16:06:26 CEST 2019
+CommitPorMes: 12
+ Enero: 18
+ Febrero: 19
+ Marzo: 24
+ Abril: 25
+ Mayo: 16
+ Junio: 10
+ Julio: 1
+ Agosto: 0
+ Septiembre: 0
+ Octubre: 0
+ Noviembre: 2
+ Diciembre: 5
+RelacionMesPico: Abril
+ContadorCambiosPico: 0.20833333333333334
+RatioActividadCambio: 2.5
+CommitPorDia: 7
+ Domingo: 14
+ Lunes: 23
+ Martes: 15
+ Miercoles: 17
+ Jueves: 22
+ Viernes: 10
+ Sabado: 19
+CambioPorAutor: 6
+ rlp0019: 51
+ Kiriboo: 22
+ Carlos López: 1
+ The Codacy Badger: 1
+ dba0010: 43
+ Nazalik: 2
+ContadorAutor: 0.05
+IssuesPorAutor: 3
+ rlp0019: 61
+ clopezno: 7
+ codacy-badger: 1
+NumeroFavoritos: 0
