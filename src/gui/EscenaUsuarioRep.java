@@ -82,7 +82,7 @@ public class EscenaUsuarioRep extends StackPane {
 	/**
 	 * Botón para buscar el repositorio.
 	 */
-	private static Button repoB = CreadorElementos.createButton("", 20, "", -5, -5, 100);
+	private static Button repoB = CreadorElementos.createButton("", 16, "", -5, -5, 100);
 
 	/**
 	 * Botón para eliminar la selección del repositorio.

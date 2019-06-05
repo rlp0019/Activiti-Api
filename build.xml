@@ -10,8 +10,6 @@
   <property name="build.tests.dir" value="build/test"/>
   <property name="dist.dir" value="dist/Activiti-Api"/>
   <property name="dist.data.dir" value ="${dist.dir}/data"/>
-  <property name="dclase.dir" value="rsc/diagramasclase"/>
-  <property name="dsecuencia.dir" value="rsc/diagramassecuencia"/>
   <property name="imagenes.dir" value="rsc/imagenes"/>
   <property name="css.dir" value="rsc/css"/>
   <property name="datoscsv.dir" value="rsc/datoscsv"/>
@@ -133,8 +131,6 @@
 	  	<attribute name="Main-Class" value="gui.PrincipalFX"/>
 	  </manifest>
 		
-	  <zipfileset dir="${dclase.dir}" prefix="diagramasclase"/>
-	  <zipfileset dir="${dsecuencia.dir}" prefix="diagramassecuencia"/>
 	  <zipfileset dir="${imagenes.dir}" prefix="imagenes"/>
 	  <zipfileset dir="${css.dir}" prefix="css"/>
 	  <zipfileset dir="${config.dir}" prefix="config"/>
